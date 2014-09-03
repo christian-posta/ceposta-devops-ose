@@ -6,3 +6,4 @@ target
 .settings
 .project
 .classpath
+openshift_vars_build*

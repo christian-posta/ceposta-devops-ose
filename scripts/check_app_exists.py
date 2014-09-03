@@ -31,7 +31,6 @@ def encodeUserData(username,passwd):
 
 try:
     url = "{0}{1}domain/{2}/application/{3}?nolinks=true".format(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[6])
-    print "url to use" + url
     req = urllib2.Request(url)
     req.add_header('Accept','application/json')
     req.add_header('Authorization',encodeUserData(sys.argv[4],sys.argv[5]))
@@ -42,7 +41,6 @@ try:
     else:
         print "1"
 except urllib2.URLError, e:
-    print e
     result = json.loads(e.read())
     if "not_found" == result["status"]:
         print ("0")

@@ -28,17 +28,12 @@ OPENSHIFT_PASSWORD=christian
 # ceposta, dev, qa, prod
 OPENSHIFT_DOMAIN=dev
 OPENSHIFT_CARTRIDGE_FUSE=fusesource-fuse-1.0.0
-OPENSHIFT_GIT_URL=
-OPENSHIFT_APP_URL=
+
 
 # set the app name to include the build versions so we can identify the env
 OPENSHIFT_APP_NAME=${APP_NAME}${MAJOR_VERSION}${BUILD_NUMBER}
 
 echo "app name: $OPENSHIFT_APP_NAME"
-
-
-# Configure SSH
-export GIT_SSH=${DIR}/ssh_wrapper.sh
 
 
 function cleanup() {
@@ -62,6 +57,7 @@ trap cleanup 0
 # Error Occurred
 # RESULT[0] = Status Code 1
 # RESULT[1] = Error Message
+echo "checking whether this app already exists in this environment"
 declare -a CHECK_APP_EXISTS_RESULT=$(python check_app_exists.py ${OPENSHIFT_BROKER} ${OPENSHIFT_API} ${OPENSHIFT_DOMAIN} ${OPENSHIFT_USER} "${OPENSHIFT_PASSWORD}" "${OPENSHIFT_APP_NAME}" ${OPENSHIFT_CARTRIDGE_FUSE}
 )
 
@@ -88,35 +84,17 @@ echo
 #
 # Application Created Successfully
 # RESULT[0] = Status Code 0
-# RESULT[1] = Application URL 
-# RESULT[2] = Git URL of Application
+# RESULT[1] = Application URL
+# RESULT[2] = SSH url
+# RESULT[3] = Console User Name
+# RESULT[4] = Console Password
+# RESULT[5] = ZK URL
+# RESULT[6] = ZK Password
 #
 # Error Occurred
 # RESULT[0] = Status Code 1
 # RESULT[1] = Error Message
-declare -a APP_CREATE_RESULT=$(python - ${OPENSHIFT_BROKER} ${OPENSHIFT_API} ${OPENSHIFT_DOMAIN} ${OPENSHIFT_USER} "${OPENSHIFT_PASSWORD}" "${OPENSHIFT_APP_NAME}" ${OPENSHIFT_CARTRIDGE_FUSE} <<EOF
-
-import sys, urllib, urllib2, json;
-
-def encodeUserData(username,passwd):
-	return "Basic %s" % (("%s:%s" % (username,passwd)).encode('base64').rstrip())
-
-try:
-	dict = (("name",sys.argv[6]),("cartridges[][name]",sys.argv[7]))
-	dict_encode = urllib.urlencode(dict)
-	url = "{0}{1}domain/{2}/applications".format(sys.argv[1],sys.argv[2],sys.argv[3])
-	req = urllib2.Request(url)
-	req.add_header('Accept','application/json')
-	req.add_header('Authorization',encodeUserData(sys.argv[4],sys.argv[5]))
-	res = urllib2.urlopen(req, dict_encode)
-	result = json.loads(res.read())
-	print '("{0}" "{1}" "{2}")'.format("0", result["data"]["app_url"], result["data"]["git_url"])
-except urllib2.URLError, e: 
-	result = json.loads(e.read())
-	print '("{0}" "{1}")'.format("1", result["messages"][0]["text"])
-except:
-	print ("1")
-EOF
+declare -a APP_CREATE_RESULT=$(python create_new_app.py ${OPENSHIFT_BROKER} ${OPENSHIFT_API} ${OPENSHIFT_DOMAIN} ${OPENSHIFT_USER} "${OPENSHIFT_PASSWORD}" "${OPENSHIFT_APP_NAME}" ${OPENSHIFT_CARTRIDGE_FUSE}
 )
 
 
@@ -128,36 +106,29 @@ then
 	echo "Application Failed to be Created"
 	echo "Error: ${APP_CREATE_RESULT[1]}"
 	exit 1
+else
+    echo "Created application ${APP_CREATE_RESULT[1]} successfully"
 fi
 
-OPENSHIFT_APP_URL=${APP_CREATE_RESULT[1]}
-OPENSHIFT_GIT_URL=${APP_CREATE_RESULT[2]}
+FUSE_ROOT_URL=${APP_CREATE_RESULT[1]}
+FUSE_GEAR_SSH=${APP_CREATE_RESULT[2]}
+FUSE_CONSOLE_USER=${APP_CREATE_RESULT[3]}
+FUSE_CONSOLE_PASSWORD=${APP_CREATE_RESULT[4]}
+FUSE_ZK_URL=${APP_CREATE_RESULT[5]}
+FUSE_ZK_PASSWORD=${APP_CREATE_RESULT[6]}
 
+# end the entire large if
+else
+    echo "There was major error: ${CHECK_APP_EXISTS_RESULT}"
 fi
 
-rm -rf ${OPENSHIFT_APP_NAME}
 
-echo "Cloning Upstream Repository..."
-#git clone ${UPSTREAM_GIT} -b ${SOURCE_GIT_BRANCH} ${OPENSHIFT_APP_NAME}
-
-pushd ${OPENSHIFT_APP_NAME} >/dev/null
-
-git remote add openshift ${OPENSHIFT_GIT_URL}
-
-echo "Pushing Repository to OpenShift Application"
-#git push -f openshift ${SOURCE_GIT_BRANCH}:master
-
-popd >/dev/null
 
 echo "Writing Variables to Properties File"
 
-echo OPENSHIFT_APP_URL=${OPENSHIFT_APP_URL} > openshift_vars_build${BUILD_NUMBER}
-echo OPENSHIFT_GIT_URL=${OPENSHIFT_GIT_URL} >> openshift_vars_build${BUILD_NUMBER}
-echo OPENSHIFT_APP_NAME=${OPENSHIFT_APP_NAME} >> openshift_vars_build${BUILD_NUMBER}
-
-
-
-
-
-
-
+echo FUSE_ROOT_URL=${FUSE_ROOT_URL} > openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
+echo FUSE_GEAR_SSH=${FUSE_GEAR_SSH} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
+echo FUSE_CONSOLE_USER=${FUSE_CONSOLE_USER} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
+echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
+echo FUSE_ZK_URL=${FUSE_ZK_URL} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
+echo FUSE_ZK_PASSWORD=${FUSE_ZK_PASSWORD} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
