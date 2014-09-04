@@ -37,6 +37,7 @@ ADD jobs/fuse-rest-initial-build/ /var/jenkins_home/jobs/fuse-rest-initial-build
 
 # change ownership of plugins and projects
 RUN chown -R jenkins:jenkins /var/jenkins_home/plugins
+RUN chown -R jenkins:jenkins /var/jenkins_home/jobs
 
 USER jenkins
 
