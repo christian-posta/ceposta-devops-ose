@@ -57,7 +57,7 @@ trap cleanup 0
 # RESULT[0] = Status Code 1
 # RESULT[1] = Error Message
 echo "checking whether this app already exists in this environment"
-declare -a CHECK_APP_EXISTS_RESULT=$(python check_app_exists.py ${OPENSHIFT_BROKER} ${OPENSHIFT_API} ${OPENSHIFT_DOMAIN} ${OPENSHIFT_USER} "${OPENSHIFT_PASSWORD}" "${OPENSHIFT_APP_NAME}" ${OPENSHIFT_CARTRIDGE_FUSE}
+declare -a CHECK_APP_EXISTS_RESULT=$(python ${DIR}/check_app_exists.py ${OPENSHIFT_BROKER} ${OPENSHIFT_API} ${OPENSHIFT_DOMAIN} ${OPENSHIFT_USER} "${OPENSHIFT_PASSWORD}" "${OPENSHIFT_APP_NAME}" ${OPENSHIFT_CARTRIDGE_FUSE}
 )
 
 if [ "${CHECK_APP_EXISTS_RESULT[0]}" == "1" ]
@@ -93,7 +93,7 @@ echo
 # Error Occurred
 # RESULT[0] = Status Code 1
 # RESULT[1] = Error Message
-declare -a APP_CREATE_RESULT=$(python create_new_app.py ${OPENSHIFT_BROKER} ${OPENSHIFT_API} ${OPENSHIFT_DOMAIN} ${OPENSHIFT_USER} "${OPENSHIFT_PASSWORD}" "${OPENSHIFT_APP_NAME}" ${OPENSHIFT_CARTRIDGE_FUSE}
+declare -a APP_CREATE_RESULT=$(python ${DIR}/create_new_app.py ${OPENSHIFT_BROKER} ${OPENSHIFT_API} ${OPENSHIFT_DOMAIN} ${OPENSHIFT_USER} "${OPENSHIFT_PASSWORD}" "${OPENSHIFT_APP_NAME}" ${OPENSHIFT_CARTRIDGE_FUSE}
 )
 
 
@@ -125,9 +125,12 @@ fi
 
 echo "Writing Variables to Properties File"
 
-echo FUSE_ROOT_URL=${FUSE_ROOT_URL} > openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_GEAR_SSH=${FUSE_GEAR_SSH} >> openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_CONSOLE_USER=${FUSE_CONSOLE_USER} >> openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_ZK_URL=${FUSE_ZK_URL} >> openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_ZK_PASSWORD=${FUSE_ZK_PASSWORD} >> openshift_vars_build-${VERSION_NUMBER}
+rm -fr ${DIR}/vars
+mkdir -p ${DIR}/vars
+
+echo FUSE_ROOT_URL=${FUSE_ROOT_URL} > ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_GEAR_SSH=${FUSE_GEAR_SSH} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_CONSOLE_USER=${FUSE_CONSOLE_USER} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_ZK_URL=${FUSE_ZK_URL} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_ZK_PASSWORD=${FUSE_ZK_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
