@@ -116,12 +116,6 @@ FUSE_CONSOLE_PASSWORD=${APP_CREATE_RESULT[4]}
 FUSE_ZK_URL=${APP_CREATE_RESULT[5]}
 FUSE_ZK_PASSWORD=${APP_CREATE_RESULT[6]}
 
-# end the entire large if
-else
-    echo "There was major error: ${CHECK_APP_EXISTS_RESULT}"
-fi
-
-
 
 echo "Writing Variables to Properties File"
 
@@ -134,3 +128,12 @@ echo FUSE_CONSOLE_USER=${FUSE_CONSOLE_USER} >> ${DIR}/vars/openshift_vars_build-
 echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 echo FUSE_ZK_URL=${FUSE_ZK_URL} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 echo FUSE_ZK_PASSWORD=${FUSE_ZK_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+# end the entire large if
+else
+    echo "There was major error"
+    echo "check result: ${CHECK_APP_EXISTS_RESULT[1]}"
+    echo "create result: ${APP_CREATE_RESULT[1]}"
+fi
+
+
+
