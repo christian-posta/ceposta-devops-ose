@@ -22,7 +22,7 @@ ADD http://updates.jenkins-ci.org/latest/config-file-provider.hpi /var/jenkins_h
 
 USER root
 
-RUN chown -R jenkins:jenkins /var/lib/jenkins/plugins
+RUN chown -R jenkins:jenkins /var/jenkins_home/plugins
 
 USER jenkins
 
