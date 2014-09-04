@@ -17,3 +17,5 @@ ADD http://updates.jenkins-ci.org/latest/build-pipeline-plugin.hpi /var/jenkins_
 ADD http://updates.jenkins-ci.org/latest/managed-scripts.hpi /var/jenkins_home/plugins/managed-scripts.hpi
 ADD http://updates.jenkins-ci.org/latest/copyartifact.hpi /var/jenkins_home/plugins/copyartifact.hpi
 ADD http://updates.jenkins-ci.org/latest/envinject.hpi /var/jenkins_home/plugins/envinject.hpi
+
+RUN chown -R jenkins:jenkins /var/jenkins_home/plugins
