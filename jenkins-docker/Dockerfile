@@ -39,6 +39,9 @@ ADD jobs/fuse-rest-initial-build/ /var/jenkins_home/jobs/fuse-rest-initial-build
 RUN chown -R jenkins:jenkins /var/jenkins_home/plugins
 RUN chown -R jenkins:jenkins /var/jenkins_home/jobs
 
+# configure maven installation
+RUN printf "<?xml version='1.0' encoding='UTF-8'?> <hudson.tasks.Maven_-DescriptorImpl> <installations> <hudson.tasks.Maven_-MavenInstallation> <name>maven</name> <home>/usr/share/maven</home> <properties/> </hudson.tasks.Maven_-MavenInstallation> </installations> </hudson.tasks.Maven_-DescriptorImpl>" >> /var/jenkins_home/hudson.tasks.Maven.xml ; chown jenkins:jenkins /var/jenkins_home/hudson.tasks.Maven.xml
+
 USER jenkins
 
 CMD ["/usr/local/bin/jenkins.sh"]
