@@ -2,7 +2,7 @@ FROM jenkins:1.576
 
 MAINTAINER Christian Posta <christian.posta@gmail.com>
 
-USER jenkins
+
 
 # Let's install all of the plugins we'll need
 ADD http://updates.jenkins-ci.org/latest/git.hpi /var/jenkins_home/plugins/git.hpi
@@ -20,5 +20,10 @@ ADD http://updates.jenkins-ci.org/latest/copyartifact.hpi /var/jenkins_home/plug
 ADD http://updates.jenkins-ci.org/latest/envinject.hpi /var/jenkins_home/plugins/envinject.hpi
 ADD http://updates.jenkins-ci.org/latest/config-file-provider.hpi /var/jenkins_home/plugins/config-file-provider.hpi
 
+USER root
+
+RUN chown -R jenkins:jenkins /var/lib/jenkins/plugins
+
+USER jenkins
 
 CMD ["/usr/local/bin/jenkins.sh"]
