@@ -4,19 +4,18 @@ set -e
 
 # Input Checking
 
-if [ "$#" -ne 3 ]; then
+if [ "$#" -ne 2 ]; then
     echo "Invalid Number of Input Parameters"
 	exit 1
 fi
 
 SOURCE_APP_NAME=$1
-MAJOR_VERSION=$2
-BUILD_NUMBER=$3
+VERSION_NUMBER=$2
 
 
 
 # Cleanse App and Branch names per OpenShift spec
-APP_NAME=$(echo ${SOURCE_APP_NAME} | tr -d -c ".[:alnum:]")
+APP_NAME=$(echo ${SOURCE_APP_NAME} | tr -d -c "[:alnum:]")
 
 # Initialize Variables
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -31,7 +30,7 @@ OPENSHIFT_CARTRIDGE_FUSE=fusesource-fuse-1.0.0
 
 
 # set the app name to include the build versions so we can identify the env
-OPENSHIFT_APP_NAME=${APP_NAME}${MAJOR_VERSION}${BUILD_NUMBER}
+OPENSHIFT_APP_NAME=$(echo ${APP_NAME}${VERSION_NUMBER} |  tr -d -c "[:alnum:]")
 
 echo "app name: $OPENSHIFT_APP_NAME"
 
@@ -126,9 +125,9 @@ fi
 
 echo "Writing Variables to Properties File"
 
-echo FUSE_ROOT_URL=${FUSE_ROOT_URL} > openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
-echo FUSE_GEAR_SSH=${FUSE_GEAR_SSH} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
-echo FUSE_CONSOLE_USER=${FUSE_CONSOLE_USER} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
-echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
-echo FUSE_ZK_URL=${FUSE_ZK_URL} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
-echo FUSE_ZK_PASSWORD=${FUSE_ZK_PASSWORD} >> openshift_vars_build-${MAJOR_VERSION}.${BUILD_NUMBER}
+echo FUSE_ROOT_URL=${FUSE_ROOT_URL} > openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_GEAR_SSH=${FUSE_GEAR_SSH} >> openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_CONSOLE_USER=${FUSE_CONSOLE_USER} >> openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_ZK_URL=${FUSE_ZK_URL} >> openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_ZK_PASSWORD=${FUSE_ZK_PASSWORD} >> openshift_vars_build-${VERSION_NUMBER}
