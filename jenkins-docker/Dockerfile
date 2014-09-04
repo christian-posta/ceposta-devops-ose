@@ -5,7 +5,7 @@ MAINTAINER Christian Posta <christian.posta@gmail.com>
 
 
 # Let's install all of the plugins we'll need
-# The jenkins site to browse the plugins is here:
+# The jenkins site to browse the plugins is here: https://updates.jenkins-ci.org/download/plugins/
 ADD http://updates.jenkins-ci.org/latest/git.hpi /var/jenkins_home/plugins/git.hpi
 ADD http://updates.jenkins-ci.org/latest/ssh-credentials.hpi /var/jenkins_home/plugins/ssh-credentials.hpi
 ADD http://updates.jenkins-ci.org/latest/git-client.hpi /var/jenkins_home/plugins/git-client.hpi
@@ -27,6 +27,15 @@ ADD http://updates.jenkins-ci.org/latest/envinject.hpi /var/jenkins_home/plugins
 
 USER root
 
+# add the maven settings.xml
+ADD maven/settings.xml /etc/maven/settings.xml
+
+# add the jenkins jobs
+ADD jobs/fuse-rest-deploy-dev/ /var/jenkins_home/jobs/fuse-rest-deploy-dev
+ADD jobs/fuse-rest-integration-tests/ /var/jenkins_home/jobs/fuse-rest-integration-tests
+ADD jobs/fuse-rest-initial-build/ /var/jenkins_home/jobs/fuse-rest-initial-build
+
+# change ownership of plugins and projects
 RUN chown -R jenkins:jenkins /var/jenkins_home/plugins
 
 USER jenkins
