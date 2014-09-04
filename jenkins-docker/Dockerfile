@@ -42,6 +42,10 @@ RUN chown -R jenkins:jenkins /var/jenkins_home/jobs
 # configure maven installation
 RUN printf "<?xml version='1.0' encoding='UTF-8'?> <hudson.tasks.Maven_-DescriptorImpl> <installations> <hudson.tasks.Maven_-MavenInstallation> <name>maven</name> <home>/usr/share/maven</home> <properties/> </hudson.tasks.Maven_-MavenInstallation> </installations> </hudson.tasks.Maven_-DescriptorImpl>" >> /var/jenkins_home/hudson.tasks.Maven.xml ; chown jenkins:jenkins /var/jenkins_home/hudson.tasks.Maven.xml
 
+# Set up git user 'jenkins'
+RUN git config --global user.email "jenkins@jenkins.org"
+RUN git config --global user.name "jenkins"
+
 USER jenkins
 
 CMD ["/usr/local/bin/jenkins.sh"]
