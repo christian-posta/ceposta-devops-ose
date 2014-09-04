@@ -13,9 +13,13 @@ ADD http://updates.jenkins-ci.org/latest/scm-api.hpi /var/jenkins_home/plugins/s
 ADD http://updates.jenkins-ci.org/latest/ssh-credentials.hpi /var/jenkins_home/plugins/ssh-credentials.hpi
 ADD http://updates.jenkins-ci.org/latest/credentials.hpi /var/jenkins_home/plugins/credentials.hpi
 ADD http://updates.jenkins-ci.org/latest/config-file-provider.hpi /var/jenkins_home/plugins/config-file-provider.hpi
+ADD http://updates.jenkins-ci.org/latest/token-macro.hpi /var/jenkins_home/plugins/token-macro.hpi
+ADD http://updates.jenkins-ci.org/latest/run-condition.hpi /var/jenkins_home/plugins/run-condition.hpi
 ADD http://updates.jenkins-ci.org/latest/conditional-buildstep.hpi /var/jenkins_home/plugins/conditional-buildstep.hpi
 ADD http://updates.jenkins-ci.org/latest/parameterized-trigger.hpi /var/jenkins_home/plugins/parameterized-trigger.hpi
 ADD http://updates.jenkins-ci.org/latest/promoted-builds.hpi /var/jenkins_home/plugins/promoted-builds.hpi
+ADD http://updates.jenkins-ci.org/latest/jquery.hpi /var/jenkins_home/plugins/jquery.hpi
+ADD http://updates.jenkins-ci.org/latest/dashboard-view.hpi /var/jenkins_home/plugins/dashboard-view.hpi
 ADD http://updates.jenkins-ci.org/latest/build-pipeline-plugin.hpi /var/jenkins_home/plugins/build-pipeline-plugin.hpi
 ADD http://updates.jenkins-ci.org/latest/managed-scripts.hpi /var/jenkins_home/plugins/managed-scripts.hpi
 ADD http://updates.jenkins-ci.org/latest/copyartifact.hpi /var/jenkins_home/plugins/copyartifact.hpi
