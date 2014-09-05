@@ -2,8 +2,7 @@ FROM jenkins:1.576
 
 MAINTAINER Christian Posta <christian.posta@gmail.com>
 
-# needed to run our OSE scripts
-RUN apt-get update && apt-get install -y python
+
 
 
 # Let's install all of the plugins we'll need
@@ -28,6 +27,9 @@ ADD http://updates.jenkins-ci.org/latest/copyartifact.hpi /var/jenkins_home/plug
 ADD http://updates.jenkins-ci.org/latest/envinject.hpi /var/jenkins_home/plugins/envinject.hpi
 
 USER root
+
+# needed to run our OSE scripts
+RUN apt-get update && apt-get install -y python
 
 # add the maven settings.xml
 ADD maven/settings.xml /etc/maven/settings.xml
