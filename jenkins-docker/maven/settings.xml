@@ -135,7 +135,12 @@ under the License.
     	  <id>nexus.internal.repo</id>
           <username>admin</username>
           <password>admin123</password>
-      </server> 
+      </server>
+      <server>
+          <id>fabric8.repo</id>
+          <username>__FABRIC8_REPO_USERNAME__</username>
+          <password>__FABRIC8_REPO_PASSWORD__</password>
+      </server>
   </servers>
 
   <!-- mirrors
