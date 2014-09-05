@@ -47,7 +47,10 @@ RUN printf "<?xml version='1.0' encoding='UTF-8'?> <hudson.tasks.Maven_-Descript
 RUN git config --global user.email "jenkins@jenkins.org"
 RUN git config --global user.name "jenkins"
 
-USER jenkins
 ADD conf-and-run-jenkins.sh /home/jenkins/conf-and-run-jenkins.sh
 RUN chmod +x /home/jenkins/conf-and-run-jenkins.sh
+RUN chown jenkins:jenkins /home/jenkins/conf-and-run-jenkins.sh
+
+USER jenkins
+
 CMD ["/home/jenkins/conf-and-run-jenkins.sh"]
