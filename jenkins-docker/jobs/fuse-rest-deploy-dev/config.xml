@@ -29,7 +29,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>http://172.17.0.19/root/quickstart-fuse-rest.git</url>
+        <url>http://__GITLAB_IP__/root/quickstart-fuse-rest.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -50,7 +50,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>rm -fr ${WORKSPACE}/.env-scripts
-git clone http://172.17.0.19/root/ceposta-devops-ose.git ${WORKSPACE}/.env-scripts
+git clone http://__GITLAB_IP__/root/ceposta-devops-ose.git ${WORKSPACE}/.env-scripts
 ${WORKSPACE}/.env-scripts/scripts/create_ose_env.sh fuse ${RELEASE_NUMBER}</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@1.89">

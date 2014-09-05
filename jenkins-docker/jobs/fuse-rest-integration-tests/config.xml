@@ -23,7 +23,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>http://172.17.0.19/root/quickstart-fuse-rest.git</url>
+        <url>http://__GITLAB_IP__/root/quickstart-fuse-rest.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>

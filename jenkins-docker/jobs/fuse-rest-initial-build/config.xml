@@ -24,7 +24,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>http://172.17.0.19/root/quickstart-fuse-rest.git</url>
+        <url>http://__GITLAB_IP__/root/quickstart-fuse-rest.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -62,7 +62,7 @@
   <publishers>
     <hudson.maven.RedeployPublisher>
       <id>nexus.internal.repo</id>
-      <url>http://172.17.0.23:8081/nexus/content/repositories/releases</url>
+      <url>http://__NEXUS_IP__:__NEXUS_PORT__/nexus/content/repositories/releases</url>
       <uniqueVersion>true</uniqueVersion>
       <evenIfUnstable>false</evenIfUnstable>
     </hudson.maven.RedeployPublisher>
@@ -114,7 +114,7 @@ RELEASE_NUMBER=$MAJOR_VERSION_NUMBER.$BUILD_NUMBER
       </condition>
       <buildStep class="hudson.tasks.Shell">
         <command>git commit -a -m &apos;new release candidate&apos;
-git push http://root:redhat01@172.17.0.19:80/root/quickstart-fuse-rest.git quickstart-fuse-rest-$MAJOR_VERSION_NUMBER.$BUILD_NUMBER</command>
+git push http://root:redhat01@__GITLAB_IP__:80/root/quickstart-fuse-rest.git quickstart-fuse-rest-$MAJOR_VERSION_NUMBER.$BUILD_NUMBER</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>

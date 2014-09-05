@@ -35,6 +35,10 @@ ADD jobs/fuse-rest-deploy-dev/ /var/jenkins_home/jobs/fuse-rest-deploy-dev
 ADD jobs/fuse-rest-integration-tests/ /var/jenkins_home/jobs/fuse-rest-integration-tests
 ADD jobs/fuse-rest-initial-build/ /var/jenkins_home/jobs/fuse-rest-initial-build
 
+RUN find /var/jenkins_home/jobs -name config.xml | xargs sed -i  's/__GITLAB_IP__/'$GITLAB_PORT_80_TCP_ADDR'/g'
+RUN find /var/jenkins_home/jobs -name config.xml | xargs sed -i  's/__NEXUS_IP__/'$NEXUS_PORT_8081_TCP_ADDR'/g'
+RUN find /var/jenkins_home/jobs -name config.xml | xargs sed -i  's/__NEXUS_PORT__/'$NEXUS_PORT_8081_TCP_PORT'/g'
+
 # change ownership of plugins and projects
 RUN chown -R jenkins:jenkins /var/jenkins_home/plugins
 RUN chown -R jenkins:jenkins /var/jenkins_home/jobs
