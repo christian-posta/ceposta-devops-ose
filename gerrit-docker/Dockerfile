@@ -35,7 +35,7 @@ RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_H
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
 ADD replication.config $GERRIT_HOME/gerrit/etc/replication.config
-ADD conf-and-run-gerrit.sh $GERRIT_HOME
+ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
 
 USER root
 EXPOSE 8080 29418
