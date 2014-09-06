@@ -32,7 +32,7 @@ RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 #RUN rm -f /etc/apt/apt.conf.d/01proxy
 
 USER gerrit
-RUN java -jar $GERRIT_WAR init --batch -d $GERRIT_HOME/gerrit
+RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_HOME/gerrit
 
 # clobber the gerrit config. set the URL to localhost:8080
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
