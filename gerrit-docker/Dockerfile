@@ -19,10 +19,12 @@ RUN apt-get update
 RUN apt-get upgrade
 
 RUN useradd -m ${GERRIT_USER}
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes tzdata=2014b-1 tzdata-java openjdk-6-jre-headless sudo git-core vim-tiny
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes tzdata=2014b-1 tzdata-java openjdk-6-jre-headless sudo git-core supervisor vim-tiny
+RUN mkdir -p /var/log/supervisor
 
 ADD http://gerrit-releases.storage.googleapis.com/gerrit-2.8.5.war /tmp/gerrit.war
 #ADD gerrit-2.8.war /tmp/gerrit.war
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN mkdir -p $GERRIT_HOME/gerrit
 RUN mv /tmp/gerrit.war $GERRIT_WAR
@@ -39,4 +41,4 @@ ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
 
 USER root
 EXPOSE 8080 29418
-CMD ["/home/gerrit/conf-and-run-gerrit.sh"]
+CMD ["/usr/sbin/service","supervisor","start"]
