@@ -4,7 +4,7 @@
 
 FROM  ubuntu:trusty
 
-MAINTAINER Larry Cai <larry.caiyu@gmail.com>
+MAINTAINER Christian Posta <christian.posta@gmail.com>
 
 ENV GERRIT_HOME /home/gerrit
 ENV GERRIT_USER gerrit
@@ -36,6 +36,7 @@ RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_H
 
 # clobber the gerrit config. set the URL to localhost:8080
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
+ADD replication.config $GERRIT_HOME/gerrit/etc/replication.config
 
 USER root
 EXPOSE 8080 29418
