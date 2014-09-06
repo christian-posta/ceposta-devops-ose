@@ -28,6 +28,10 @@ ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN mkdir -p $GERRIT_HOME/gerrit
 RUN mv /tmp/gerrit.war $GERRIT_WAR
+ADD replication.config $GERRIT_HOME/gerrit/etc/replication.config
+ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
+RUN chmod +x $GERRIT_HOME/conf-and-run-gerrit.sh
+
 RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
 USER gerrit
@@ -36,8 +40,6 @@ RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_H
 # clobber the gerrit config. set the URL to localhost:8080
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
-ADD replication.config $GERRIT_HOME/gerrit/etc/replication.config
-ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
 
 USER root
 EXPOSE 8080 29418
