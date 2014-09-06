@@ -36,7 +36,11 @@ RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_H
 
 # clobber the gerrit config. set the URL to localhost:8080
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
+
 ADD replication.config $GERRIT_HOME/gerrit/etc/replication.config
+
+RUN sed -i  's/__GITLAB_IP__/'${GITLAB_PORT_80_TCP_ADDR}'/g' $GERRIT_HOME/gerrit/etc/replication.config
+
 
 USER root
 EXPOSE 8080 29418
