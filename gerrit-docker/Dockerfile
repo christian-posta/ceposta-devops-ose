@@ -43,4 +43,4 @@ ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
 USER root
 EXPOSE 8080 29418
-CMD ["/usr/sbin/service","supervisor","start"]
+CMD ["/home/gerrit/conf-and-run-gerrit.sh"]
