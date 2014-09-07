@@ -1,7 +1,7 @@
-# gerrit
-#
-# VERSION               0.0.2
 
+#Example how to run this:
+# docker run -itdP --name=“gerrit” -e “GERRIT_USER=admin” -e “GERRIT_PASSWORD=redhat01” -e \
+# “GERRIT_PROJ_ROOT=root”--link gitlab:gitlab gerrit
 FROM  ubuntu:trusty
 
 MAINTAINER Christian Posta <christian.posta@gmail.com>
