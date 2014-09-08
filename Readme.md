@@ -33,7 +33,7 @@ no manual configuration. Each container is built using a predefined [Dockerfile]
 for how to configure the container. _Note, that although the Dockerfile is specific to Docker, the steps taken are not_.
 Those give a very detailed step-by-step guide for how to set up any VM to behave like the Docker container.
 
-See [this guide for setting up our Docker environment on RHEL 6.5 for this demo][docs/set-up-docker.md].
+See [this guide for setting up our Docker environment on RHEL 6.5 for this demo](docs/set-up-docker.md).
 
 ## Openstack
 The entire demo runs on RHEL 6.5 instances on OpenStack. I'll show how I set up everything, but YMMV. There is no

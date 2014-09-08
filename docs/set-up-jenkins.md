@@ -32,4 +32,20 @@ Now you can run the following command to see where on the host Gerrit HTTP liste
     
 ## Running a build
 At this point you should be able to navigate to the Jenkins page (as exposed on the host and the port from above)
-and insepct the build jobs. 
+and inspect the build jobs. For example, from my box, the URL looks like this: http://ceposta-public:49161
+ 
+You should have a pipeline and build jobs already configured and ready to go
+
+---
+
+![dashboard](images/JenkinsDashboard.png)]
+
+---
+
+You can explore the projects and see how they're set up.
+
+To run a build, click `fuse-rest-initial-build` link and then `Build with Paramters` link off to the left.
+You can choose to go with the default params (`1.0`) for this project. This signifies the "Major Version" of the
+build, and Jenkins will substitute the rest of the data. As long as this build runs fine you should be all set.
+
+Note, we'll go through the entire deployment pipeline in [the demo guide](demo.md).
