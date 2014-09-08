@@ -69,4 +69,8 @@ the Jenkins build jobs are set up to look for that name.
 
 __Make sure__ you mark the project public, and make it an empty project. 
 
-We will use Gerrit to replicate code to this Gitlab Project so we don't need to import anything. 
+We will use Gerrit to replicate code to this Gitlab Project so we don't need to import anything.
+ 
+## What's Next?
+You can [go right to the Demo](demo.md) or you can [set up Gerrit](set-up-gerrit.md) since that's the next container
+that should be set up to do the demo.

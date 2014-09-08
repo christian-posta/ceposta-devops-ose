@@ -8,7 +8,7 @@ JBoss Fuse, we can focus on integration projects and [Micorservices][microservic
 the developer experience (using Git, for example) as well as automating the deployment enivornment (using
 [OpenShift][openshift] for example). 
 
-There are two angles to this project. One is actually using it to do continuous delivery on JBoss Fuse, and the second
+There are two angles to this project. One is actually using  it (a live demo) to do continuous delivery on JBoss Fuse, and the second
 is to prep and set up all the pieces so you can see it for yourself. Everything is documented and/or automated such 
 that anyone can try it out. See the guides for the specific sections for how to set up each piece.
 
@@ -30,8 +30,9 @@ pipline are delivered as Docker containers:
 
 Additionally they are run in a linked configuration so that all IPs and Ports are automatically discovered and there's
 no manual configuration. Each container is built using a predefined [Dockerfile][dockerfile] that acts as documentation
-for how to configure the container. _Note, that although the Dockerfile is specific to Docker, the steps taken are not_.
-Those give a very detailed step-by-step guide for how to set up any VM to behave like the Docker container.
+for how to configure the container. _Note, that although the Dockerfile is specific to Docker, the steps taken to 
+setup the container are not_.
+The Dockerfile gives a very detailed step-by-step guide for how to set up any VM to behave like the Docker container.
 
 See [this guide for setting up our Docker environment on RHEL 6.5 for this demo](docs/set-up-docker.md).
 

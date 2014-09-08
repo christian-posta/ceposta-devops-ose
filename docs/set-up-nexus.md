@@ -28,3 +28,8 @@ For example, on my machine that would be:
     http://ceposta-public:49159/nexus
     
 You can try logging in with the default un/pw of __admin/admin123__
+
+
+## What's Next?
+You can [go right to the Demo](demo.md) or you can [set up Jenkins](set-up-jenkins.md) since that's the next container
+that should be set up to do the demo.

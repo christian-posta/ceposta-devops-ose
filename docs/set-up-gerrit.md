@@ -174,3 +174,7 @@ Can do this in the same project as master because it checks out the change for y
     git commit --amend
 
 This will cause the commit to use the same change-id (as that’s how commits are tracked)
+
+## What's Next?
+You can [go right to the Demo](demo.md) or you can [set up Nexus](set-up-nexus.md) since that's the next container
+that should be set up to do the demo.

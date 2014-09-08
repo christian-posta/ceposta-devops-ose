@@ -1,8 +1,12 @@
 # Setting up Docker on RHEL for the Continuous Delivery Demo
 
 
-We are going to install the requisite software with Docker. So we need to have Docker.
-You’ll want to have docker images on a separate volume. See the notes from here:
+We use Docker for all of the pieces in the demo. If you're new to Docker, please [see the Docker website](http://docker.com)
+for more information. In short, Docker is an automation and virtual environment software that allows you to package 
+your software in isolated containers and ship the containers and have them behave the same on any host that can run
+Docker. 
+
+Here's a detailed setup guide for RHEL/CentOS, including some suggestions:
 
 ## Install prerequisites
 
@@ -12,9 +16,10 @@ On RHEL/Centos, you'll need to install the EPEL repos:
 
 
 ## Attaching external volume
-You’ll want to attach a separate volume for docker images because they tend to take up a lot of space.
+You’ll want to attach a separate volume for docker images because they tend to take up a lot of space (especially
+if running in a VM with limited disk or on IaaS where the image gets limited space)
 
-Should do this before running docker for the first time
+If you're going to attach a volume, __you Should do this before running docker for the first time__
 
 In OpenStack, find the volume and attach it. Then run these commands:
 
@@ -58,3 +63,8 @@ You should also set up _nsenter_ as described in this blog post so you don't hav
 SSH dameon:
 
     http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/
+    
+    
+## What's Next?
+You can [go right to the Demo](demo.md) or you can [set up GitLab](set-up-gitlab.md) since that's the first container
+that should be set up to do the demo.
