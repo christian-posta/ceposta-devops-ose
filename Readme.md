@@ -119,6 +119,7 @@ environments/deployments. As we go through the steps to get from Dev to Prod, we
 
 1) The binaries run in any environment are the same binaries run in all environments. We don't want to have special,
 environment-dependnet builds
+
 2) How JBoss Fuse brings its platform to the cloud with OpenShift to build an iPaaS. An iPaaS allows you to 
 delcaratively (through scripts, or a UI) manage your integration platform and scale your applications/integrations
 for solutions that run on premise or in a PaaS.
