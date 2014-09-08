@@ -9,6 +9,8 @@ MAINTAINER Christian Posta <christian.posta@gmail.com>
 # The jenkins site to browse the plugins is here: https://updates.jenkins-ci.org/download/plugins/
 ADD http://updates.jenkins-ci.org/latest/git.hpi /var/jenkins_home/plugins/git.hpi
 ADD http://updates.jenkins-ci.org/latest/ssh-credentials.hpi /var/jenkins_home/plugins/ssh-credentials.hpi
+ADD http://updates.jenkins-ci.org/latest/ssh-agent.hpi /var/jenkins_home/plugins/ssh-agent.hpi
+ADD http://updates.jenkins-ci.org/latest/rebuild.hpi /var/jenkins_home/plugins/rebuild.hpi
 ADD http://updates.jenkins-ci.org/latest/git-client.hpi /var/jenkins_home/plugins/git-client.hpi
 ADD http://updates.jenkins-ci.org/latest/scm-api.hpi /var/jenkins_home/plugins/scm-api.hpi
 ADD http://updates.jenkins-ci.org/latest/ssh-credentials.hpi /var/jenkins_home/plugins/ssh-credentials.hpi
@@ -25,6 +27,7 @@ ADD http://updates.jenkins-ci.org/latest/build-pipeline-plugin.hpi /var/jenkins_
 ADD http://updates.jenkins-ci.org/latest/managed-scripts.hpi /var/jenkins_home/plugins/managed-scripts.hpi
 ADD http://updates.jenkins-ci.org/latest/copyartifact.hpi /var/jenkins_home/plugins/copyartifact.hpi
 ADD http://updates.jenkins-ci.org/latest/envinject.hpi /var/jenkins_home/plugins/envinject.hpi
+ADD http://updates.jenkins-ci.org/latest/gerrit-trigger.hpi /var/jenkins_home/plugins/gerrit-trigger.hpi
 
 USER root
 
