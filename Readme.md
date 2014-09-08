@@ -37,7 +37,7 @@ The entire demo runs on RHEL 6.5 instances on OpenStack. I'll show how I set up 
 dependency on OpenStack per-se, as you can use any VM or IaaS as desired (for example, if you have [VirtualBox][vbox],
 you can run everything on there too).
 
-See [this guide for setting up a VM on OpenStack for this demo][docs/set-up-openstack-vm.md]
+See [this guide for setting up a VM on OpenStack for this demo](docs/set-up-openstack-vm.md)
 
 
 ## Gitlab
@@ -52,7 +52,7 @@ for.
 For the Docker environment we have for this demo, you'll want to start the Gitlab container first, since 
 all of the other containers link to it.
 
-See [this guide for setting up Gitlab as a Docker container for this demo][docs/set-up-gitlab.md]
+See [this guide for setting up Gitlab as a Docker container for this demo](docs/set-up-gitlab.md)
 
 ## Gerrit
 We use [Gerrit][gerrit]https://code.google.com/p/gerrit/ to demonstrate a key piece of the Continuous Delivery/Devops
@@ -65,14 +65,14 @@ conforming to a team style/convention, then Gerrit is the tool to help you do th
 With Gerrit, you can code review your changesets, track the feedback loop that usually happens when reviewing code,
 and merge with master when the code is ready. This also keeps broken builds on your master/CI branch to a minimum.
 
-See [this guide for setting up Gerrit as a Docker container for this demo][docs/set-up-gitlab.md]
+See [this guide for setting up Gerrit as a Docker container for this demo](docs/set-up-gitlab.md)
 
 ## Nexus
 We use [Sonatype Nexus][nexus]to model our enterprise artifact repository. In here we can store our build artifacts
 (for example, not just jars and wars, but our JBoss Fuse/Fabric8 profiles) and access them across environments. Nexus
 plays a central role in our [continuous delivery][cd] pipline. 
 
-See [this guide for setting up Nexus as a Docker container for this demo][docs/set-up-nexus.md]
+See [this guide for setting up Nexus as a Docker container for this demo](docs/set-up-nexus.md)
 
 ## Jenkins
 Jenkins provides the heavy lifting for our continuous integration and continuous delivery pipline. Just like the
@@ -82,7 +82,7 @@ the other external pieces (OpenShift, Gitlab/Nexus) are set up correctly, but al
 go.
 
 You may wish to set up additional features (like email proxy, or user accounts), so for a complete guide,
-see [the guide for setting up Jenkins as a Docker contianer for this demo][docs/set-up-jenkins.md]
+see [the guide for setting up Jenkins as a Docker contianer for this demo](docs/set-up-jenkins.md)
 
 ### Jenkins plugins
 Here are a list of Jenkins plugins we use for our Continuous Delivery setup:
@@ -97,7 +97,7 @@ Here are a list of Jenkins plugins we use for our Continuous Delivery setup:
 * Git
 * Maven
 
-You can see the full, up to date list, [directly on the Dockerfile for the Jenkins container][jenkins-docker/Dockerfile]
+You can see the full, up to date list, [directly on the Dockerfile for the Jenkins container](jenkins-docker/Dockerfile)
 
 ## JBoss Fuse
 For this demo, we're using [JBoss Fuse 6.1][fuse]. JBoss Fuse proivdes the integration platform onto which we deploy
@@ -110,7 +110,7 @@ You couuld even bring up an HTTP gateway to do the auto discovery.
 For this demo, however, we're going to be deploying our Fuse projects onto [OpenShift][openshift], a 
 PaaS supporting multiple technology stacks, including Fuse. 
 
-Check out the [architecture diagram and setting up Fuse for this demo][docs/set-up-fuse.md]
+Check out the [architecture diagram and setting up Fuse for this demo](docs/set-up-fuse.md)
 
 ## OpenShift
 We use OpenShift as our PaaS to allow us to deploy our solutions on-demand, without having to set up a complicated
@@ -123,7 +123,7 @@ environment-dependnet builds
 delcaratively (through scripts, or a UI) manage your integration platform and scale your applications/integrations
 for solutions that run on premise or in a PaaS.
 
-See [this guide for setting up our OpenShift environment on OpenStack][docs/set-up-openshift.md]
+See [this guide for setting up our OpenShift environment on OpenStack](docs/set-up-openshift.md)
 
 
 [docker]: https://www.docker.com
