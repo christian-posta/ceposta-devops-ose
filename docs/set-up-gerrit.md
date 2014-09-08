@@ -50,7 +50,7 @@ At this point you can add SSH keys, but to keep it simple you can just HTTP acce
 
 Click the _continue_ link at the bottom left hand side.
 
-### Set up HTTP password
+## Set up HTTP password
 Before you keep going, you should set up an HTTP password so we can use the HTTP url with gerrit (of course this
 is just for the demo. You __should__ use the SSH access in a real environment).
 
@@ -113,8 +113,14 @@ Now we should be ready to push to master (we'll pull first to rebase what's alre
 
     git pull gerrit master
     git push gerrit master
+    
+__NOTE__ as we'll see in the demo, the correct branch to push to for reviews is:
 
-### Verify replication happened correctly
+    git push gerrit HEAD:refs/for/master
+    
+This will cause the code review to kick in.
+
+## Verify replication happened correctly
 At this point we have our quickstart-fuse-rest application installed into Gerrit, and since gerrit does repplication
 to GitLab, we should see the same code in Gitlab as well. If this happened, everything is working correctly so far.
 
@@ -123,3 +129,48 @@ For me, the path to my Gitlab project is here:
     http://ceposta-public:49164/root/quickstart-fuse-rest/tree/master
     
 Yours will be wherever you set up gitlab using the Gitlab docker container [as described in setting up Gitlab](set-up-gitlab.md)
+
+## Roles, Reviews, Topics
+
+### Gerrit Topcis:
+With gerrit changes are slightly different than with PR because you typically have a single commit to review. However, you can organize multiple commits into “topics” by pushing to 
+    
+    HEAD:refs/for/master%topic=topic-name
+
+
+### Gerrit Reviewers
+To add a reviewer, add their email to the `r` param:
+
+    HEAD:refs/for/master%topic=first-topic,r=christian.posta@gmail.com
+
+
+### Gerrit Roles
+
+Life of a patch: http://source.android.com/source/life-of-a-patch.html
+
+* Contributor - an internal or external member of the team who uploads a commit for review
+* Reviewer - Any internal or external member of the team who is allowed to post comments on a change and provide score
+* Committer - A senior team member allowed to grant a veto or approve, submit, and merge a change
+* Build - Batch user (jenkins?) allowed to fetch and provide automated review
+
+### Reviews
+
+* Review/-2 a committer has fundamental reasons for opposing the merge veto cannot be cancelled by another reviewer, and will block the change
+* Review/-1 not a blocker for merge, but is a negative score; indication more work is needed to bring into acceptable state
+* Review/0  comments
+* Review/+1 positive score, no problems found, though reserved for non-committers (reviewers)
+* Review/+2 committers think the code should be merged
+
+
+### Amending code under review
+
+Can click the git link to download the actual change set and start from there:
+
+    git fetch http://ceposta-public:49157/quickstart-fuse-rest refs/changes/01/1/1 && git checkout FETCH_HEAD
+
+
+Can do this in the same project as master because it checks out the change for you in place. Then make changes, and do a commit —amend:
+
+    git commit --amend
+
+This will cause the commit to use the same change-id (as that’s how commits are tracked)
