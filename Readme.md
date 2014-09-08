@@ -65,7 +65,7 @@ conforming to a team style/convention, then Gerrit is the tool to help you do th
 With Gerrit, you can code review your changesets, track the feedback loop that usually happens when reviewing code,
 and merge with master when the code is ready. This also keeps broken builds on your master/CI branch to a minimum.
 
-See [this guide for setting up Gerrit as a Docker container for this demo](docs/set-up-gitlab.md)
+See [this guide for setting up Gerrit as a Docker container for this demo](docs/set-up-gerrit.md)
 
 ## Nexus
 We use [Sonatype Nexus][nexus]to model our enterprise artifact repository. In here we can store our build artifacts
