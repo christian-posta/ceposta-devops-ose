@@ -80,7 +80,8 @@ http://ceposta-public/jenkins or http://ceposta-public/nexus (and automate it)
 * See how Fuse Service Works DT gov could fit in?
 * Extend the Fuse example to include multiple projects
 * Set up Role based access for Jenkins (and automate it)
-* Set up polling for jenkins to poll the gitlab repo
+* Set up polling or commit hooks for jenkins to poll the gitlab repo
+* Put the build + unit tests (intiial build) phase into the gerrit/code review cycle
 
 Any requests for enhancement are also welcome! Just open an issue!
 
