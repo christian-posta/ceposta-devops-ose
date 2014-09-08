@@ -12,6 +12,8 @@ There are two angles to this project. One is actually using it to do continuous 
 is to prep and set up all the pieces so you can see it for yourself. Everything is documented and/or automated such 
 that anyone can try it out. See the guides for the specific sections for how to set up each piece.
 
+After you've set up the environment, you [can go directly to the demo](docs/demo.md) and try it out.
+
 The following are the tools we use, and a quick explanation of how:
 
 ## Docker
@@ -20,10 +22,11 @@ easy to ship portable applications which are fully configured and isolated in th
 is start the container and expose it on the host system. For example, each of the pieces in the continuous deployment
 pipline are delivered as Docker containers:
 
-* Gerrit Code Review system
 * Gitlab 
-* Jenkins
+* Gerrit Code Review system
 * Sonatype Nexus
+* Jenkins
+
 
 Additionally they are run in a linked configuration so that all IPs and Ports are automatically discovered and there's
 no manual configuration. Each container is built using a predefined [Dockerfile][dockerfile] that acts as documentation
@@ -39,6 +42,16 @@ you can run everything on there too).
 
 See [this guide for setting up a VM on OpenStack for this demo](docs/set-up-openstack-vm.md)
 
+# Set up of the individual pieces
+The following are the technology pieces involved with the Continuous Delivery demo. 
+
+* Gitlab 
+* Gerrit Code Review system
+* Sonatype Nexus
+* Jenkins
+
+    NOTE!! when installing these with Docker, as the demo is built on, make sure the respective pieces
+    are installed in the order this guide lists them.
 
 ## Gitlab
 GitHub is great for hosting code, reviewing branches, reviewing commits, tracking issues, etc. But we prefer an

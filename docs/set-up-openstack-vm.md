@@ -1,1 +1,1 @@
-comin soon..
+# Provisioning a RHEL machine in OpenStack
