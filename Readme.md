@@ -1,4 +1,4 @@
-# Continuous Delivery with JBoss Fuse
+# Continuous Delivery with JBoss Fuse and OpenShift
 This project is a end-to-end [Continuous Delivery][cd] automation project. This can be used to set up a handful
 of tools to assist your team to work cross functionally in a DevOps culture. 
 
