@@ -127,6 +127,22 @@ for solutions that run on premise or in a PaaS.
 See [this guide for setting up our OpenShift environment on OpenStack](docs/set-up-openshift.md)
 
 
+## Todos
+Here are a list of things I'd like to do with the Demo that it doesn't do right now.
+I'll try to strike through the list as I accomplish it. 
+
+__Or, if you want to contribute, PRs are welcome!!__
+
+* Use [Project Atomic](http://www.projectatomic.io) to host the Docker environment
+* Set up a reverse proxy (Apache/ngnix) for the docker containers so we can easily get to them, eg: 
+http://ceposta-public/jenkins or http://ceposta-public/nexus (and automate it)
+* See how Fuse Service Works DT gov could fit in?
+* Extend the Fuse example to include multiple projects
+* Set up Role based access for Jenkins (and automate it)
+* Set up polling for jenkins to poll the gitlab repo
+
+Any requests for enhancement are also welcome! Just open an issue!
+
 [docker]: https://www.docker.com
 [fuse]: http://www.jboss.org/products/fuse/overview/
 [microservices]: http://microservices.io
