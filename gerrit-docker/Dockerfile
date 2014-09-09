@@ -48,11 +48,11 @@ ADD cache/diff.h2.db $GERRIT_HOME/gerrit/cache/diff.h2.db
 ADD cache/diff_intraline.h2.db $GERRIT_HOME/gerrit/cache/diff_intraline.h2.db
 RUN find $GERRIT_HOME/gerrit/cache -type f -exec chmod 644 {} \;
 
-RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
 USER gerrit
 RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_HOME/gerrit
 
+USER root
 # clobber the gerrit config. set the URL to localhost:8080
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
@@ -73,6 +73,7 @@ ADD cache/diff_intraline.h2.db $GERRIT_HOME/gerrit/cache/diff_intraline.h2.db
 RUN find $GERRIT_HOME/gerrit/cache -type f -exec chmod 644 {} \;
 
 
-USER root
+RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
+
 EXPOSE 8080 29418
 CMD ["/home/gerrit/conf-and-run-gerrit.sh"]
