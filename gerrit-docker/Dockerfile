@@ -44,14 +44,23 @@ USER root
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
 # add the databases
-ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
-ADD db/ReviewDB.trace.db $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
-RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
-RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
+#ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+#ADD db/ReviewDB.trace.db $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
+#RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+#RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
 
 # add the project settings
-ADD git/All-Projects.git $GERRIT_HOME/gerrit/git/All-Projects.git
-RUN chmod 644 $GERRIT_HOME/gerrit/git/All-Projects.git
+ADD git/All-Projects.git/objects/17 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/17
+ADD git/All-Projects.git/objects/51 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/51
+ADD git/All-Projects.git/objects/1c $GERRIT_HOME/gerrit/git/All-Projects.git/objects/1c
+ADD git/All-Projects.git/refs/meta/config $GERRIT_HOME/gerrit/git/All-Projects.git/refs/meta/config
+RUN chmod 644 $GERRIT_HOME/gerrit/git/All-Projects.git/refs/meta/config
+RUN chmod 751 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/17
+RUN chmod 444 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/17/46dd2af0eb865131d635d1756fa7e3589f5a9c
+RUN chmod 751 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/51
+RUN chmod 444 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/51/6caf53e5e1ef1b1bf7bb5657e26a924f973db7
+RUN chmod 751 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/1c
+RUN chmod 444 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/1c/b7aceab8421bfb8c117f9cc25d0c8a030f24e8
 
 # Add the webapp caches
 #ADD cache/git_tags.h2.db $GERRIT_HOME/gerrit/cache/git_tags.h2.db
