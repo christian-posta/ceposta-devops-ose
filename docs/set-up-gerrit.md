@@ -29,50 +29,14 @@ Now you can run the following command to see where on the host Gerrit HTTP liste
     
     
 ## Set up Gerrit user account
+
+By default, the user account "admin" and "jenkins" are already provided.
+You can use the "become" link in the upper right hand to switch to the user you want to become.
+The demo will assume the admin account, but you can create additional accounts as desired.
+
 Admin account is:
 admin/6Nh8jUp+R1om
 
-
-The first person to log into gerrit becomes the administrator. Since we've set up Gerrit to be in developer mode we
-won't use any fancy SSO signin. To see more about the config [checkout the Readme.md from the dockerfile](../gerrit-docker/Readme.md). You can "become" a specific user in this development mode, and the first account we
-"become" will be the admin account. So click the "Become" link in the top right-hand corner. Then click
-"New Account" under register:
-
----
-
-![Gerrit Become](images/GerritBecome.png)
-
----
-
-Now you'll need to enter the fields in this order (be careful, unforunately it's tricky)
-
-1) Register New Email
-2) Full Name
-3) Enter a Username then click --> Select Username
-
-Since we're going to use a gerrit-jenkins integration to help review the patch files, we're going to 
-want to set an administrator SSH. This SSH key can be used for committing code as well as administration functions.
-
-Copy the ssh key from the $PROJ_ROOT/gerrit-docker/ssh-keys/gerrit-admin.pub key. The private key will be used to 
-automate some scripting pieces that will setup the gerrit-jenkins relationship (see below).
-
-Click the _continue_ link at the bottom left hand side.
-
-## Set up HTTP password
-Before you keep going, you should set up an HTTP password so we can use the HTTP url with gerrit (of course this
-is just for the demo. You __should__ use the SSH access in a real environment).
-
-To do this, Click on your name in the upper right hand and select "settings"
-
-On the left-hand side, you should see "HTTP Password" click that and generate a password:
-
----
-
-![HTTP Password](images/GerritHttpPassword.png)
-
----
-
-Now your user account is all setup...
 
 ## Prep the quickstart-fuse-rest project
 Next we need to get the project set up. So just like we created a new project (empty one) on gitlab, we'll do the same
@@ -93,7 +57,7 @@ Now we need to import some code!! We'll check out the quickstart-fuse-rest code 
     
 Then we'll need to add the gerrit url as a remote:
 
-    $ git remote add gerrit http://ceposta@ceposta-public:49166/quickstart-fuse-rest.git
+    $ git remote add gerrit http://admin@ceposta-public:49166/quickstart-fuse-rest.git
     
 
 Note you'll need to get the HTTP url from here:
@@ -106,8 +70,8 @@ Note you'll need to get the HTTP url from here:
 
 Now we need to configure the git-config with the same values we have in our Gerrit installation:
 
-    git config user.name "Christian Posta"
-    git config user.email "christian.posta@gmail.com"
+    git config user.name "Administrator"
+    git config user.email "admin@company.com"
     
 Then we have to get the commit-msg hook that'll use for generating Change-Ids (which is what gerrit uses for tracking
 changes:
@@ -125,6 +89,8 @@ Now we should be ready to push to master (we'll pull first to rebase what's alre
 __NOTE__ as we'll see in the demo, the correct branch to push to for reviews is:
 
     git push gerrit HEAD:refs/for/master
+    
+__NOTE__ You may also want to take a look at git+gerrit command line helper named [git-review](http://www.mediawiki.org/wiki/Gerrit/git-review)
     
 This will cause the code review to kick in.
 
