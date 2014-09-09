@@ -43,6 +43,7 @@ ADD jobs/gerrit-trigger.xml /var/jenkins_home/gerrit-trigger.xml
 ADD jobs/fuse-rest-deploy-dev/ /var/jenkins_home/jobs/fuse-rest-deploy-dev
 ADD jobs/fuse-rest-integration-tests/ /var/jenkins_home/jobs/fuse-rest-integration-tests
 ADD jobs/fuse-rest-initial-build/ /var/jenkins_home/jobs/fuse-rest-initial-build
+ADD jobs/fuse-rest-gerrit-patchset/ /var/jenkins_home/jobs/fuse-rest-gerrit-patchset
 
 
 # change ownership of plugins and projects
