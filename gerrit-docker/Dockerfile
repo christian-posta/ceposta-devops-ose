@@ -42,6 +42,13 @@ RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
 ADD git/All-Projects.git $GERRIT_HOME/gerrit/git/All-Projects.git
 RUN chmod 644 $GERRIT_HOME/gerrit/git/All-Projects.git
 
+# Add the webapp caches
+ADD cache/git_tags.h2.db $GERRIT_HOME/gerrit/cache/git_tags.h2.db
+ADD cache/diff.h2.db $GERRIT_HOME/gerrit/cache/diff.h2.db
+ADD cache/diff_intraline.h2.db $GERRIT_HOME/gerrit/cache/diff_intraline.h2.db
+
+RUN find $GERRIT_HOME/gerrit/cache -type f -exec chmod 644 {} \;
+
 RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
 USER gerrit
