@@ -46,7 +46,11 @@ Now you'll need to enter the fields in this order (be careful, unforunately it's
 2) Full Name
 3) Enter a Username then click --> Select Username
 
-At this point you can add SSH keys, but to keep it simple you can just HTTP access as well.
+Since we're going to use a gerrit-jenkins integration to help review the patch files, we're going to 
+want to set an administrator SSH. This SSH key can be used for committing code as well as administration functions.
+
+Copy the ssh key from the $PROJ_ROOT/gerrit-docker/ssh-keys/gerrit-admin.pub key. The private key will be used to 
+automate some scripting pieces that will setup the gerrit-jenkins relationship (see below).
 
 Click the _continue_ link at the bottom left hand side.
 
@@ -130,7 +134,12 @@ For me, the path to my Gitlab project is here:
     
 Yours will be wherever you set up gitlab using the Gitlab docker container [as described in setting up Gitlab](set-up-gitlab.md)
 
-## Roles, Reviews, Topics
+
+## Set up Jenkins user
+We will want to create a non-interactive user named "jenkins" that will be able to query gerrit and send events to 
+a jenkins build server.
+
+## Random Gerrit Notes: Roles, Reviews, Topics
 
 ### Gerrit Topcis:
 With gerrit changes are slightly different than with PR because you typically have a single commit to review. However, you can organize multiple commits into “topics” by pushing to 
