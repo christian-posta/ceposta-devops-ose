@@ -62,12 +62,6 @@ RUN chmod 444 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/51/6caf53e5e1ef1b
 RUN chmod 751 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/1c
 RUN chmod 444 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/1c/b7aceab8421bfb8c117f9cc25d0c8a030f24e8
 
-# Add the webapp caches
-#ADD cache/git_tags.h2.db $GERRIT_HOME/gerrit/cache/git_tags.h2.db
-#ADD cache/diff.h2.db $GERRIT_HOME/gerrit/cache/diff.h2.db
-#ADD cache/diff_intraline.h2.db $GERRIT_HOME/gerrit/cache/diff_intraline.h2.db
-#RUN find $GERRIT_HOME/gerrit/cache -type f -exec chmod 644 {} \;
-
 
 RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
