@@ -32,11 +32,15 @@ ADD replication.config $GERRIT_HOME/gerrit/etc/replication.config
 ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
 RUN chmod +x $GERRIT_HOME/conf-and-run-gerrit.sh
 
-
+# add the databases
 ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
 ADD db/ReviewDB.trace.db $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
 RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
 RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
+
+# add the project settings
+ADD git/All-Projects.git $GERRIT_HOME/gerrit/git/All-Projects.git
+RUN chmod 644 $GERRIT_HOME/gerrit/git/All-Projects.git
 
 RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
