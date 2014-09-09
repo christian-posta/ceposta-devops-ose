@@ -32,9 +32,11 @@ ADD replication.config $GERRIT_HOME/gerrit/etc/replication.config
 ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
 RUN chmod +x $GERRIT_HOME/conf-and-run-gerrit.sh
 
-RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
 ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+
+RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
 USER gerrit
 RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_HOME/gerrit
