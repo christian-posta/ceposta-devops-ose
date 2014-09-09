@@ -34,7 +34,9 @@ RUN chmod +x $GERRIT_HOME/conf-and-run-gerrit.sh
 
 
 ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+ADD db/ReviewDB.trace.db $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
 RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
 
 RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
