@@ -34,6 +34,8 @@ RUN chmod +x $GERRIT_HOME/conf-and-run-gerrit.sh
 
 RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
+ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+
 USER gerrit
 RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_HOME/gerrit
 

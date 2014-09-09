@@ -29,6 +29,10 @@ Now you can run the following command to see where on the host Gerrit HTTP liste
     
     
 ## Set up Gerrit user account
+Admin account is:
+admin/6Nh8jUp+R1om
+
+
 The first person to log into gerrit becomes the administrator. Since we've set up Gerrit to be in developer mode we
 won't use any fancy SSO signin. To see more about the config [checkout the Readme.md from the dockerfile](../gerrit-docker/Readme.md). You can "become" a specific user in this development mode, and the first account we
 "become" will be the admin account. So click the "Become" link in the top right-hand corner. Then click
