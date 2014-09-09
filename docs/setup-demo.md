@@ -10,14 +10,14 @@ The following are the technology pieces involved with the Continuous Delivery de
     are installed in the order this guide lists them.
     
 As mentioned in the opening page, this demo relies on [Docker](http://docker.com) to package up the individual
-pieces, so if you need help installing docker specifically for this demo (on RHEL or CentOS), see [this guide for setting up our Docker environment on RHEL 6.5 for this demo](docs/set-up-docker.md).
+pieces, so if you need help installing docker specifically for this demo (on RHEL or CentOS), see [this guide for setting up our Docker environment on RHEL 6.5 for this demo](set-up-docker.md).
 
 Each section is listed in the order it's to be installed. Once you have docker installed, follow each section's guide.
 There is a few manual steps you'll need to do, so if anyone wants to contribute any automation to it, please feel free!
 
 ## Gitlab
 GitHub is great for hosting code, reviewing branches, reviewing commits, tracking issues, etc. But we prefer an
-OpenSource solution for this demonstration so that anyone can get started. [GitLab][gitlab] is an excellent alternative
+OpenSource solution for this demonstration so that anyone can get started. [GitLab](https://about.gitlab.com) is an excellent alternative
 to GitHub for internal/private hosting.
 
 We use Gitlab to be able to view our code through a web browser, track changes, branches, etc. You could also 
@@ -27,7 +27,7 @@ for.
 For the Docker environment we have for this demo, you'll want to start the Gitlab container first, since 
 all of the other containers link to it.
 
-See [this guide for setting up Gitlab as a Docker container for this demo](docs/set-up-gitlab.md)
+See [this guide for setting up Gitlab as a Docker container for this demo](set-up-gitlab.md)
 
 ## Gerrit
 We use [Gerrit][gerrit]https://code.google.com/p/gerrit/ to demonstrate a key piece of the Continuous Delivery/Devops
@@ -40,14 +40,14 @@ conforming to a team style/convention, then Gerrit is the tool to help you do th
 With Gerrit, you can code review your changesets, track the feedback loop that usually happens when reviewing code,
 and merge with master when the code is ready. This also keeps broken builds on your master/CI branch to a minimum.
 
-See [this guide for setting up Gerrit as a Docker container for this demo](docs/set-up-gerrit.md)
+See [this guide for setting up Gerrit as a Docker container for this demo](set-up-gerrit.md)
 
 ## Nexus
 We use [Sonatype Nexus][nexus]to model our enterprise artifact repository. In here we can store our build artifacts
 (for example, not just jars and wars, but our JBoss Fuse/Fabric8 profiles) and access them across environments. Nexus
 plays a central role in our [continuous delivery][cd] pipline. 
 
-See [this guide for setting up Nexus as a Docker container for this demo](docs/set-up-nexus.md)
+See [this guide for setting up Nexus as a Docker container for this demo](set-up-nexus.md)
 
 ## Jenkins
 Jenkins provides the heavy lifting for our continuous integration and continuous delivery pipline. Just like the
@@ -57,7 +57,7 @@ the other external pieces (OpenShift, Gitlab/Nexus) are set up correctly, but al
 go.
 
 You may wish to set up additional features (like email proxy, or user accounts), so for a complete guide,
-see [the guide for setting up Jenkins as a Docker contianer for this demo](docs/set-up-jenkins.md)
+see [the guide for setting up Jenkins as a Docker contianer for this demo](set-up-jenkins.md)
 
 ### Jenkins plugins
 Here are a list of Jenkins plugins we use for our Continuous Delivery setup. They are listed here for completeness.
@@ -73,7 +73,7 @@ You don't have to install this separately as it's all automated.
 * Git
 * Maven
 
-You can see the full, up to date list, [directly on the Dockerfile for the Jenkins container](jenkins-docker/Dockerfile)
+You can see the full, up to date list, [directly on the Dockerfile for the Jenkins container](../jenkins-docker/Dockerfile)
 
 ## JBoss Fuse
 For this demo, we're using [JBoss Fuse 6.1][fuse]. JBoss Fuse proivdes the integration platform onto which we deploy
@@ -86,4 +86,17 @@ You couuld even bring up an HTTP gateway to do the auto discovery.
 For this demo, however, we're going to be deploying our Fuse projects onto [OpenShift][openshift], a 
 PaaS supporting multiple technology stacks, including Fuse. 
 
-Check out the [architecture diagram and setting up Fuse for this demo](docs/set-up-fuse.md)
+Check out the [architecture diagram and setting up Fuse for this demo](set-up-fuse.md)
+
+
+
+[docker]: https://www.docker.com
+[fuse]: http://www.jboss.org/products/fuse/overview/
+[microservices]: http://microservices.io
+[openshift]: https://www.openshift.com
+[dockerfile]: https://docs.docker.com/reference/builder/
+[vbox]: https://www.virtualbox.org
+[gerrit]: https://code.google.com/p/gerrit/
+[gitlab]: https://about.gitlab.com
+[nexus]: http://www.sonatype.org/nexus/
+[cd]: http://en.wikipedia.org/wiki/Continuous_delivery

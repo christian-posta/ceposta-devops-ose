@@ -82,6 +82,10 @@ http://ceposta-public/jenkins or http://ceposta-public/nexus (and automate it)
 * Set up Role based access for Jenkins (and automate it)
 * Set up polling or commit hooks for jenkins to poll the gitlab repo
 * Put the build + unit tests (intiial build) phase into the gerrit/code review cycle
+* Refactor the docker images so they can be more configurable and stand on their own so we can keep as trusted builds for an eg fabric8 CD solution
+* add go.cd as an option for CI/CD server
+* Bash (or ansible?) scripts for setting this all up on Vagrant
+* refactor out the OSE parts so we can swap in a pure Docker solution (or Vagrant, OpenStack/EC2, etc)
 
 Any requests for enhancement are also welcome! Just open an issue!
 
