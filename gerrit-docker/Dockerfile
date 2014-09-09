@@ -44,10 +44,10 @@ USER root
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
 # add the databases
-#ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
-#ADD db/ReviewDB.trace.db $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
-#RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
-#RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
+ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+ADD db/ReviewDB.trace.db $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
+RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.trace.db
 
 # add the project settings
 ADD git/All-Projects.git/objects/17 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/17
