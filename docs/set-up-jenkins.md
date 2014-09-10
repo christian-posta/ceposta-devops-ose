@@ -12,13 +12,13 @@ To build the Docker image, navigate to the `gerrit-docker` folder:
     
 Then build the image using `gerrit` as the image name:
 
-    docker build -t myjenkins .
+    docker build -t fabric8:jenkins .
     
 Now you should have an image of the gerrit installation we're going to use.
 
 Run the container with this command:
 
-    docker run -itdP --name jenkins --link gitlab:gitlab --link nexus:nexus --link gerrit:gerrit myjenkins
+    docker run -itdP --name jenkins --link gitlab:gitlab --link nexus:nexus --link gerrit:gerrit fabric8:jenkins
     
 Note we link to the `gitlab` and `nexus` containers, so these containers must have been installed first (the correct
 order, as illustrated on the root Readme.md of this project is "Gitlab" then "Nexus".

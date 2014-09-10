@@ -12,13 +12,13 @@ To build the Docker image, navigate to the `gerrit-docker` folder:
     
 Then build the image using `gerrit` as the image name:
 
-    docker build -t gerrit .
+    docker build -t fabric8:gerrit .
     
 Now you should have an image of the gerrit installation we're going to use.
 
 Run the container with this command:
 
-    docker run -itdP --env GITLAB_USER=root --env GITLAB_PASSWORD=redhat01 --env GITLAB_PROJ_ROOT=root --name gerrit --link gitlab:gitlab gerrit
+    docker run -itdP --env GITLAB_USER=root --env GITLAB_PASSWORD=redhat01 --env GITLAB_PROJ_ROOT=root --name gerrit --link gitlab:gitlab fabric8:gerrit
     
 Note we link to the `gitlab` container, so this container must have been installed first. The username/password are
 the credentials we set when creating our gitlab account. [See the GitLab setup instructions for more](set-up-gitlab.md).
