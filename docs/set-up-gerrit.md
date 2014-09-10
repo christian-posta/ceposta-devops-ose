@@ -37,6 +37,14 @@ The demo will assume the admin account, but you can create additional accounts a
 Admin account is:
 admin/6Nh8jUp+R1om
 
+Jenkins account doesn't have an HTTP password (though you can create one if needed)
+
+The `admin` account is associated with the `gerrit-admin` private key (in the [ssh-keys](../gerrit-docker/ssh-keys) folder 
+of the _gerrit-docker_ folder, and the `jenkins` account is associated with the `jenkins` private key 
+(in the [ssh-keys](../gerrit-jenkins/ssh-keys) of the _jenkins-docker_ folder. The `jenkins` private key is automatically
+setup for the [Gerrit Jenkins Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Gerrit+Trigger) in the Jenkins
+docker image
+
 
 ## Prep the quickstart-fuse-rest project
 Next we need to get the project set up. So just like we created a new project (empty one) on gitlab, we'll do the same
