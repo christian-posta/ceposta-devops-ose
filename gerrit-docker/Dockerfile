@@ -55,11 +55,11 @@ ADD git/All-Projects.git/objects/51 $GERRIT_HOME/gerrit/git/All-Projects.git/obj
 ADD git/All-Projects.git/objects/1c $GERRIT_HOME/gerrit/git/All-Projects.git/objects/1c
 ADD git/All-Projects.git/refs/meta/config $GERRIT_HOME/gerrit/git/All-Projects.git/refs/meta/config
 RUN chmod 644 $GERRIT_HOME/gerrit/git/All-Projects.git/refs/meta/config
-RUN chmod 751 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/17
+RUN chmod 755 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/17
 RUN chmod 444 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/17/46dd2af0eb865131d635d1756fa7e3589f5a9c
-RUN chmod 751 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/51
+RUN chmod 755 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/51
 RUN chmod 444 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/51/6caf53e5e1ef1b1bf7bb5657e26a924f973db7
-RUN chmod 751 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/1c
+RUN chmod 755 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/1c
 RUN chmod 444 $GERRIT_HOME/gerrit/git/All-Projects.git/objects/1c/b7aceab8421bfb8c117f9cc25d0c8a030f24e8
 
 
