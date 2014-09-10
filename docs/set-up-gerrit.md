@@ -35,7 +35,9 @@ You can use the "become" link in the upper right hand to switch to the user you 
 The demo will assume the admin account, but you can create additional accounts as desired.
 
 Admin account is:
-admin/6Nh8jUp+R1om
+
+* __username__ admin
+* __password__ GPLvrRrCfpR2
 
 Jenkins account doesn't have an HTTP password (though you can create one if needed)
 
@@ -87,7 +89,9 @@ changes:
     curl -Lo .git/hooks/commit-msg http://ceposta-public:49157/tools/hooks/commit-msg
     chmod +x .git/hooks/commit-msg
         
-Note, the URL above to grab the commit-ms is the location of your gerrit installation and "/tools/hooks/commit-msg"
+Note, the URL above to grab the commit-msg is the location of your gerrit installation and "/tools/hooks/commit-msg"
+
+    NOTE: You may also want to take a look at git-review which is a git plugin that helps interact with gerrit [git-review](http://www.mediawiki.org/wiki/Gerrit/git-review) This can take care of setting up the commit hooks and set up the right branches for review
 
 Now we should be ready to push to master (we'll pull first to rebase what's already in gerrit)
 
@@ -98,7 +102,6 @@ __NOTE__ as we'll see in the demo, the correct branch to push to for reviews is:
 
     git push gerrit HEAD:refs/for/master
     
-__NOTE__ You may also want to take a look at git+gerrit command line helper named [git-review](http://www.mediawiki.org/wiki/Gerrit/git-review)
     
 This will cause the code review to kick in.
 
