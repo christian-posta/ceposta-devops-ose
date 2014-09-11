@@ -34,7 +34,7 @@
       <gridBuilder class="au.com.centrumsystems.hudson.plugin.buildpipeline.DownstreamProjectGridBuilder">
         <firstJob>fuse-rest-initial-build</firstJob>
       </gridBuilder>
-      <noOfDisplayedBuilds>1</noOfDisplayedBuilds>
+      <noOfDisplayedBuilds>5</noOfDisplayedBuilds>
       <buildViewTitle></buildViewTitle>
       <consoleOutputLinkStyle>Lightbox</consoleOutputLinkStyle>
       <cssUrl></cssUrl>
