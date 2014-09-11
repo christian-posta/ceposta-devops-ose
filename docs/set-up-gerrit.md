@@ -28,7 +28,7 @@ Now you can run the following command to see where on the host Gerrit HTTP liste
     docker port gerrit 8080
     
     
-## Set up Gerrit user account
+## Set up Gerrit Admin account
 
 The first person to log into gerrit becomes the administrator. Since we've set up Gerrit to be in developer mode we
 won't use any fancy SSO signin. To see more about the config [checkout the Readme.md from the dockerfile](../gerrit-docker/Readme.md). You can "become" a specific user in this development mode, and the first account we
@@ -41,14 +41,13 @@ won't use any fancy SSO signin. To see more about the config [checkout the Readm
 
 ---
 
-Now you'll need to enter the fields in this order (be careful, unforunately it's tricky)
+Now you'll need to enter these fields in this order (be careful, unforunately it's tricky)
 
-1) Register New Email
-2) Full Name
-3) Enter a Username then click --> Select Username
+1) Register New Email: admin@company.com
+2) Full Name (click Save Changes): Administrator
+3) Enter a Username (click Select Username): admin
 
-Since we're going to use a gerrit-jenkins integration to help review the patch files, we're going to 
-want to set an administrator SSH. This SSH key can be used for committing code as well as administration functions.
+Since we're going to use a gerrit-jenkins integration to help review the patch files, and we'll need some automated setup , we're going to want to set an administrator SSH. This SSH key can be used for committing code as well as administration functions.
 
 Copy the ssh key from the $PROJ_ROOT/gerrit-docker/ssh-keys/gerrit-admin.pub key. The private key will be used to 
 automate some scripting pieces that will setup the gerrit-jenkins relationship (see below).
@@ -69,9 +68,18 @@ On the left-hand side, you should see "HTTP Password" click that and generate a 
 
 ---
 
-Now your user account is all setup...
+Now the Admin account is all setup...
 
 ### Set up Jenkins Account (optional)
+
+This part is automated.
+There is [a script in the gerrit-docker folder named conf-jenkins-user.sh](../gerrit-docker/conf-jenkins-user.sh) that
+you should run which will automatically setup the jenkins user (if doesn't exist) and update the project settings
+to allow jenkins to monitor gerrit for changes.
+
+    $PROJ_ROOT/conf-jenkins-user.sh
+
+Notes for manual set up:
 If you want jenkins to participate in the voting/code review, you should add a jenkins user with these details:
 
 Full Name: Jenkins
@@ -82,8 +90,7 @@ SSH-key: the public key from jenkins-gerrit project
 You should also log in as admin and update the All-Projects access to allow Non-INteractive
 users to modify refs/* and label-code-reviews for -1..+1
 
-I will try to automate all of this section, unfortunately I haven't found a way to automate the creation of
-the Admin user.
+
 
 
 ## Prep the quickstart-fuse-rest project

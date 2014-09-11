@@ -13,7 +13,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>${GERRIT_REFSPEC}</refspec>
-        <url>http://__GERRIT_IP__:8080/test-project</url>
+        <url>http://__GERRIT_IP__:8080/quickstart-fuse-rest</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -35,7 +35,7 @@
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
-          <pattern>test-project</pattern>
+          <pattern>quickstart-fuse-rest</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
@@ -73,7 +73,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;you win!&quot;</command>
+      <command>echo &quot;stubbed out for demo purposes&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
