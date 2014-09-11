@@ -1,7 +1,7 @@
 __author__ = 'ceposta'
 
 #
-# python create_new_app.py https://broker.hosts.pocteam.com /broker/rest/ dev christian christian fuse10 fusesource-fuse-1.0.0
+# python create_new_app.py https://broker.hosts.pocteam.com /broker/rest/ dev christian christian fuse10 fuse-1.0.0
 # expects these params:
 # 1 -- OSE broker
 # 2 -- path to rest API, eg, /broker/rest/ <-- note the trailing slash
