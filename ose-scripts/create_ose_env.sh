@@ -28,7 +28,7 @@ OPENSHIFT_USER=christian
 OPENSHIFT_PASSWORD=christian
 # ceposta, dev, qa, prod
 OPENSHIFT_DOMAIN=dev
-OPENSHIFT_CARTRIDGE_FUSE=fusesource-fuse-1.0.0
+OPENSHIFT_CARTRIDGE_FUSE=fuse-1.0.0
 
 
 # set the app name to include the build versions so we can identify the env

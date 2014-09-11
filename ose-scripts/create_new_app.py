@@ -40,7 +40,7 @@ def get_fuse_attr(text):
     return rc
 
 try:
-    dict = (("name",sys.argv[6]),("gear_size", "medium"),("cartridges[][name]",sys.argv[7]))
+    dict = (("name",sys.argv[6]),("gear_size", "xpaas"),("cartridges[][name]",sys.argv[7]))
     dict_encode = urllib.urlencode(dict)
     url = "{0}{1}domain/{2}/applications".format(sys.argv[1],sys.argv[2],sys.argv[3])
     req = urllib2.Request(url)
@@ -54,6 +54,5 @@ try:
 except urllib2.URLError, e:
     result = json.loads(e.read())
     print '("{0}" "{1}")'.format("1", result["messages"][0]["text"])
-except:
-    print sys.exc_traceback[0]
+except RuntimeError, e:
     print ("1")
