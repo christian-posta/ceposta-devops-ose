@@ -44,8 +44,10 @@ USER root
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
 # add the databases
-ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
-RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+## leaving out for now until we can figure out how to autmoate the
+## admin user
+#ADD db/ReviewDB.h2.db $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
+#RUN chmod 644 $GERRIT_HOME/gerrit/db/ReviewDB.h2.db
 
 
 RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME

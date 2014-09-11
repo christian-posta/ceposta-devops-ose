@@ -30,22 +30,60 @@ Now you can run the following command to see where on the host Gerrit HTTP liste
     
 ## Set up Gerrit user account
 
-By default, the user account "admin" and "jenkins" are already provided.
-You can use the "become" link in the upper right hand to switch to the user you want to become.
-The demo will assume the admin account, but you can create additional accounts as desired.
+The first person to log into gerrit becomes the administrator. Since we've set up Gerrit to be in developer mode we
+won't use any fancy SSO signin. To see more about the config [checkout the Readme.md from the dockerfile](../gerrit-docker/Readme.md). You can "become" a specific user in this development mode, and the first account we
+"become" will be the admin account. So click the "Become" link in the top right-hand corner. Then click
+"New Account" under register:
 
-Admin account is:
+---
 
-* __username__ admin
-* __password__ GPLvrRrCfpR2
+![Gerrit Become](images/GerritBecome.png)
 
-Jenkins account doesn't have an HTTP password (though you can create one if needed)
+---
 
-The `admin` account is associated with the `gerrit-admin` private key (in the [ssh-keys](../gerrit-docker/ssh-keys) folder 
-of the _gerrit-docker_ folder, and the `jenkins` account is associated with the `jenkins` private key 
-(in the [ssh-keys](../gerrit-jenkins/ssh-keys) of the _jenkins-docker_ folder. The `jenkins` private key is automatically
-setup for the [Gerrit Jenkins Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Gerrit+Trigger) in the Jenkins
-docker image
+Now you'll need to enter the fields in this order (be careful, unforunately it's tricky)
+
+1) Register New Email
+2) Full Name
+3) Enter a Username then click --> Select Username
+
+Since we're going to use a gerrit-jenkins integration to help review the patch files, we're going to 
+want to set an administrator SSH. This SSH key can be used for committing code as well as administration functions.
+
+Copy the ssh key from the $PROJ_ROOT/gerrit-docker/ssh-keys/gerrit-admin.pub key. The private key will be used to 
+automate some scripting pieces that will setup the gerrit-jenkins relationship (see below).
+
+Click the _continue_ link at the bottom left hand side.
+
+### Set up HTTP password
+Before you keep going, you should set up an HTTP password so we can use the HTTP url with gerrit (of course this
+is just for the demo. You __should__ use the SSH access in a real environment).
+
+To do this, Click on your name in the upper right hand and select "settings"
+
+On the left-hand side, you should see "HTTP Password" click that and generate a password:
+
+---
+
+![HTTP Password](images/GerritHttpPassword.png)
+
+---
+
+Now your user account is all setup...
+
+### Set up Jenkins Account (optional)
+If you want jenkins to participate in the voting/code review, you should add a jenkins user with these details:
+
+Full Name: Jenkins
+username: jenkins
+email: jenkins@jenkins.org
+SSH-key: the public key from jenkins-gerrit project
+
+You should also log in as admin and update the All-Projects access to allow Non-INteractive
+users to modify refs/* and label-code-reviews for -1..+1
+
+I will try to automate all of this section, unfortunately I haven't found a way to automate the creation of
+the Admin user.
 
 
 ## Prep the quickstart-fuse-rest project
