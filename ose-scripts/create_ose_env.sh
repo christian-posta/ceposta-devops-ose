@@ -4,13 +4,16 @@ set -e
 
 # Input Checking
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 4 ]; then
     echo "Invalid Number of Input Parameters"
+    echo "args: AppName VersionNumber OSEBrokerUrl OSEDomain"
 	exit 1
 fi
 
 SOURCE_APP_NAME=$1
 VERSION_NUMBER=$2
+OPENSHIFT_BROKER=$3
+OPENSHIFT_DOMAIN=$4
 
 
 
@@ -20,7 +23,6 @@ APP_NAME=$(echo ${SOURCE_APP_NAME} | tr -d -c "[:alnum:]")
 # Initialize Variables
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HEADER_ACCEPT="Accept: application/json"
-OPENSHIFT_BROKER=https://broker.hosts.pocteam.com
 OPENSHIFT_API=/broker/rest/
 OPENSHIFT_USER=christian
 OPENSHIFT_PASSWORD=christian
