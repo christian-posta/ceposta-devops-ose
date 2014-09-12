@@ -35,7 +35,9 @@ USER root
 RUN apt-get update && apt-get install -y python
 
 # add the maven settings.xml
-ADD maven/settings.xml /etc/maven/settings.xml
+#ADD maven/settings.xml /etc/maven/settings.xml
+ADD maven/settings.xml /var/lib/jenkins/.m2/settings.xml
+RUN chown -R jenkins:jenkins /var/lib/jenkins/.m2
 
 # add the jenkins jobs
 ADD jobs/config.xml /var/jenkins_home/config.xml

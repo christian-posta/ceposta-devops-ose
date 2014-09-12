@@ -8,7 +8,7 @@ find /var/jenkins_home/jobs -name \*.xml | xargs sed -i  's/__GERRIT_IP__/'${GER
 
 # Global configs
 sed -i  's/__GERRIT_IP__/'${GERRIT_PORT_8080_TCP_ADDR}'/g' /var/jenkins_home/gerrit-trigger.xml
-sed -i  's/__NEXUS_IP__/'${NEXUS_PORT_8081_TCP_ADDR}'/g' /usr/share/maven/conf/settings.xml
-sed -i  's/__NEXUS_PORT__/'${NEXUS_PORT_8081_TCP_PORT}'/g' /usr/share/maven/conf/settings.xml
+sed -i  's/__NEXUS_IP__/'${NEXUS_PORT_8081_TCP_ADDR}'/g' /var/lib/jenkins/.m2/settings.xml
+sed -i  's/__NEXUS_PORT__/'${NEXUS_PORT_8081_TCP_PORT}'/g' /var/lib/jenkins/.m2/settings.xml
 
 . /usr/local/bin/jenkins.sh
