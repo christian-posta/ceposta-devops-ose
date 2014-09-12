@@ -1,64 +1,80 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
-  <actions/>
-  <description></description>
-  <logRotator class="hudson.tasks.LogRotator">
-    <daysToKeep>1</daysToKeep>
-    <numToKeep>5</numToKeep>
-    <artifactDaysToKeep>-1</artifactDaysToKeep>
-    <artifactNumToKeep>-1</artifactNumToKeep>
-  </logRotator>
-  <keepDependencies>false</keepDependencies>
-  <properties>
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>TAG_PREFIX</name>
-          <description></description>
-          <defaultValue></defaultValue>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>RELEASE_NUMBER</name>
-          <description></description>
-          <defaultValue></defaultValue>
-        </hudson.model.StringParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
-  </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.2.1">
-    <configVersion>2</configVersion>
-    <userRemoteConfigs>
-      <hudson.plugins.git.UserRemoteConfig>
-        <url>http://__GITLAB_IP__/root/quickstart-fuse-rest.git</url>
-      </hudson.plugins.git.UserRemoteConfig>
-    </userRemoteConfigs>
-    <branches>
-      <hudson.plugins.git.BranchSpec>
-        <name>${TAG_PREFIX}-${RELEASE_NUMBER}</name>
-      </hudson.plugins.git.BranchSpec>
-    </branches>
-    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
-    <extensions/>
-  </scm>
-  <canRoam>true</canRoam>
-  <disabled>false</disabled>
-  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
-  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
-  <concurrentBuild>false</concurrentBuild>
-  <builders>
-    <hudson.tasks.Shell>
-      <command>rm -fr ${WORKSPACE}/.env-scripts
-git clone http://__GITLAB_IP__/root/ceposta-devops-ose.git ${WORKSPACE}/.env-scripts
-${WORKSPACE}/.env-scripts/ose-scripts/create_ose_env.sh fuse ${RELEASE_NUMBER} https://broker.hosts.pocteam.com dev</command>
-    </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@1.89">
-      <info>
-        <propertiesFilePath>${WORKSPACE}/.env-scripts/ose-scripts/vars/openshift_vars_build-${RELEASE_NUMBER}</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
-  </builders>
-  <publishers/>
-  <buildWrappers/>
+    <actions/>
+    <description></description>
+    <logRotator class="hudson.tasks.LogRotator">
+        <daysToKeep>1</daysToKeep>
+        <numToKeep>5</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+    </logRotator>
+    <keepDependencies>false</keepDependencies>
+    <properties>
+        <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+                <hudson.model.StringParameterDefinition>
+                    <name>TAG_PREFIX</name>
+                    <description></description>
+                    <defaultValue></defaultValue>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                    <name>RELEASE_NUMBER</name>
+                    <description></description>
+                    <defaultValue></defaultValue>
+                </hudson.model.StringParameterDefinition>
+            </parameterDefinitions>
+        </hudson.model.ParametersDefinitionProperty>
+        <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.22">
+            <autoRebuild>false</autoRebuild>
+        </com.sonyericsson.rebuild.RebuildSettings>
+    </properties>
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@2.2.5">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+            <hudson.plugins.git.UserRemoteConfig>
+                <url>http://__GITLAB_IP__/root/quickstart-fuse-rest.git</url>
+            </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+            <hudson.plugins.git.BranchSpec>
+                <name>${TAG_PREFIX}-${RELEASE_NUMBER}</name>
+            </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions/>
+    </scm>
+    <canRoam>true</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers/>
+    <concurrentBuild>false</concurrentBuild>
+    <builders>
+        <hudson.tasks.Shell>
+            <command>rm -fr ${WORKSPACE}/.env-scripts
+                git clone http://__GITLAB_IP__/root/ceposta-devops-ose.git ${WORKSPACE}/.env-scripts
+                ${WORKSPACE}/.env-scripts/ose-scripts/create_ose_env.sh fuse ${RELEASE_NUMBER} https://broker.hosts.pocteam.com dev</command>
+        </hudson.tasks.Shell>
+        <EnvInjectBuilder plugin="envinject@1.89">
+            <info>
+                <propertiesFilePath>${WORKSPACE}/.env-scripts/ose-scripts/vars/openshift_vars_build-${RELEASE_NUMBER}</propertiesFilePath>
+            </info>
+        </EnvInjectBuilder>
+        <hudson.tasks.Shell>
+            <command>cp /usr/share/maven/conf/settings.xml ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml
+                sed -i &apos;s/__FABRIC8_REPO_USERNAME__/admin/&apos; ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml
+                sed -i &apos;s/__FABRIC8_REPO_PASSWORD__/&apos;${FUSE_CONSOLE_PASSWORD}&apos;/&apos; ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml </command>
+        </hudson.tasks.Shell>
+        <hudson.tasks.Maven>
+            <targets>fabric8:deploy -Dfabric8.jolokiaUrl=${FUSE_ROOT_URL}/jolokia -Dfabric8.serverId=fabric8.upload.repo -Dmaven.test.skip=true -DfailIfNoTests=false -s ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml</targets>
+            <mavenName>maven</mavenName>
+            <pom>rest/pom.xml</pom>
+            <usePrivateRepository>false</usePrivateRepository>
+            <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+            <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+        </hudson.tasks.Maven>
+    </builders>
+    <publishers/>
+    <buildWrappers/>
 </project>
