@@ -62,12 +62,12 @@
             </info>
         </EnvInjectBuilder>
         <hudson.tasks.Shell>
-            <command>cp /usr/share/maven/conf/settings.xml ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml
+            <command>cp /var/lib/jenkins/.m2/settings.xml ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml
                 sed -i &apos;s/__FABRIC8_REPO_USERNAME__/admin/&apos; ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml
                 sed -i &apos;s/__FABRIC8_REPO_PASSWORD__/&apos;${FUSE_CONSOLE_PASSWORD}&apos;/&apos; ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml </command>
         </hudson.tasks.Shell>
         <hudson.tasks.Maven>
-            <targets>fabric8:deploy -Dfabric8.jolokiaUrl=${FUSE_ROOT_URL}/jolokia -Dfabric8.serverId=fabric8.upload.repo -Dmaven.test.skip=true -DfailIfNoTests=false -s ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml</targets>
+            <targets>fabric8:deploy -Dfabric8.jolokiaUrl=${FUSE_ROOT_URL}jolokia -Dfabric8.serverId=fabric8.upload.repo -Dmaven.test.skip=true -DfailIfNoTests=false -s ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml</targets>
             <mavenName>maven</mavenName>
             <pom>rest/pom.xml</pom>
             <usePrivateRepository>false</usePrivateRepository>

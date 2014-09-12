@@ -32,7 +32,7 @@ ADD http://updates.jenkins-ci.org/latest/gerrit-trigger.hpi /var/jenkins_home/pl
 USER root
 
 # needed to run our OSE scripts
-RUN apt-get update && apt-get install -y python
+RUN apt-get update && apt-get install -y python sshpass
 
 # add the maven settings.xml
 #ADD maven/settings.xml /etc/maven/settings.xml

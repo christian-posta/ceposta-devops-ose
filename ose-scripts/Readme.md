@@ -6,10 +6,17 @@ script (or its major pieces, which are the python scripts) outside of Jenkins al
 
 Some of the variables are hard coded at the moment, but we can change that.
 
-To run the create_ose_env.sh script, pass in the name of the app along with the version to use. Note,
-OSE will strip out the '.' characters:
+## SSH Keys
+You'll want to install the public key found in [ssh-keys directory](ssh-keys) into your OSE installation for
+the user you'll use to connect. This is because Jenkins will try to SSH into gears during builds and will use
+the private key found in that same directory.
 
-    $ create_ose_env.sh 1.0.2
+## Trying out the scripts
+
+To run the create_ose_env.sh script, pass in the name of the app along with the version to use. Note,
+OSE will strip out the '.' characters. Parameters are "AppName" "Version" "OSE installation" "OSE domain"
+
+    $ create_ose_env.sh 1.0.2 https://broker.hosts.pocteam.com dev
     
 
 Once the script finishes, you should see the environment details in the ./vars/ folder with a name like:
@@ -18,7 +25,8 @@ Once the script finishes, you should see the environment details in the ./vars/ 
     
 You can also check the Jenkins fuse-rest-deploy-dev job to see how it's used.
 
-NOTE you'll have to have your DNS set up so that the OSE installation can be resolved. 
+## DNS for your OSE installation
+you'll have to have your DNS set up so that the OSE installation can be resolved. 
 
 For example, in this demo, we use an OSE installation setup here:
 
