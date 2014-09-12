@@ -22,7 +22,7 @@ CONTAINER_NAME=$(echo restcontainer${BUILD_NUMBER} | tr -d -c "[:alnum:]")
 
 echo "$CONTAINER_NAME"
 
-exit 0;
+
 alias ssh2fabric="sshpass -p $FUSE_ADMIN_PASSWORD ssh -p 53562 -o ServerAliveCountMax=100 -o ConnectionAttempts=180 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o LogLevel=ERROR admin@$FUSE_HOST"
 
 #
