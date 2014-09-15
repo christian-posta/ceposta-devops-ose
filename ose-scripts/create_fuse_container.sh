@@ -15,7 +15,7 @@ fi
 
 FUSE_HOST=$(echo $1 | cut -d ':' -f 1)
 SSH_PORT=$(echo $1 | cut -d ':' -f 2)
-FUSE_ADMIN_PASSWORD=$1
+FUSE_ADMIN_PASSWORD=$2
 OPENSHIFT_BROKER=$3
 BUILD_NUMBER=$4
 PROFILE_NAME=my-rest
