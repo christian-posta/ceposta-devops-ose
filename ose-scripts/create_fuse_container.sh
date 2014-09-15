@@ -7,7 +7,7 @@ if [ "$#" -ne 4 ]; then
 	exit 1
 fi
 
-#FUSE_HOST=fuse101-dev.ose.pocteam.com
+#FUSE_HOST=fuse101-dev.ose.pocteam.com:10990
 #FUSE_ADMIN_PASSWORD=EPAaj4k44p8v
 #OPENSHIFT_BROKER=broker.hosts.pocteam.com
 #BUILD_NUMBER=1.0.3

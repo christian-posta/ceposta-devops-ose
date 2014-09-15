@@ -111,6 +111,7 @@ else
     echo "Created application ${APP_CREATE_RESULT[1]} successfully"
 fi
 
+
 FUSE_ROOT_URL=${APP_CREATE_RESULT[1]}
 FUSE_GEAR_SSH=${APP_CREATE_RESULT[2]}
 FUSE_CONSOLE_USER=${APP_CREATE_RESULT[3]}
@@ -119,6 +120,24 @@ FUSE_ZK_URL=${APP_CREATE_RESULT[5]}
 FUSE_ZK_PASSWORD=${APP_CREATE_RESULT[6]}
 FUSE_DOMAIN_NAME=$(echo ${FUSE_ZK_URL} | cut -d ':' -f 1)
 
+echo "try get fuse ssh url"
+
+#SSH_URL_JSON=$(curl --insecure -X POST --user admin:Jd5bgvF1hXiK --data '{"arguments":["${OPENSHIFT_APP_NAME}",["sshUrl"]],"mbean":"io.fabric8:type=Fabric","operation":"getContainer(java.lang.String,java.util.List)","type":"exec"}'  '${FUSE_ROOT_URL}jolokia/exec')
+
+declare -a SSH_URL_RESULT=$(
+    python ${DIR}/get_container_ssh.py $FUSE_ROOT_URL $OPENSHIFT_APP_NAME
+)
+
+if [ "${SSH_URL_RESULT[0]}" != 0 ]
+then
+    echo "Could not find the container's SSH URL... we should kill the env create and try again"
+    exit 1
+else
+    echo "Found the Fuse SSH Url to use: ${SSH_URL_RESULT[1]}"
+fi
+
+FUSE_CONTAINER_SSH=${SSH_URL_RESULT[1]}
+
 echo "Writing Variables to Properties File"
 
 rm -fr ${DIR}/vars
@@ -126,6 +145,7 @@ mkdir -p ${DIR}/vars
 
 echo FUSE_ROOT_URL=${FUSE_ROOT_URL} > ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 echo FUSE_GEAR_SSH=${FUSE_GEAR_SSH} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_CONTAINER_SSH=${FUSE_CONTAINER_SSH} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 echo FUSE_CONSOLE_USER=${FUSE_CONSOLE_USER} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 echo FUSE_ZK_URL=${FUSE_ZK_URL} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
