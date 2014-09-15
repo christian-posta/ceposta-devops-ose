@@ -42,7 +42,13 @@
         </branches>
         <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
         <submoduleCfg class="list"/>
-        <extensions/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>true</shallow>
+        <reference></reference>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+      <hudson.plugins.git.extensions.impl.WipeWorkspace/>
+    </extensions>
     </scm>
     <canRoam>true</canRoam>
     <disabled>false</disabled>
@@ -67,13 +73,16 @@
                 sed -i &apos;s/__FABRIC8_REPO_PASSWORD__/&apos;${FUSE_CONSOLE_PASSWORD}&apos;/&apos; ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml </command>
         </hudson.tasks.Shell>
         <hudson.tasks.Maven>
-            <targets>fabric8:deploy -Dfabric8.jolokiaUrl=${FUSE_ROOT_URL}jolokia -Dfabric8.serverId=fabric8.upload.repo -Dmaven.test.skip=true -DfailIfNoTests=false -s ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml</targets>
+      <targets>fabric8:deploy -Dfabric8.jolokiaUrl=${FUSE_ROOT_URL}/jolokia -Dfabric8.serverId=fabric8.upload.repo -Dmaven.test.skip=true -DfailIfNoTests=false -s ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml</targets>
             <mavenName>maven</mavenName>
             <pom>rest/pom.xml</pom>
             <usePrivateRepository>false</usePrivateRepository>
             <settings class="jenkins.mvn.DefaultSettingsProvider"/>
             <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
         </hudson.tasks.Maven>
+    <hudson.tasks.Shell>
+      <command>${WORKSPACE}/.env-scripts/ose-scripts/create_fuse_container.sh ${FUSE_CONTAINER_SSH} ${FUSE_CONSOLE_PASSWORD} https://broker.hosts.pocteam.com ${RELEASE_NUMBER}</command>
+    </hudson.tasks.Shell>
     </builders>
     <publishers/>
     <buildWrappers/>
