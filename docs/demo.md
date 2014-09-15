@@ -103,6 +103,10 @@ intended to be filled out) fail, we stop the build pipeline and alert any intere
 ---
 
 ## Deploy to OSE/dev
+
+    If you're interested in automating the deployment of your Fuse/Fabric8 projects to OpenShift, this is the build step you should dig into.
+
+
 To move our code further along in the pipeline, we need to actually deploy it and make sure it works not only with the
 code and configuration we've assigned but also within a real (and progressively more production like) environment. 
 traditionally, to do this, you would have some kind of shared infrastructure where you deploy code to existing, shared
@@ -135,6 +139,43 @@ In the demo, if our initial builds and integration builds pass successfully, we 
 
 ---
 
+The Jenkins build itself uses the scripts found in the [ose-scripts](../ose-scripts) directory. To create the OSE
+environment, we use the OpenShift REST API. After we've successfully created a new Fuse cartridge in the OSE dev
+environment, we capture the gear details (domain, ssh urls, fuse console passwords, etc) and inject them into the
+Jenkins build so that we can use them as parameters for kicking off the scripts to build the fabric profiles and
+upload them to the fuse gear. For example, here's an example of some of those environment variables that we can use:
+
+    FUSE_ROOT_URL=http://fuse10-dev.ose.pocteam.com/
+    FUSE_GEAR_SSH=ssh://54121b79d91cec462a0000bb@fuse10-dev.ose.pocteam.com
+    FUSE_CONTAINER_SSH=fuse10-dev.ose.pocteam.com:45556
+    FUSE_CONSOLE_USER=admin
+    FUSE_CONSOLE_PASSWORD=fZ_WpQGZxddg
+    FUSE_ZK_URL=fuse10-dev.ose.pocteam.com:43526
+    FUSE_ZK_PASSWORD=fZ_WpQGZxddg
+    
+We can also log directly into the gear (FUSE_GEAR_SSH) or into the Fuse container itself (FUSE_CONTAINER_SSH). The
+rest of the jenkins build will log directly into the FUSE_CONTAINER_SSH and spin up a new container with the `my-rest`
+profile. This profile was automatically generated using the `fabric8:deploy maven goal`. See the Jenkins job for
+`fuse-rest-deploy-dev`.
+
+ 
+## Dev Acceptance tests
+After we've deployed our environment (OSE + Fuse + our integrations), we'll want to run some automated acceptance tests.
+These tests will be the gate keeper to moving to the next environment (QA for example). This automated acceptance tests
+can be developed using any testing framework (Cucumber, FitNesse, etc) but using good old JUnit to automate these is
+an acceptable solution too. 
+
+
+## Migration to other environments
+If these acceptance tests pass, then we do the following things:
+
+* We should extract the profiles associated with this application from Fuse/Fabric8. This will allow us to easily migrate our deployment to the next stage. All profiles are kept in git so we basically do a git clone 
+* We zip up the profiles associated with our application
+* We push the zip artifact up to our central artifact repository
+
+Pushing the profiles up to our artifact repository allows us to version our deployments and migrate them. Any ideal build process will build the binaries _once_ and migrate them exactly to other environments (and change configurations, depending on env. But also note, these configurations are _also_ versioned... everything is versioned!!!)
+
+The zip files can then be pulled down and merged into a QA fuse deployment (or PROD). Since fuse by default pulls binaries down from the artifact repository, you have a fully automated and auditable trace of how code gets from one environment to another. 
 
 
 
