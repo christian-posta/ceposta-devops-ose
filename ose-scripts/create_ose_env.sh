@@ -120,6 +120,20 @@ FUSE_ZK_URL=${APP_CREATE_RESULT[5]}
 FUSE_ZK_PASSWORD=${APP_CREATE_RESULT[6]}
 FUSE_DOMAIN_NAME=$(echo ${FUSE_ZK_URL} | cut -d ':' -f 1)
 
+echo "Writing Variables to Properties File"
+
+
+rm -fr ${DIR}/vars
+mkdir -p ${DIR}/vars
+
+echo FUSE_ROOT_URL=${FUSE_ROOT_URL} > ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_GEAR_SSH=${FUSE_GEAR_SSH} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_CONSOLE_USER=${FUSE_CONSOLE_USER} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_ZK_URL=${FUSE_ZK_URL} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_ZK_PASSWORD=${FUSE_ZK_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_DOMAIN_NAME=${FUSE_DOMAIN_NAME} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+
 echo "try get fuse ssh url"
 
 #SSH_URL_JSON=$(curl --insecure -X POST --user admin:Jd5bgvF1hXiK --data '{"arguments":["${OPENSHIFT_APP_NAME}",["sshUrl"]],"mbean":"io.fabric8:type=Fabric","operation":"getContainer(java.lang.String,java.util.List)","type":"exec"}'  '${FUSE_ROOT_URL}jolokia/exec')
@@ -138,20 +152,8 @@ else
 fi
 
 FUSE_CONTAINER_SSH=${SSH_URL_RESULT[1]}
-
-echo "Writing Variables to Properties File"
-
-rm -fr ${DIR}/vars
-mkdir -p ${DIR}/vars
-
-echo FUSE_ROOT_URL=${FUSE_ROOT_URL} > ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_GEAR_SSH=${FUSE_GEAR_SSH} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 echo FUSE_CONTAINER_SSH=${FUSE_CONTAINER_SSH} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_CONSOLE_USER=${FUSE_CONSOLE_USER} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_ZK_URL=${FUSE_ZK_URL} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_ZK_PASSWORD=${FUSE_ZK_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
-echo FUSE_DOMAIN_NAME=${FUSE_DOMAIN_NAME} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+
 # end the entire large if
 else
     echo "There was major error"
