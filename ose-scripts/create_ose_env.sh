@@ -131,6 +131,7 @@ declare -a SSH_URL_RESULT=$(
 if [ "${SSH_URL_RESULT[0]}" != 0 ]
 then
     echo "Could not find the container's SSH URL... we should kill the env create and try again"
+    echo ${SSH_URL_RESULT[1]}
     exit 1
 else
     echo "Found the Fuse SSH Url to use: ${SSH_URL_RESULT[1]}"

@@ -28,4 +28,4 @@ try :
     print '("{0}" "{1}")'.format("0", result["value"]["sshUrl"])
 
 except:
-    print '("{0}")'.format("1")
+    print '("{0}" "{1}")'.format("1", sys.exc_info()[0])
