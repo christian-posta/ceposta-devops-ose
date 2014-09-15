@@ -1,5 +1,5 @@
 # Setting up Jenkins for the Continuous Delivery Demo
-We use docker containers for all of the continuous deliver pieces, so follow the first section on setting up the
+We use docker containers for all of the continuous delivery pieces, so follow the first section on setting up the
 Docker container on your host. Docker isn't required if you wish to manually set up an environment somewhere else.
 
 ## Set up Docker container
@@ -20,7 +20,7 @@ Run the container with this command:
 
     docker run -itdP --name jenkins --link gitlab:gitlab --link nexus:nexus --link gerrit:gerrit fabric8:jenkins
     
-Note we link to the `gitlab` and `nexus` containers, so these containers must have been installed first (the correct
+Note we link to the `gitlab` `gerrit`, and `nexus` containers, so these containers must have been installed first (the correct
 order, as illustrated on the root Readme.md of this project is "Gitlab" then "Nexus".
 
 [See the GitLab setup instructions for more](set-up-gitlab.md).

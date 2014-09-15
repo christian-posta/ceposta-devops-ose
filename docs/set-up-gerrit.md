@@ -41,7 +41,7 @@ won't use any fancy SSO signin. To see more about the config [checkout the Readm
 
 ---
 
-Now you'll need to enter these fields in this order (be careful, unforunately it's tricky)
+Now you'll need to enter these fields in this order 
 
 1) Register New Email: admin@company.com
 2) Full Name (click Save Changes): Administrator
@@ -72,10 +72,15 @@ Now the Admin account is all setup...
 
 ### Set up Jenkins Account (optional)
 
+We can also set up the jenkins account on gerrit and alter the project permissions so that when we commit a new
+patchset for a project, jenkins can check it out and do a sanity build on it and provide its feedback to gerrit.
+
 This part is automated.
+
 There is [a script in the gerrit-docker folder named conf-jenkins-user.sh](../gerrit-docker/conf-jenkins-user.sh) that
-you should run which will automatically setup the jenkins user (if doesn't exist) and update the project settings
-to allow jenkins to monitor gerrit for changes.
+you should run after setting up the Admin account which will automatically setup the jenkins user (if doesn't exist) and update the project settings to allow jenkins to monitor gerrit for changes. This script depends on the `admin`
+username and the `gerrit-admin` private key that we set up in the previous step, so please verify everything was 
+set up correctly. Now run:
 
     $PROJ_ROOT/conf-jenkins-user.sh
 
@@ -87,17 +92,16 @@ username: jenkins
 email: jenkins@jenkins.org
 SSH-key: the public key from jenkins-gerrit project
 
-You should also log in as admin and update the All-Projects access to allow Non-INteractive
+You should also log in as admin and update the All-Projects access to allow Non-Interactive
 users to modify refs/* and label-code-reviews for -1..+1
 
 
-
-
 ## Prep the quickstart-fuse-rest project
+
 Next we need to get the project set up. So just like we created a new project (empty one) on gitlab, we'll do the same
 here for Gerrit. Click on "Projects" and then "Create New Project" The name of the project must match the name we
 gave to the project in GitLab (because that's how the replication from Gerrit to GitLab happens) and we MUST use the name
-__quickstart-fuse-rest__ because that's what's used in the Jenkins builds.
+__quickstart-fuse-rest__ because that's what's used in the Jenkins builds for the demo.
 
 ---
 
@@ -160,10 +164,9 @@ For me, the path to my Gitlab project is here:
     
 Yours will be wherever you set up gitlab using the Gitlab docker container [as described in setting up Gitlab](set-up-gitlab.md)
 
-
-## Set up Jenkins user
-We will want to create a non-interactive user named "jenkins" that will be able to query gerrit and send events to 
-a jenkins build server.
+## Verify jenkins code-review happened correctly
+We should click on the change and verify that jenkins has registered a code review of the patch set. Also,
+if we log into the jenkins console, we should see that a build was run for this patchset.
 
 ## Random Gerrit Notes: Roles, Reviews, Topics
 

@@ -6,7 +6,7 @@ for more information. In short, Docker is an automation and virtual environment 
 your software in isolated containers and ship the containers and have them behave the same on any host that can run
 Docker. 
 
-Here's a detailed setup guide for RHEL/CentOS, including some suggestions:
+Here's a detailed setup guide for Docker running on RHEL/CentOS, including some suggestions:
 
 ## Install prerequisites
 
@@ -30,6 +30,14 @@ In OpenStack, find the volume and attach it. Then run these commands:
 
 ## Install docker
 
+   
+Now you can install from the yum repos:
+
+    sudo yum -y install docker-io
+    sudo chkconfig docker on
+    sudo service docker start
+    
+    
 You can add your user to the allowed docker group with this (so you don't have to _sudo_ every time)
 
     usermod -a -G docker <your-user>
@@ -40,12 +48,6 @@ On openstack, the default user is `cloud-user` so the command would be:
     
 You may need to log back into your shell session (as I don't know how to get the usermod to kick in without doing..
 any suggestions?)
-   
-Now you can install from the yum repos:
-
-    sudo yum -y install docker-io
-    sudo chkconfig docker on
-    sudo service docker start
 
     
 ## iptables firewall
@@ -64,7 +66,16 @@ SSH dameon:
 
     http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/
     
+## Spin the all the docker containers automatically
+In the [bootstrap](../boostrap) directory of this project you'll find a couple of handy scripts that automate
+setting up all of the containers.
+
+* [build_docker_images.sh](../bootstrap/build_docker_images.sh) - this script will pull all required images and build
+the specialized images for this demo for jenkins and gerrit
+* [run-docker.sh](../bootstrap/run-docker.sh) - this script will boot up all the docker containers in the right order
+and with the right parameters
+    
+    
     
 ## What's Next?
-You can [go right to the Demo](demo.md) or you can [set up GitLab](set-up-gitlab.md) since that's the first container
-that should be set up to do the demo.
+You can [go right to the Demo](demo.md) or you can manually set up the required containers....[set up GitLab](set-up-gitlab.md) since that's the first container that should be set up to do the demo.
