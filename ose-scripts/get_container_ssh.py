@@ -7,6 +7,7 @@ FUSE_ROOT_URL = sys.argv[1]
 # app name, eg, fuse102
 FUSE_APP_NAME = sys.argv[2]
 
+FUSE_CONSOLE_PASSWORD = sys.argv[3]
 
 
 
@@ -22,10 +23,10 @@ try :
     dict["arguments"] = [FUSE_APP_NAME, ["sshUrl"]]
     req = urllib2.Request(url)
     req.add_header('Accept','application/json')
-    req.add_header('Authorization',encodeUserData("admin","Jd5bgvF1hXiK"))
+    req.add_header('Authorization',encodeUserData("admin",FUSE_CONSOLE_PASSWORD))
     res = urllib2.urlopen(req, json.dumps(dict))
     result = json.loads(res.read())
     print '("{0}" "{1}")'.format("0", result["value"]["sshUrl"])
 
-except:
-    print '("{0}" "{1}")'.format("1", sys.exc_info()[0])
+except Exception, e:
+    print '("{0}" "{1}")'.format("1", e)

@@ -139,7 +139,7 @@ echo "try get fuse ssh url"
 #SSH_URL_JSON=$(curl --insecure -X POST --user admin:Jd5bgvF1hXiK --data '{"arguments":["${OPENSHIFT_APP_NAME}",["sshUrl"]],"mbean":"io.fabric8:type=Fabric","operation":"getContainer(java.lang.String,java.util.List)","type":"exec"}'  '${FUSE_ROOT_URL}jolokia/exec')
 
 declare -a SSH_URL_RESULT=$(
-    python ${DIR}/get_container_ssh.py $FUSE_ROOT_URL $OPENSHIFT_APP_NAME
+    python ${DIR}/get_container_ssh.py $FUSE_ROOT_URL $OPENSHIFT_APP_NAME $FUSE_CONSOLE_PASSWORD
 )
 
 if [ "${SSH_URL_RESULT[0]}" != 0 ]
