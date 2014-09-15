@@ -102,6 +102,41 @@ intended to be filled out) fail, we stop the build pipeline and alert any intere
 
 ---
 
+## Deploy to OSE/dev
+To move our code further along in the pipeline, we need to actually deploy it and make sure it works not only with the
+code and configuration we've assigned but also within a real (and progressively more production like) environment. 
+traditionally, to do this, you would have some kind of shared infrastructure where you deploy code to existing, shared
+containers hoping to not blow everything up or step on someone else's toes. Often these types of deployment would have zero
+environment configurations where you can deploy and version entire environments (although I've seen some companies do a 
+really good job of this). But sharing environments can be a nightmare (as I've also seen some companies do this ;) ) so 
+we've [opted to use a PaaS][openshift] to help isolate our dev environments and the builds/testing we do for each deployment.
+  
+[Trevor Quinn](http://www.linkedin.com/in/trevorquinn) put together this excellent graphic of how OSE environments and a deployment pipeline could look:
+
+---
+
+![ose env](images/ose-env.png)
+
+---
+
+Our demo does something similar, although we only use one OSE environment and try to partition deployments by domain/build number. But for a real deployment, you will most likely have a dev OSE, QA OSE, and production OSE.
+ 
+In the demo, if our initial builds and integration builds pass successfully, we will try to do the following things:
+
+* spin up a new fuse environment on the fly in a "Dev" OSE
+* deploy our fuse binaries + fabric profiles to this new environment
+* deploy a fuse container and apply our profiles/binaries
+* run acceptance tests against this environment
+
+
+---
+
+![deploy fuse ose](diagrams/deploy-fuse-ose.png)
+
+---
+
+
 
 
 [fuse]: http://www.jboss.org/products/fuse/overview/
+[openshift]: https://www.openshift.com

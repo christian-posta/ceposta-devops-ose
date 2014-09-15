@@ -58,7 +58,7 @@ See [this guide for setting up a VM on OpenStack for this demo](docs/set-up-open
 
 
 ## OpenShift
-We use OpenShift as our PaaS to allow us to deploy our solutions on-demand, without having to set up a complicated
+We [use OpenShift as our PaaS][openshift] to allow us to deploy our solutions on-demand, without having to set up a complicated
 static shared environment. We use OpenShift to spin up our application on-demand and completely isolated from other
 environments/deployments. As we go through the steps to get from Dev to Prod, we see two things:
 
