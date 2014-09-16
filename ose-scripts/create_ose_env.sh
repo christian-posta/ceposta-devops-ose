@@ -119,6 +119,8 @@ FUSE_CONSOLE_PASSWORD=${APP_CREATE_RESULT[4]}
 FUSE_ZK_URL=${APP_CREATE_RESULT[5]}
 FUSE_ZK_PASSWORD=${APP_CREATE_RESULT[6]}
 FUSE_DOMAIN_NAME=$(echo ${FUSE_ZK_URL} | cut -d ':' -f 1)
+FUSE_GIT_URL="http://${FUSE_CONSOLE_USER}:${FUSE_CONSOLE_PASSWORD}@${FUSE_DOMAIN_NAME}/git/fabric"
+FUSE_MAVEN_UPLOAD_URL="http://${FUSE_CONSOLE_USER}:${FUSE_CONSOLE_PASSWORD}@${FUSE_DOMAIN_NAME}/maven/upload"
 
 echo "Writing Variables to Properties File"
 
@@ -133,6 +135,8 @@ echo FUSE_CONSOLE_PASSWORD=${FUSE_CONSOLE_PASSWORD} >> ${DIR}/vars/openshift_var
 echo FUSE_ZK_URL=${FUSE_ZK_URL} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 echo FUSE_ZK_PASSWORD=${FUSE_ZK_PASSWORD} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 echo FUSE_DOMAIN_NAME=${FUSE_DOMAIN_NAME} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_GIT_URL=${FUSE_GIT_URL} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
+echo FUSE_MAVEN_UPLOAD_URL=${FUSE_MAVEN_UPLOAD_URL} >> ${DIR}/vars/openshift_vars_build-${VERSION_NUMBER}
 
 echo "try get fuse ssh url"
 
