@@ -24,6 +24,11 @@
                 </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
         </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.copyartifact.CopyArtifactPermissionProperty plugin="copyartifact@1.31">
+      <projectNameList>
+        <string>fuse-rest-dev-acceptance</string>
+      </projectNameList>
+    </hudson.plugins.copyartifact.CopyArtifactPermissionProperty>
         <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.22">
             <autoRebuild>false</autoRebuild>
         </com.sonyericsson.rebuild.RebuildSettings>
@@ -84,6 +89,24 @@
       <command>${WORKSPACE}/.env-scripts/ose-scripts/create_fuse_container.sh ${FUSE_CONTAINER_SSH} ${FUSE_CONSOLE_PASSWORD} https://broker.hosts.pocteam.com ${RELEASE_NUMBER}</command>
     </hudson.tasks.Shell>
     </builders>
-    <publishers/>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>.env-scripts/ose-scripts/vars/openshift_vars_build-*</artifacts>
+      <latestOnly>false</latestOnly>
+      <allowEmptyArchive>false</allowEmptyArchive>
+    </hudson.tasks.ArtifactArchiver>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.25">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
+          </configs>
+          <projects>fuse-rest-dev-acceptance</projects>
+          <condition>SUCCESS</condition>
+          <triggerWithNoParameters>true</triggerWithNoParameters>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+  </publishers>
     <buildWrappers/>
 </project>

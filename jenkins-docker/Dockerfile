@@ -28,6 +28,7 @@ ADD http://updates.jenkins-ci.org/latest/managed-scripts.hpi /var/jenkins_home/p
 ADD http://updates.jenkins-ci.org/latest/copyartifact.hpi /var/jenkins_home/plugins/copyartifact.hpi
 ADD http://updates.jenkins-ci.org/latest/envinject.hpi /var/jenkins_home/plugins/envinject.hpi
 ADD http://updates.jenkins-ci.org/latest/gerrit-trigger.hpi /var/jenkins_home/plugins/gerrit-trigger.hpi
+ADD http://updates.jenkins-ci.org/latest/ws-cleanup.hpi /var/jenkins_home/plugins/ws-cleanup.hpi
 
 USER root
 
@@ -46,6 +47,7 @@ ADD jobs/fuse-rest-deploy-dev/ /var/jenkins_home/jobs/fuse-rest-deploy-dev
 ADD jobs/fuse-rest-integration-tests/ /var/jenkins_home/jobs/fuse-rest-integration-tests
 ADD jobs/fuse-rest-initial-build/ /var/jenkins_home/jobs/fuse-rest-initial-build
 ADD jobs/fuse-rest-gerrit-patchset/ /var/jenkins_home/jobs/fuse-rest-gerrit-patchset
+ADD jobs/fuse-rest-dev-acceptance/ /var/jenkins_home/jobs/fuse-rest-dev-acceptance
 
 
 # change ownership of plugins and projects
