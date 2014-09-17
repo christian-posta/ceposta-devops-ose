@@ -60,7 +60,7 @@ RUN echo "alias grep='grep --color=auto'" >> /etc/profile
 ONBUILD ADD . /root/
 ONBUILD RUN unzip -q -d /opt/rh /root/*.zip
 ONBUILD RUN chown -R fuse:fuse /opt/rh
-ONBUILD RUN rm /root/*
+ONBUILD RUN rm  -fr /root/*
 ONBUILD RUN sed -i "s/#admin/admin/" /opt/rh/*/etc/users.properties
 
 WORKDIR /opt/rh
