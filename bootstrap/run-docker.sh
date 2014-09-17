@@ -46,4 +46,4 @@ docker run -itdP --name nexus pantinor/centos-nexus:latest
 docker run -itdP --name gerrit --env GITLAB_USER=$GITLAB_USER --env GITLAB_PASSWORD=$GITLAB_PASSWORD --env GITLAB_PROJ_ROOT=$GITLAB_PROJ_ROOT --link gitlab:gitlab fabric8:gerrit
 docker run -itdP --name jenkins --link gitlab:gitlab --link nexus:nexus --link gerrit:gerrit fabric8:jenkins
 
-. $APP_BASE/print-docker.sh
+. $APP_BASE/bootstrap/print-docker.sh
