@@ -11,11 +11,12 @@ slightly modified for the purposes of this demo and lives at [https://github.com
 
 The code from this project is driven through the delivery pipeline as follows.
  
-* Code Review
-* Initial build for delivery
-* Automated Integration tests
-* Build Fuse environment on the fly, deploy code and profiles
-* Run automated acceptance tests
+* Code Review (automated + human)
+* Initial build
+* Automated integration tests (this is stubbed out for the demo, but placeholder and mvn module exist)
+* Build Fuse environment on the fly, deploy code and profiles to OpenShift Enterprise
+* Run automated acceptance tests (stubbed out for the demo)
+* Deploy fuse profiles to Enterprise Artifact Repository
 * Notify QA to promote to shared QA environment
 * Run Acceptance tests + manual tests in QA environment
 * Notify build and release team to promote to Prod/Staged Prod
@@ -30,15 +31,15 @@ Review is three things:
 1) Ensure patch correctly implements desired functionality, is accompanied by tests, and helps the author understand
 any gotchas or clear up assumptions of the code
 2) Enforce code quality, standards, conventions, etc
-3) Encourage cross pollination of understanding of the code
+3) Encourage cross pollination and understanding of the code
 
 
 
 For this demo, we've chosen the popular Gerrit code review tool. Gerrit-style code reviews add a little more
-formality and governance around achieving the above goals. They are different that GitHub-stype pull requests, and the
+formality and governance around achieving the above goals. They are different than GitHub-style pull requests, and the
 reader is encouraged to understand how. On large complex opensource projects (OpenStack, Android, etc) or similar 
 internal enterprise projects, a more fine grained review process is required. Gerrit can also be integrated with
-Jenkins and Gitlab to provide a more feature-filled environment for typical enterprises.
+Jenkins and Gitlab to provide a more feature-filled environment for typical code reviews.
 
 This is a visualization of the interaction between the pieces in the demo:
 
@@ -55,7 +56,9 @@ employed for a gerrit patchset.
 
 In the demo, when a patchset is submitted, Jenkins will automatically checkout the change, build it and run unit tests.
 If everything looks good, then Jenkins will vote +1 for the change. This can be taken to mean "jenkins found no problems
-with the build, unit tests, and anything else it was charged with examining in a first pass". At this point any team
+with the build, unit tests, and anything else it was charged with examining in a first pass". 
+
+At this point any team
 member with +2/commit authority can view the patch and vote. If the patchset gets voted a +2, then the change will
 be merged into the master branch. When this happens in the demo, the code will be automatically replicated to a 
 read-only repo that's more suitable for browsing code, viewing commits, and filing issues. In this case it's Gitlab,

@@ -46,7 +46,7 @@
     <groupId>org.jboss.quickstarts.fuse</groupId>
     <artifactId>rest-parent</artifactId>
   </rootModule>
-  <goals>clean test</goals>
+  <goals>clean install</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <ignoreUpstremChanges>true</ignoreUpstremChanges>

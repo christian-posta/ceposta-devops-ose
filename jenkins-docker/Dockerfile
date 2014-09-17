@@ -29,6 +29,7 @@ ADD http://updates.jenkins-ci.org/latest/copyartifact.hpi /var/jenkins_home/plug
 ADD http://updates.jenkins-ci.org/latest/envinject.hpi /var/jenkins_home/plugins/envinject.hpi
 ADD http://updates.jenkins-ci.org/latest/gerrit-trigger.hpi /var/jenkins_home/plugins/gerrit-trigger.hpi
 ADD http://updates.jenkins-ci.org/latest/ws-cleanup.hpi /var/jenkins_home/plugins/ws-cleanup.hpi
+ADD http://updates.jenkins-ci.org/latest/role-strategy.hpi /var/jenkins_home/plugins/role-strategy.hpi
 
 USER root
 
