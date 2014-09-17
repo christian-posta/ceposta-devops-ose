@@ -38,37 +38,12 @@ GITLAB_USER=${GITLAB_USER:-root}
 GITLAB_PASSWORD=${GITLAB_PASSWORD:-redhat01}
 GITLAB_PROJ_ROOT=${GITLAB_PROJ_ROOT:-root}
 
-DOCKER_HOSTNAME=${DOCKER_HOSTNAME:-`echo $DOCKER_HOST | awk '{gsub("(tcp|http)://|/.*","")}1' | awk '{gsub(":.*","")}1'`}
-if [ -z "$APP_BASE" ] ; then
-  DOCKER_HOSTNAME="localhost"
-fi
 
-echo "Docker host name is $DOCKER_HOSTNAME"
 
-createDockerUrl() {
-  dockerUrl=`echo $1 | sed s/0.0.0.0/$DOCKER_HOSTNAME/`
-}
-
-echo "Creating the docker images using gitlab user ${GITLAB_USER} and project root ${GITLAB_PROJ_ROOT}"
+echo "Creating the docker images using gitlab user ${GITLAB_USER} and project root '${GITLAB_PROJ_ROOT}'"
 docker run -itdP --name gitlab -e 'GITLAB_SIGNUP=true' sameersbn/gitlab:latest
 docker run -itdP --name nexus pantinor/centos-nexus:latest
 docker run -itdP --name gerrit --env GITLAB_USER=$GITLAB_USER --env GITLAB_PASSWORD=$GITLAB_PASSWORD --env GITLAB_PROJ_ROOT=$GITLAB_PROJ_ROOT --link gitlab:gitlab fabric8:gerrit
 docker run -itdP --name jenkins --link gitlab:gitlab --link nexus:nexus --link gerrit:gerrit fabric8:jenkins
 
-createDockerUrl `docker port gerrit 8080`
-GERRIT_URL=$dockerUrl
-
-createDockerUrl `docker port gitlab 80`
-GITLAB_URL=$dockerUrl
-
-createDockerUrl `docker port jenkins 8080`
-JENKINS_URL=$dockerUrl
-
-createDockerUrl `docker port nexus 8081`
-NEXUS_URL=$dockerUrl
-
-
-echo "Gerrit:  http://$GERRIT_URL/"
-echo "Gitlab:  http://$GITLAB_URL/"
-echo "Jenkins: http://$JENKINS_URL/"
-echo "Nexus:   http://$NEXUS_URL/nexus"
+. $APP_BASE/print-docker.sh
