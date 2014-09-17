@@ -29,6 +29,20 @@ For example, on my machine that would be:
     
 You can try logging in with the default un/pw of __admin/admin123__
 
+## Gotchas
+For our Jenkins server to build projects correctly, we'll need to be able to reach repository.jboss.org, specifically
+through this url:
+
+    curl -L https://repo.fusesource.com/nexus/content/groups/ea
+    
+If you cannot reach that DNS name, you can try to ping the server directly from a box that can see it, and then
+use the IP address directly (or add it to your hosts file). One scenario where this may come up is when you have to play around with the DNS entries on your box to be able to see the OSE installation you've set up.
+
+Then you'll need to add the new proxy repo you just added to the _Public Repositories Group_
+
+
+
+    
 
 ## What's Next?
 You can [go right to the Demo](demo.md) or you can [set up Jenkins](set-up-jenkins.md) since that's the next container

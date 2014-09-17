@@ -30,6 +30,19 @@ Now you can run the following command to see where on the host Gerrit HTTP liste
 
     docker port jenkins 8080
     
+## Required manual steps
+There are required manual steps for setting up Gitlab and Gerrit (and possibly nexus, if you have connectivity 
+issues).
+
+Jenkins shouldn't have any manual steps.
+
+However, one thing to note, the scripts used to orchestrate the OSE environments do use hard-coded username/passwords.
+You'll need to update those in your config to be able to communicate with OSE.
+
+Additionally, it's your responsibility to make sure the Jenkins docker container can see the OSE environment you've
+set up; usually this means access to the DNS correctly. Docker will inherit the host /etc/resolv.conf file so if you
+can reach it from your Docker HOST, then the containers should be fine.
+    
 ## Running a build
 At this point you should be able to navigate to the Jenkins page (as exposed on the host and the port from above)
 and inspect the build jobs. For example, from my box, the URL looks like this: http://ceposta-public:49161
