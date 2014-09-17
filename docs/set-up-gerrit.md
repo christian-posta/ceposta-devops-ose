@@ -27,6 +27,12 @@ Now you can run the following command to see where on the host Gerrit HTTP liste
 
     docker port gerrit 8080
     
+## Required manual steps
+Here are the manual steps we need to take to set up gerrit.
+
+Gerrit does have an SSH admin interface and we do use that to automate setting everything else up, but you 
+have to start off by creating the admin account and assiging an SSH key to it (the SSH keys must be the ones
+from this project for the demo to work).
     
 ## Set up Gerrit Admin account
 
@@ -43,9 +49,9 @@ won't use any fancy SSO signin. To see more about the config [checkout the Readm
 
 Now you'll need to enter these fields in this order 
 
-1) Register New Email: admin@company.com
-2) Full Name (click Save Changes): Administrator
-3) Enter a Username (click Select Username): admin
+1. Register New Email: admin@company.com
+2. Full Name (click Save Changes): Administrator
+3. Enter a Username (click Select Username): admin
 
 Since we're going to use a gerrit-jenkins integration to help review the patch files, and we'll need some automated setup , we're going to want to set an administrator SSH. This SSH key can be used for committing code as well as administration functions.
 
@@ -70,7 +76,7 @@ On the left-hand side, you should see "HTTP Password" click that and generate a 
 
 Now the Admin account is all setup...
 
-### Set up Jenkins Account (optional)
+### Set up Jenkins Account (automated)
 
 We can also set up the jenkins account on gerrit and alter the project permissions so that when we commit a new
 patchset for a project, jenkins can check it out and do a sanity build on it and provide its feedback to gerrit.
@@ -82,7 +88,11 @@ you should run after setting up the Admin account which will automatically setup
 username and the `gerrit-admin` private key that we set up in the previous step, so please verify everything was 
 set up correctly. Now run:
 
-    $PROJ_ROOT/conf-jenkins-user.sh
+    $PROJ_ROOT/conf-jenkins-user.sh "hostname" "gerrit-ssh-port"
+    
+`hostname` is going to be where you're running your docker container, `gerrit-ssh-port` is going to be the output of
+    
+    docker port gerrit 29418
 
 Notes for manual set up:
 If you want jenkins to participate in the voting/code review, you should add a jenkins user with these details:
@@ -114,7 +124,7 @@ Now we need to import some code!! We'll check out the quickstart-fuse-rest code 
     $ git clone https://github.com/christian-posta/quickstart-fuse-rest.git
     $ cd quickstart-fuse6.1-rest
     
-Then we'll need to add the gerrit url as a remote:
+Then we'll need to add the gerrit url as a remote (note substitute in your own host/port names):
 
     $ git remote add gerrit http://admin@ceposta-public:49166/quickstart-fuse-rest.git
     
@@ -147,7 +157,8 @@ Now we should be ready to push to master (we'll pull first to rebase what's alre
     git pull gerrit master
     git push gerrit master
     
-__NOTE__ as we'll see in the demo, the correct branch to push to for reviews is:
+For initial import, we'll push to _master_, however, for code reviews, we push to this branch (as we'll see in the
+demo)
 
     git push gerrit HEAD:refs/for/master
     
@@ -165,8 +176,71 @@ For me, the path to my Gitlab project is here:
 Yours will be wherever you set up gitlab using the Gitlab docker container [as described in setting up Gitlab](set-up-gitlab.md)
 
 ## Verify jenkins code-review happened correctly
-We should click on the change and verify that jenkins has registered a code review of the patch set. Also,
-if we log into the jenkins console, we should see that a build was run for this patchset.
+When you make a change to the project and push it to gerrit via the `refs/for/master` branch, you should
+see that Jenkins checked out the code, built it, and added a +1 to the Code Review of the patchset. (actually
+the build is stubbed out, so it won't really do a mvn build, but it does initiate the build job and vote on the
+patchset)
+
+Example, let's make a change to the readme.md of the project and push to gerrit for review to see if jenkins
+also does its code review:
+
+Start by changing the `README.md` file of the project. Change something like "Author: " from "Fuse team" to your name.
+Then save it and commit to git:
+
+    git commit -a -m 'changed author'
+    
+At this point, we should make sure that the gerrit commit hoook added a `change-id` as this is how gerrit groups
+changes:
+
+    
+    ceposta@postamachat(gerrit-quickstart-fuse-rest (master)) $ git log -n 1
+    commit d0d35198ea582beba091f31ff3d5f0deb63aac8c
+    Author: Administrator <admin@company.com>
+    Date:   Wed Sep 17 09:58:05 2014 -0700
+    
+        changed author
+        
+        Change-Id: I5bf8c63b91b198b1446ef472b33ce08a0636b42e
+    (END) 
+    
+    
+So now we should push this commit to gerrit:
+
+    ceposta@postamachat(gerrit-quickstart-fuse-rest (master)) $ git push gerrit HEAD:refs/for/master
+    Counting objects: 14, done.
+    Delta compression using up to 8 threads.
+    Compressing objects: 100% (3/3), done.
+    Writing objects: 100% (3/3), 338 bytes | 0 bytes/s, done.
+    Total 3 (delta 2), reused 0 (delta 0)
+    remote: Resolving deltas: 100% (2/2)
+    remote: Processing changes: new: 1, refs: 1, done    
+    remote: 
+    remote: New Changes:
+    remote:   http://localhost:8080/1
+    remote: 
+    To http://admin@ceposta-public:49176/quickstart-fuse-rest.git
+     * [new branch]      HEAD -> refs/for/master
+     
+At this point, we should see a new patchset in gerrit:
+
+Also note that little "+1" in the "CR" column. That means Jenkins did its thing. We can click on the changeset and
+see it more clearly:
+
+---
+
+![HTTP Url](images/GerritDidCodeReviewJenkins.png)
+
+---
+
+![HTTP Url](images/GerritDidCodeReviewJenkins2.png)
+
+---
+
+Also note that little "+1" in the "CR" column. That means Jenkins did its thing. We can click on the changeset and
+see it more clearly:
+
+
+
 
 ## Random Gerrit Notes: Roles, Reviews, Topics
 

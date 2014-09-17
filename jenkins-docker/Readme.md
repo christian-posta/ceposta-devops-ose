@@ -22,3 +22,21 @@ docker environment, you can just set the environment variables yourself. See the
 names.
 
 You should see [the guide for setting up the Jenkins docker container for this demo](../docs/set-up-jenkins.md). 
+
+
+
+### Jenkins plugins
+Here are a list of Jenkins plugins we use for our Continuous Delivery setup. They are listed here for completeness.
+You don't have to install this separately as it's all automated.
+
+* Conditional Build plugin
+* Paramaterized Build plugin
+* Promoted Build plugin
+* Build pipeline
+* Copy artifacts
+* EnvInject plugin
+* ConfigFile plugin
+* Git
+* Maven
+
+You can see the full, up to date list, [directly on the Dockerfile for the Jenkins container](../jenkins-docker/Dockerfile)

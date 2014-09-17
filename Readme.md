@@ -71,6 +71,38 @@ for solutions that run on premise or in a PaaS.
 
 See [this guide for setting up our OpenShift environment on OpenStack](docs/set-up-openshift.md)
 
+## Gitlab
+GitHub is great for hosting code, reviewing branches, reviewing commits, tracking issues, etc. But we prefer an
+OpenSource solution for this demonstration so that anyone can get started. [GitLab](https://about.gitlab.com) is an excellent alternative
+to GitHub for internal/private hosting.
+
+We use Gitlab to be able to view our code through a web browser, track changes, branches, etc. You could also 
+use GitLab for pull requests and use the GitHub style pull-request model if the Gerrit model isn't what you're looking
+for.
+
+## Gerrit
+We use [Gerrit][gerrit]https://code.google.com/p/gerrit/ to demonstrate a key piece of the Continuous Delivery/Devops
+work flow. Allowing teams to contribute to a large complex integration project takes a little more care, especially 
+when getting new people on your team, or accepting junior developers to submit code. The traditional GitHub pull-request
+model works great for some open source projects, but for those teams wishing to bring an open-source feel to their
+teams along with tracking changesets, encouraging cross-developer interaction and knowledge sharing as well as 
+conforming to a team style/convention, then Gerrit is the tool to help you do that. 
+
+With Gerrit, you can code review your changesets, track the feedback loop that usually happens when reviewing code,
+and merge with master when the code is ready. This also keeps broken builds on your master/CI branch to a minimum.
+
+## Sonatype Nexus
+We use [Sonatype Nexus][nexus]to model our enterprise artifact repository. In here we can store our build artifacts
+(for example, not just jars and wars, but our JBoss Fuse/Fabric8 profiles) and access them across environments. Nexus
+plays a central role in our [continuous delivery][cd] pipline.
+ 
+## Jenkins
+Jenkins provides the heavy lifting for our continuous integration and continuous delivery pipline. Just like the
+other components, this piece is delivered as an out-of-the box Jenkins already configured to use the other containers
+(Gitlab, Nexus, etc) and it also has the projects needed for the CD demo already configured. You'll have to make sure
+the other external pieces (OpenShift, Gitlab/Nexus) are set up correctly, but all of the projects are all ready to 
+go.
+
 ## Todos
 Here are a list of things I'd like to do with the Demo that it doesn't do right now.
 I'll try to strike through the list as I accomplish it. 
