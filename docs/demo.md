@@ -49,32 +49,105 @@ This is a visualization of the interaction between the pieces in the demo:
 
 ---
 
-When a developer is ready to submit a code change, they submit the code to Gerrit as a "patchset." This patchset is
-then scrutinized, reviewed more carefully, and finally voted on by automated builds, team members, and ultimately those 
-who have commit authority. See [set-up-gerrit.md](set-up-gerrit.md) for more details on the roles and voting mechanisms
-employed for a gerrit patchset.
+When you make a change to the project and push it to gerrit via the `refs/for/master` branch, you should
+see that Jenkins checked out the code, built it, and added a +1 to the Code Review of the patchset. (actually
+the build is stubbed out, so it won't really do a mvn build, but it does initiate the build job and vote on the
+patchset)
 
-In the demo, when a patchset is submitted, Jenkins will automatically checkout the change, build it and run unit tests.
-If everything looks good, then Jenkins will vote +1 for the change. This can be taken to mean "jenkins found no problems
-with the build, unit tests, and anything else it was charged with examining in a first pass". 
+Example, let's make a change to the readme.md of the project and push to gerrit for review to see if jenkins
+also does its code review:
 
-At this point any team
-member with +2/commit authority can view the patch and vote. If the patchset gets voted a +2, then the change will
-be merged into the master branch. When this happens in the demo, the code will be automatically replicated to a 
-read-only repo that's more suitable for browsing code, viewing commits, and filing issues. In this case it's Gitlab,
-but we could also have used GitHub as gerrit has good integration with both. Gitlab/GitHub provide a read-only copy
-of the authoritative master that's in Gerrit. Jenkins deploy pipeline builds are initiated from the Gitlab repo.
+Start by changing the `README.md` file of the project. Change something like "Author: " from "Fuse team" to your name.
+Then save it and commit to git:
+
+    git commit -a -m 'changed author'
+    
+At this point, we should make sure that the gerrit commit hoook added a `change-id` as this is how gerrit groups
+changes:
+
+    
+    ceposta@postamachat(gerrit-quickstart-fuse-rest (master)) $ git log -n 1
+    commit d0d35198ea582beba091f31ff3d5f0deb63aac8c
+    Author: Administrator <admin@company.com>
+    Date:   Wed Sep 17 09:58:05 2014 -0700
+    
+        changed author
+        
+        Change-Id: I5bf8c63b91b198b1446ef472b33ce08a0636b42e
+    (END) 
+    
+    
+So now we should push this commit to gerrit:
+
+    ceposta@postamachat(gerrit-quickstart-fuse-rest (master)) $ git push gerrit HEAD:refs/for/master
+    Counting objects: 14, done.
+    Delta compression using up to 8 threads.
+    Compressing objects: 100% (3/3), done.
+    Writing objects: 100% (3/3), 338 bytes | 0 bytes/s, done.
+    Total 3 (delta 2), reused 0 (delta 0)
+    remote: Resolving deltas: 100% (2/2)
+    remote: Processing changes: new: 1, refs: 1, done    
+    remote: 
+    remote: New Changes:
+    remote:   http://localhost:8080/1
+    remote: 
+    To http://admin@ceposta-public:49176/quickstart-fuse-rest.git
+     * [new branch]      HEAD -> refs/for/master
+     
+At this point, we should see a new patchset in gerrit:
+
+Also note that little "+1" in the "CR" column. That means Jenkins did its thing. We can click on the changeset and
+see it more clearly:
+
+---
+
+![HTTP Url](images/GerritDidCodeReviewJenkins.png)
+
+---
+
+![HTTP Url](images/GerritDidCodeReviewJenkins2.png)
+
+---
+
+Also note that little "+1" in the "CR" column. That means Jenkins did its thing. We can click on the changeset and
+see it more clearly:
+
+
+At this point any team member with +2/commit authority can view the patch and vote. If the patchset gets voted a +2, 
+then the change will be merged into the master branch. When this happens in the demo, the code will be automatically
+replicated to a read-only repo that's more suitable for browsing code, viewing commits, and filing issues. In this case
+it's Gitlab, but we could also have used GitHub as gerrit has good integration with both. Gitlab/GitHub provide a
+read-only copy of the authoritative master that's in Gerrit. Jenkins deploy pipeline builds are initiated from the Gitlab
+repo.
 
 ## Code merged, kick off initial build for delivery
 Once the code has been merged to the authoritative master, the build pipeline can start. The initial smoke builds done
 by jenkins earlier were on the SNAPSHOT code with the patchset applied. Once this patchset has been accepted by the
 reviewers, it becomes eligible to be built and deployed. When the code has made it to the authoritative master, we follow 
-a continuous-integration style reaction here where the code will be checked out and built again. The big difference 
+a continuous-integration style reaction here where the code will be checked out and built following this pipeline:
+
+
+---
+
+![HTTP Url](images/PipelineList.png)
+
+---
+
+The big difference 
 this time is that since the code is eligible for delivery, we will need to assign a version to it. We branch the code from
-Gitlab, assign a version number and proceed. This code will then 
+Gitlab, assign a version number and proceed. 
+
+    git checkout -b quickstart-fuse-rest-1.0.0
+    versions:set -DnewVersion=1.0.0
+
+This code will then 
 run through unit tests, code style checks, and other quality inspections. If all is good, the code with the new version 
 is committed back to the git branch and pushed back to Gitlab, and artifacts are stored into a central artifact repository
-(Nexus for this demo, could be file system, Artifactory, etc) and this stage is passed. If this stage has passed successfully, the next stage is initiated: Automated integration tests.
+(Nexus for this demo, could be file system, Artifactory, etc) and this stage is passed. If this stage has passed
+successfully, the next stage is initiated: Automated integration tests.
+
+    git commit -a -m 'new release candidate'
+    git push http://host/root/quickstart-fuse-rest.git quickstart-fuse-rest-1.0.0
 
 
 ---
@@ -112,11 +185,14 @@ intended to be filled out) fail, we stop the build pipeline and alert any intere
 
 To move our code further along in the pipeline, we need to actually deploy it and make sure it works not only with the
 code and configuration we've assigned but also within a real (and progressively more production like) environment. 
-traditionally, to do this, you would have some kind of shared infrastructure where you deploy code to existing, shared
-containers hoping to not blow everything up or step on someone else's toes. Often these types of deployment would have zero
+Traditionally, to do this, you would have to procure some kind of shared infrastructure where you deploy code to existing, servers hoping to not blow everything up or step on someone else's toes. Often these types of deployment would have zero
 environment configurations where you can deploy and version entire environments (although I've seen some companies do a 
 really good job of this). But sharing environments can be a nightmare (as I've also seen some companies do this ;) ) so 
-we've [opted to use a PaaS][openshift] to help isolate our dev environments and the builds/testing we do for each deployment.
+we've [opted to use a PaaS][openshift] to help isolate and automate our dev environments and the builds/testing we do for each deployment. The benefits are these:
+
+    * isolation from other environments
+    * don't need to plan ahead of time to provision, can spin up on the fly
+    * can fully tests that your environment is set up correctly (wink, wink... DevOps??)
   
 [Trevor Quinn](http://www.linkedin.com/in/trevorquinn) put together this excellent graphic of how OSE environments and a deployment pipeline could look:
 
@@ -130,23 +206,13 @@ Our demo does something similar, although we only use one OSE environment and tr
  
 In the demo, if our initial builds and integration builds pass successfully, we will try to do the following things:
 
-* spin up a new fuse environment on the fly in a "Dev" OSE
-* deploy our fuse binaries + fabric profiles to this new environment
-* deploy a fuse container and apply our profiles/binaries
-* run acceptance tests against this environment
+### spin up a new fuse environment on the fly in a "Dev" OSE
 
+We use the OSE REST api to do this. See the docs here: [http://openshift.github.io/documentation/rest_api/rest-api-1-6.html](http://openshift.github.io/documentation/rest_api/rest-api-1-6.html)
 
----
-
-![deploy fuse ose](diagrams/deploy-fuse-ose.png)
-
----
-
-The Jenkins build itself uses the scripts found in the [ose-scripts](../ose-scripts) directory. To create the OSE
-environment, we use the OpenShift REST API. After we've successfully created a new Fuse cartridge in the OSE dev
-environment, we capture the gear details (domain, ssh urls, fuse console passwords, etc) and inject them into the
-Jenkins build so that we can use them as parameters for kicking off the scripts to build the fabric profiles and
-upload them to the fuse gear. For example, here's an example of some of those environment variables that we can use:
+After the Fuse environment is created, we inject the necessary environment variables back into the workspace. For example,
+when you create a new Fuse app, the DNS name, Console admin and passwords, ZK urls, etc are spit out to the console. We
+capture these and inject. For example:
 
     FUSE_ROOT_URL=http://fuse10-dev.ose.pocteam.com/
     FUSE_GEAR_SSH=ssh://54121b79d91cec462a0000bb@fuse10-dev.ose.pocteam.com
@@ -156,10 +222,34 @@ upload them to the fuse gear. For example, here's an example of some of those en
     FUSE_ZK_URL=fuse10-dev.ose.pocteam.com:43526
     FUSE_ZK_PASSWORD=fZ_WpQGZxddg
     
-We can also log directly into the gear (FUSE_GEAR_SSH) or into the Fuse container itself (FUSE_CONTAINER_SSH). The
-rest of the jenkins build will log directly into the FUSE_CONTAINER_SSH and spin up a new container with the `my-rest`
-profile. This profile was automatically generated using the `fabric8:deploy maven goal`. See the Jenkins job for
-`fuse-rest-deploy-dev`.
+These variables are now available within our build environment.
+
+You can check out the scripts for this step here:
+
+    * [ose-scripts/create_ose_env.sh](../ose-scripts/create_ose_env.sh)
+    * [ose-scripts/check_app_exists.py](../ose-scripts/check_app_exists.py)
+    * [ose-scripts/create_new_app.sh](../ose-scripts/create_new_app.sh)
+    
+### deploy our fuse binaries + fabric profiles to this new environment
+Once the Fuse environment is spun up, we will use the [Fabric8 maven plugin](http://fabric8.io/gitbook/mavenPlugin.html) 
+plugin to build our binaries as well as our [Fuse profiles](http://fabric8.io/gitbook/profiles.html). Once these profiles are built, we'll push them up to the [Fuse registry](http://fabric8.io/gitbook/registry.html) with this command:
+
+
+    fabric8:deploy -Dfabric8.jolokiaUrl=${FUSE_ROOT_URL}/jolokia -Dfabric8.serverId=fabric8.upload.repo -Dmaven.test.skip=true -DfailIfNoTests=false -s ${WORKSPACE}/.env-scripts/jenkins-docker/maven/settings.xml
+    
+    
+
+### deploy a fuse container and apply our profiles/binaries
+Once we have our profiles deployed to our Fuse registry we can now use Fuse to deploy the profile the way you would with any Fuse Fabric/Fabric8 deployment. However, since this is dev, we will just automate this piece also using this script here:
+
+See [this script to do that.](../ose-scripts/create_fuse_container.sh)
+
+
+---
+
+![deploy fuse ose](diagrams/deploy-fuse-ose.png)
+
+---
 
  
 ## Dev Acceptance tests
@@ -168,13 +258,13 @@ These tests will be the gate keeper to moving to the next environment (QA for ex
 can be developed using any testing framework (Cucumber, FitNesse, etc) but using good old JUnit to automate these is
 an acceptable solution too. 
 
-
-## Migration to other environments
 If these acceptance tests pass, then we do the following things:
 
-* We should extract the profiles associated with this application from Fuse/Fabric8. This will allow us to easily migrate our deployment to the next stage. All profiles are kept in git so we basically do a git clone 
+* We  extract the profiles associated with this application from Fuse/Fabric8. This will allow us to easily migrate our deployment to the next stage. All profiles are kept in git so we basically do a git clone 
 * We zip up the profiles associated with our application
 * We push the zip artifact up to our central artifact repository
+
+## Migration to other environments
 
 Pushing the profiles up to our artifact repository allows us to version our deployments and migrate them. Any ideal build process will build the binaries _once_ and migrate them exactly to other environments (and change configurations, depending on env. But also note, these configurations are _also_ versioned... everything is versioned!!!)
 
