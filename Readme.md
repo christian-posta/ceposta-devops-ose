@@ -1,5 +1,8 @@
 # Continuous Delivery with JBoss Fuse and OpenShift
 This project is a example of an end-to-end [Continuous Delivery][cd] automation pipeline for JBoss Fuse integration projects. 
+
+![entire flow](docs/diagrams/entire-flow.png)
+
 This can be used to set up a handful of tools to assist your team to work cross functionally in a DevOps culture. 
 The same philosophy and pipeline can be used for other types of applications as well, but with
 JBoss Fuse, we can focus on integration projects and [Micorservices][microservices]. The demo focuses on automating
