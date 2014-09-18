@@ -37,7 +37,7 @@ createDockerUrl() {
   dockerUrl=`echo $1 | sed s/0.0.0.0/$DOCKER_HOSTNAME/`
 }
 
-$FUSE=$1
+FUSE=$1
 createDockerUrl `docker port $FUSE 8181`
 HAWTIO_URL=$dockerUrl
 
