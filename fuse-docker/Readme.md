@@ -36,3 +36,11 @@ or run the whole thing in one line:
     sshpass -p admin ssh -p 49251 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no admin@localhost fabric:create --clean --wait-for-provisioning --zookeeper-password christian
     
 Navigate to the correct port (on the host) for fabric8's 8181
+
+Now add the `openshift` profile to fuse:
+
+    sshpass -p admin ssh -p 49251 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no admin@localhost fabric:container-add-profile root openshift
+
+Now try to create a container on OSE through the Fuse registry (which is not deployed on OSE):
+
+    sshpass -p admin ssh -p 49251 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no admin@localhost
