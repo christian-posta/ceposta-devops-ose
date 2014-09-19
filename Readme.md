@@ -23,7 +23,7 @@ or you could _enhance it with any missing features you'd like to see and contrib
 
 Quicklinks: 
 
-* [Watch Demo](http://doesntexistyet.com)
+* [Watch Demo](docs/videos.md)
 * [Set up demo yourself](docs/setup-demo.md)
 * [Run the demo yourself](docs/demo.md)
 
