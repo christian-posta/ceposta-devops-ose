@@ -5,7 +5,7 @@ This project is a example of an end-to-end [Continuous Delivery][cd] automation 
 
 This can be used to set up a handful of tools to assist your team to work cross functionally in a DevOps culture. 
 The same philosophy and pipeline can be used for other types of applications as well, but with
-JBoss Fuse, we can focus on integration projects and [Micorservices][microservices]. The demo focuses on automating
+JBoss Fuse, we can focus on integration projects and [Microservices][microservices]. The demo focuses on automating
 the developer experience (using Git, for example) as well as automating the deployment enlivenment (using
 [OpenShift][openshift] for example). The project can be used as a starting point for a customizable CD solution.
 
