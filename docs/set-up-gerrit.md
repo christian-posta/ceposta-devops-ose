@@ -88,7 +88,7 @@ you should run after setting up the Admin account which will automatically setup
 username and the `gerrit-admin` private key that we set up in the previous step, so please verify everything was 
 set up correctly. Now run:
 
-    $PROJ_ROOT/conf-jenkins-user.sh "hostname" "gerrit-ssh-port"
+    $PROJ_ROOT/gerrit-docker/conf-jenkins-user.sh "hostname" "gerrit-ssh-port"
     
 `hostname` is going to be where you're running your docker container, `gerrit-ssh-port` is going to be the output of
     

@@ -5,11 +5,11 @@ Docker container on your host. Docker isn't required if you wish to manually set
 ## Set up Docker container
 You'll need to pull the GitLab docker image that we use for this demo:
  
-    docker pull sameersbn/gitlab:latest
+    docker pull sameersbn/gitlab:7.2.2
     
 Then you can start the container:
 
-    docker run -itdP --name gitlab2 -e 'GITLAB_SIGNUP=true' sameersbn/gitlab:latest
+    docker run -itdP --name gitlab2 -e 'GITLAB_SIGNUP=true' sameersbn/gitlab:7.2.2
     
 To find out what port (on the host) the Gitlab container is listening on (for port 80), run this:
 
@@ -49,7 +49,7 @@ At this point you'll be asked to choose a new password. For the demo, we're usin
 
 
 ### Adding SSH keys
-You should add ssh keys, but you don't have to. If you wish to, you can use the keys located in the $PROJ_ROOT/git folder
+You should add ssh keys, but you don't have to. If you wish to, you can use the keys located in the $PROJ_ROOT/ssh-keys/git folder
 of this project. If you don't use SSH keys, you can use HTTP access with the root/redhat01 account as the un/pw
 
 Example of HTTP git url:

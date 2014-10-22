@@ -43,7 +43,7 @@ echo "building the Docker image for jenkins"
 docker build -t fabric8:jenkins $APP_BASE/jenkins-docker
 
 echo "pulling the Docker image for gitlab"
-docker pull sameersbn/gitlab:latest
+docker pull sameersbn/gitlab:7.2.2
 
 echo "pulling the Docker image for nexus"
 docker pull pantinor/centos-nexus:latest
