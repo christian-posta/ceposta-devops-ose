@@ -122,7 +122,7 @@ __quickstart-fuse-rest__ because that's what's used in the Jenkins builds for th
 Now we need to import some code!! We'll check out the quickstart-fuse-rest code from GitHub:
 
     $ git clone https://github.com/christian-posta/quickstart-fuse-rest.git
-    $ cd quickstart-fuse6.1-rest
+    $ cd quickstart-fuse-rest
     
 Then we'll need to add the gerrit url as a remote (note substitute in your own host/port names):
 
