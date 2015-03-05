@@ -1,4 +1,3 @@
-
 #Example how to run this:
 # docker run -itdP --name=“gerrit” -e “GERRIT_USER=admin” -e “GERRIT_PASSWORD=redhat01” -e \
 # “GERRIT_PROJ_ROOT=root”--link gitlab:gitlab gerrit
@@ -19,7 +18,7 @@ RUN apt-get update
 RUN apt-get upgrade -y
 
 RUN useradd -m ${GERRIT_USER}
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes tzdata tzdata-java openjdk-6-jre-headless sudo git-core supervisor vim-tiny
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes tzdata=2014b-1 tzdata-java openjdk-6-jre-headless sudo git-core supervisor vim-tiny
 RUN mkdir -p /var/log/supervisor
 
 ADD http://gerrit-releases.storage.googleapis.com/gerrit-2.8.5.war /tmp/gerrit.war

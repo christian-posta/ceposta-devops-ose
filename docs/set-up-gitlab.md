@@ -9,7 +9,7 @@ You'll need to pull the GitLab docker image that we use for this demo:
     
 Then you can start the container:
 
-    docker run -itdP --name gitlab2 -e 'GITLAB_SIGNUP=true' sameersbn/gitlab:7.2.2
+    docker run -itdP --name gitlab --privileged -e 'GITLAB_SIGNUP=true' sameersbn/gitlab:7.2.2
     
 To find out what port (on the host) the Gitlab container is listening on (for port 80), run this:
 

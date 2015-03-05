@@ -71,6 +71,5 @@ RUN chown jenkins:jenkins /home/jenkins/conf-and-run-jenkins.sh
 RUN mkdir -p /var/jenkins_home/gerrit/keys
 ADD ssh-keys/jenkins /var/jenkins_home/gerrit/keys/jenkins
 
-USER jenkins
 
 CMD ["/home/jenkins/conf-and-run-jenkins.sh"]
