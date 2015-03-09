@@ -111,13 +111,15 @@ users to modify refs/* and label-code-reviews for -1..+1
 Next we need to get the project set up. So just like we created a new project (empty one) on gitlab, we'll do the same
 here for Gerrit. Click on "Projects" and then "Create New Project" The name of the project must match the name we
 gave to the project in GitLab (because that's how the replication from Gerrit to GitLab happens) and we MUST use the name
-__quickstart-fuse-rest__ because that's what's used in the Jenkins builds for the demo.
+__quickstart-fuse-rest__ because that's what's used in the Jenkins builds for the demo. Also make sure the "Create initial empty commit' is checked, and then click "Create Project"
 
 ---
 
 ![Gerrit new project](images/GerritNewProject.png)
 
 ---
+
+After doing this, you should wait a minute or two and then verify on the _Gitlab_ side that the simple, empty commit was actually replicated over. This code replication is necessary for the demo as all gerrit checkins/code reviews should be replicated to Gitlab.
 
 Now we need to import some code!! We'll check out the quickstart-fuse-rest code from GitHub:
 

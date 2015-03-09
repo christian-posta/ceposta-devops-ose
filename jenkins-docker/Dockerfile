@@ -34,7 +34,7 @@ ADD http://updates.jenkins-ci.org/latest/role-strategy.hpi /var/jenkins_home/plu
 USER root
 
 # needed to run our OSE scripts
-RUN apt-get update && apt-get install -y python sshpass
+RUN apt-get update && apt-get install -y python sshpass maven
 
 # add the maven settings.xml
 #ADD maven/settings.xml /etc/maven/settings.xml
