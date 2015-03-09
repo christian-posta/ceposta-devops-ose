@@ -28,7 +28,7 @@ print "app_name=%s version=%s broker=%s domain=%s" % (SOURCE_APP_NAME, VERSION_N
 
 # filter out chars OSE can't deal with
 OPENSHIFT_APP_NAME = filter(str.isalnum,SOURCE_APP_NAME+VERSION_NUMBER)
-OPENSHIFT_CARTRIDGE_FUSE = "fuse-1.0.0"
+OPENSHIFT_CARTRIDGE_FUSE = "fuse-6.1.1"
 HEADER_ACCEPT = "Accept: application/json"
 OPENSHIFT_API="/broker/rest/"
 OPENSHIFT_USER = "christian"

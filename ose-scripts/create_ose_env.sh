@@ -24,11 +24,11 @@ APP_NAME=$(echo ${SOURCE_APP_NAME} | tr -d -c "[:alnum:]")
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HEADER_ACCEPT="Accept: application/json"
 OPENSHIFT_API=/broker/rest/
-OPENSHIFT_USER=christian
-OPENSHIFT_PASSWORD=christian
+OPENSHIFT_USER=cposta
+OPENSHIFT_PASSWORD=cposta
 # ceposta, dev, qa, prod
 OPENSHIFT_DOMAIN=dev
-OPENSHIFT_CARTRIDGE_FUSE=fuse-1.0.0
+OPENSHIFT_CARTRIDGE_FUSE=fuse-6.1.1
 
 
 # set the app name to include the build versions so we can identify the env

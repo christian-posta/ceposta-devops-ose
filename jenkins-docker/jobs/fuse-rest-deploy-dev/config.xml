@@ -65,7 +65,7 @@
         <hudson.tasks.Shell>
             <command>rm -fr ${WORKSPACE}/.env-scripts
                 git clone http://__GITLAB_IP__/root/ceposta-devops-ose.git ${WORKSPACE}/.env-scripts
-                ${WORKSPACE}/.env-scripts/ose-scripts/create_ose_env.sh fuse ${RELEASE_NUMBER} https://broker.hosts.pocteam.com dev</command>
+                ${WORKSPACE}/.env-scripts/ose-scripts/create_ose_env.sh fuse ${RELEASE_NUMBER} https://devday.osecloud.com ceposta</command>
         </hudson.tasks.Shell>
         <EnvInjectBuilder plugin="envinject@1.89">
             <info>
@@ -86,7 +86,7 @@
             <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
         </hudson.tasks.Maven>
     <hudson.tasks.Shell>
-      <command>${WORKSPACE}/.env-scripts/ose-scripts/create_fuse_container.sh ${FUSE_CONTAINER_SSH} ${FUSE_CONSOLE_PASSWORD} https://broker.hosts.pocteam.com ${RELEASE_NUMBER}</command>
+      <command>${WORKSPACE}/.env-scripts/ose-scripts/create_fuse_container.sh ${FUSE_CONTAINER_SSH} ${FUSE_CONSOLE_PASSWORD} https://devday.osecloud.com ${RELEASE_NUMBER}</command>
     </hudson.tasks.Shell>
     </builders>
   <publishers>
