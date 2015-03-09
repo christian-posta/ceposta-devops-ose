@@ -1,45 +1,60 @@
-FROM jenkins:1.576
+FROM java:openjdk-7u65-jdk
 
 MAINTAINER Christian Posta <christian.posta@gmail.com>
 
+RUN apt-get update && apt-get install -y wget python sshpass maven git curl zip && rm -rf /var/lib/apt/lists/*
 
+ENV JENKINS_HOME /var/jenkins_home
+
+# Jenkins is ran with user `jenkins`, uid = 1000
+# If you bind mount a volume from host/vloume from a data container,
+# ensure you use same uid
+RUN useradd -d "$JENKINS_HOME" -u 1000 -m -s /bin/bash jenkins
+
+RUN mkdir -p "$JENKINS_HOME"
+RUN mkdir -p "$JENKINS_HOME"/plugins
+RUN mkdir -p "$JENKINS_HOME"/jobs
+
+
+
+# could use ADD but this one does not check Last-Modified header
+# see https://github.com/docker/docker/issues/8331
+RUN curl -L http://mirrors.jenkins-ci.org/war/1.576/jenkins.war -o "$JENKINS_HOME"/jenkins.war
+RUN chown jenkins:jenkins "$JENKINS_HOME"/jenkins.war
 
 
 # Let's install all of the plugins we'll need
 # The jenkins site to browse the plugins is here: https://updates.jenkins-ci.org/download/plugins/
-ADD http://updates.jenkins-ci.org/latest/git.hpi /var/jenkins_home/plugins/git.hpi
-ADD http://updates.jenkins-ci.org/latest/ssh-credentials.hpi /var/jenkins_home/plugins/ssh-credentials.hpi
-ADD http://updates.jenkins-ci.org/latest/ssh-agent.hpi /var/jenkins_home/plugins/ssh-agent.hpi
-ADD http://updates.jenkins-ci.org/latest/rebuild.hpi /var/jenkins_home/plugins/rebuild.hpi
-ADD http://updates.jenkins-ci.org/latest/git-client.hpi /var/jenkins_home/plugins/git-client.hpi
-ADD http://updates.jenkins-ci.org/latest/scm-api.hpi /var/jenkins_home/plugins/scm-api.hpi
-ADD http://updates.jenkins-ci.org/latest/ssh-credentials.hpi /var/jenkins_home/plugins/ssh-credentials.hpi
-ADD http://updates.jenkins-ci.org/latest/credentials.hpi /var/jenkins_home/plugins/credentials.hpi
-ADD http://updates.jenkins-ci.org/latest/config-file-provider.hpi /var/jenkins_home/plugins/config-file-provider.hpi
-ADD http://updates.jenkins-ci.org/latest/token-macro.hpi /var/jenkins_home/plugins/token-macro.hpi
-ADD http://updates.jenkins-ci.org/latest/run-condition.hpi /var/jenkins_home/plugins/run-condition.hpi
-ADD http://updates.jenkins-ci.org/latest/conditional-buildstep.hpi /var/jenkins_home/plugins/conditional-buildstep.hpi
-ADD http://updates.jenkins-ci.org/latest/parameterized-trigger.hpi /var/jenkins_home/plugins/parameterized-trigger.hpi
-ADD http://updates.jenkins-ci.org/latest/promoted-builds.hpi /var/jenkins_home/plugins/promoted-builds.hpi
-ADD http://updates.jenkins-ci.org/latest/jquery.hpi /var/jenkins_home/plugins/jquery.hpi
-ADD http://updates.jenkins-ci.org/latest/dashboard-view.hpi /var/jenkins_home/plugins/dashboard-view.hpi
-ADD http://updates.jenkins-ci.org/latest/build-pipeline-plugin.hpi /var/jenkins_home/plugins/build-pipeline-plugin.hpi
-ADD http://updates.jenkins-ci.org/latest/managed-scripts.hpi /var/jenkins_home/plugins/managed-scripts.hpi
-ADD http://updates.jenkins-ci.org/latest/copyartifact.hpi /var/jenkins_home/plugins/copyartifact.hpi
-ADD http://updates.jenkins-ci.org/latest/envinject.hpi /var/jenkins_home/plugins/envinject.hpi
-ADD http://updates.jenkins-ci.org/latest/gerrit-trigger.hpi /var/jenkins_home/plugins/gerrit-trigger.hpi
-ADD http://updates.jenkins-ci.org/latest/ws-cleanup.hpi /var/jenkins_home/plugins/ws-cleanup.hpi
-ADD http://updates.jenkins-ci.org/latest/role-strategy.hpi /var/jenkins_home/plugins/role-strategy.hpi
+ADD plugins/git.hpi /var/jenkins_home/plugins/git.hpi
+ADD plugins/ssh-credentials.hpi /var/jenkins_home/plugins/ssh-credentials.hpi
+ADD plugins/ssh-agent.hpi /var/jenkins_home/plugins/ssh-agent.hpi
+ADD plugins/rebuild.hpi /var/jenkins_home/plugins/rebuild.hpi
+ADD plugins/git-client.hpi /var/jenkins_home/plugins/git-client.hpi
+ADD plugins/scm-api.hpi /var/jenkins_home/plugins/scm-api.hpi
+ADD plugins/ssh-credentials.hpi /var/jenkins_home/plugins/ssh-credentials.hpi
+ADD plugins/credentials.hpi /var/jenkins_home/plugins/credentials.hpi
+ADD plugins/config-file-provider.hpi /var/jenkins_home/plugins/config-file-provider.hpi
+ADD plugins/token-macro.hpi /var/jenkins_home/plugins/token-macro.hpi
+ADD plugins/run-condition.hpi /var/jenkins_home/plugins/run-condition.hpi
+ADD plugins/conditional-buildstep.hpi /var/jenkins_home/plugins/conditional-buildstep.hpi
+ADD plugins/parameterized-trigger.hpi /var/jenkins_home/plugins/parameterized-trigger.hpi
+ADD plugins/promoted-builds.hpi /var/jenkins_home/plugins/promoted-builds.hpi
+ADD plugins/jquery.hpi /var/jenkins_home/plugins/jquery.hpi
+ADD plugins/dashboard-view.hpi /var/jenkins_home/plugins/dashboard-view.hpi
+ADD plugins/build-pipeline-plugin.hpi /var/jenkins_home/plugins/build-pipeline-plugin.hpi
+ADD plugins/managed-scripts.hpi /var/jenkins_home/plugins/managed-scripts.hpi
+ADD plugins/copyartifact.hpi /var/jenkins_home/plugins/copyartifact.hpi
+ADD plugins/envinject.hpi /var/jenkins_home/plugins/envinject.hpi
+ADD plugins/gerrit-trigger.hpi /var/jenkins_home/plugins/gerrit-trigger.hpi
+ADD plugins/ws-cleanup.hpi /var/jenkins_home/plugins/ws-cleanup.hpi
+ADD plugins/role-strategy.hpi /var/jenkins_home/plugins/role-strategy.hpi
 
-USER root
-
-# needed to run our OSE scripts
-RUN apt-get update && apt-get install -y python sshpass maven
 
 # add the maven settings.xml
 #ADD maven/settings.xml /etc/maven/settings.xml
-ADD maven/settings.xml /var/lib/jenkins/.m2/settings.xml
-RUN chown -R jenkins:jenkins /var/lib/jenkins/.m2
+RUN mkdir -p "$JENKINS_HOME"/.m2
+ADD maven/settings.xml /var/jenkins_home/.m2/settings.xml
+RUN chown -R jenkins:jenkins "$JENKINS_HOME"/.m2
 
 # add the jenkins jobs
 ADD jobs/config.xml /var/jenkins_home/config.xml
@@ -60,16 +75,25 @@ RUN chown jenkins:jenkins /var/jenkins_home/gerrit-trigger.xml
 # configure maven installation
 RUN printf "<?xml version='1.0' encoding='UTF-8'?> <hudson.tasks.Maven_-DescriptorImpl> <installations> <hudson.tasks.Maven_-MavenInstallation> <name>maven</name> <home>/usr/share/maven</home> <properties/> </hudson.tasks.Maven_-MavenInstallation> </installations> </hudson.tasks.Maven_-DescriptorImpl>" >> /var/jenkins_home/hudson.tasks.Maven.xml ; chown jenkins:jenkins /var/jenkins_home/hudson.tasks.Maven.xml
 
-# Set up git user 'jenkins'
-RUN git config --global user.email "jenkins@jenkins.org"
-RUN git config --global user.name "jenkins"
 
 ADD conf-and-run-jenkins.sh /home/jenkins/conf-and-run-jenkins.sh
 RUN chmod +x /home/jenkins/conf-and-run-jenkins.sh
 RUN chown jenkins:jenkins /home/jenkins/conf-and-run-jenkins.sh
 
-RUN mkdir -p /var/jenkins_home/gerrit/keys
+RUN mkdir -p "$JENKINS_HOME"/gerrit/keys
 ADD ssh-keys/jenkins /var/jenkins_home/gerrit/keys/jenkins
+RUN chown -R jenkins:jenkins "$JENKINS_HOME"/gerrit
 
+USER jenkins
 
-CMD ["/home/jenkins/conf-and-run-jenkins.sh"]
+# Set up git user 'jenkins'
+RUN git config --global user.email "jenkins@jenkins.org"
+RUN git config --global user.name "jenkins"
+
+# for main web interface:
+EXPOSE 8080
+
+# will be used by attached slave agents:
+EXPOSE 50000
+
+ENTRYPOINT ["/home/jenkins/conf-and-run-jenkins.sh"]
