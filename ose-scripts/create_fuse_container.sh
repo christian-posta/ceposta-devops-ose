@@ -28,4 +28,4 @@ alias ssh2fabric="sshpass -p $FUSE_ADMIN_PASSWORD ssh -p $SSH_PORT -o ServerAliv
 
 #
 # create a container with our profile
-ssh2fabric "fabric:container-create-openshift --login christian --password christian --gear-profile xpaas --server-url $OPENSHIFT_BROKER --profile $PROFILE_NAME $CONTAINER_NAME"
+ssh2fabric "fabric:container-create-openshift --login cposta --password cposta --gear-profile xpaas --server-url $OPENSHIFT_BROKER --profile $PROFILE_NAME $CONTAINER_NAME"
