@@ -27,7 +27,7 @@ OPENSHIFT_API=/broker/rest/
 OPENSHIFT_USER=cposta
 OPENSHIFT_PASSWORD=cposta
 # ceposta, dev, qa, prod
-OPENSHIFT_DOMAIN=dev
+OPENSHIFT_DOMAIN=ceposta
 OPENSHIFT_CARTRIDGE_FUSE=fuse-6.1.1
 
 
