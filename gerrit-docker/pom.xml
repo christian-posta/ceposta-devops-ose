@@ -11,11 +11,9 @@
         <fabric8.version>2.2-SNAPSHOT</fabric8.version>
         <docker.maven.plugin.version>0.11.5-M1</docker.maven.plugin.version>
 
-        <http.port>8787</http.port>
-        
         <docker.from>fabric8/java</docker.from>
 
-        <docker.image>fabric8/${project.artifactId}:${project.version}</docker.image>
+        <docker.image>cmoulliard/${project.artifactId}:${project.version}</docker.image>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.env.MAIN>io.fabric8.cdelivery.Main</docker.env.MAIN>
         
