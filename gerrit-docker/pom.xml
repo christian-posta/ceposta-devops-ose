@@ -8,7 +8,7 @@
     <version>1.0</version>
 
     <properties>
-        <fabric8.version>2.1.3</fabric8.version>
+        <fabric8.version>2.2-SNAPSHOT</fabric8.version>
         <docker.maven.plugin.version>0.11.5-M1</docker.maven.plugin.version>
 
         <http.port>8787</http.port>
@@ -18,11 +18,8 @@
         <docker.image>fabric8/${project.artifactId}:${project.version}</docker.image>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.env.MAIN>io.fabric8.cdelivery.Main</docker.env.MAIN>
-        <docker.port.container.http>${http.port}</docker.port.container.http>
-        <docker.port.container.jolokia>8778</docker.port.container.jolokia>
-
-        <fabric8.env.KUBERNETES_TRUST_CERT>true</fabric8.env.KUBERNETES_TRUST_CERT>
-        <fabric8.env.SKIP_TLS_VERIFY>true</fabric8.env.SKIP_TLS_VERIFY>
+        
+        <fabric8.generateJson>false</fabric8.generateJson>
     </properties>
 
     <dependencyManagement>
@@ -38,6 +35,13 @@
     </dependencyManagement>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/fabric8</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
         <plugins>
             <plugin>
                 <groupId>org.jolokia</groupId>
@@ -56,14 +60,7 @@
                                 </assembly>
                                 <env>
                                     <MAIN>${docker.env.MAIN}</MAIN>
-                                    <HTTP_PORT>${http.port}</HTTP_PORT>
-                                    <KUBERNETES_TRUST_CERT>${fabric8.env.KUBERNETES_TRUST_CERT}</KUBERNETES_TRUST_CERT>
-                                    <SKIP_TLS_VERIFY>${fabric8.env.SKIP_TLS_VERIFY}</SKIP_TLS_VERIFY>
                                 </env>
-                                <ports>
-                                    <port>8778</port>
-                                    <port>${http.port}</port>
-                                </ports>
                             </build>
                         </image>
                     </images>
@@ -77,6 +74,29 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-maven-plugin</artifactId>
+                <version>${fabric8.version}</version>
+                <executions>
+                    <execution>
+                        <id>json</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>json</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>attach</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
         </plugins>
     </build>
 
