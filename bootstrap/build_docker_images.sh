@@ -33,7 +33,6 @@ if [ -z "$APP_BASE" ] ; then
   export APP_BASE
 fi
 
-
 echo "Building the docker images in $APP_BASE"
 
 echo "building the Docker image for gerrit"
