@@ -1,0 +1,86 @@
+{
+  "kind": "List",
+  "apiVersion": "v1beta3",
+  "items": [
+    {
+      "kind": "Service",
+      "apiVersion": "v1beta3",
+      "metadata": {
+        "name": "gerrit-service"
+      },
+      "spec": {
+        "ports": [
+          {
+            "port": 80,
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "name": "gerrit"
+        }
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1beta3",
+      "metadata": {
+        "name": "gerrit-daemon-service"
+      },
+      "spec": {
+        "ports": [
+          {
+            "port": 29418,
+            "targetPort": 29418
+          }
+        ],
+        "selector": {
+          "name": "gerrit"
+        }
+      }
+    },
+    {
+      "kind": "ReplicationController",
+      "apiVersion": "v1beta3",
+      "kind": "ReplicationController",
+      "metadata": {
+        "labels": {
+          "component": "gerrit"
+        },
+        "name": "gerrit-controller"
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "component": "gerrit"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "component": "gerrit"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "image": "fabric8/gerrit:1.0",
+                "name": "gerrit-container",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 29418,
+                    "protocol": "TCP"
+                  }
+                ],
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "kind": "List"
+}
