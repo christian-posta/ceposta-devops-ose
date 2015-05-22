@@ -14,6 +14,7 @@
         <docker.from>fabric8/java</docker.from>
 
         <docker.image>cmoulliard/${project.artifactId}:${project.version}</docker.image>
+        <docker.autoPull>true</docker.autoPull>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.env.MAIN>io.fabric8.cdelivery.Main</docker.env.MAIN>
         
@@ -31,6 +32,14 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>${docker.maven.plugin.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <resources>
