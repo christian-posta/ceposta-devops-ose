@@ -39,6 +39,7 @@ RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 USER gerrit
 CMD ["/usr/bin/ls","/home/gerrit"]
 RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_ROOT
+RUN java -jar $GERRIT_WAR reindex -d $GERRIT_ROOT
 
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
