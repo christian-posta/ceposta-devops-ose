@@ -62,7 +62,7 @@
           "spec": {
             "containers": [
               {
-                "image": "cmoulliard/gerrit:1.0",
+                "image": "fabric8/gerrit:1.0",
                 "name": "gerrit-container",
                 "ports": [
                   {

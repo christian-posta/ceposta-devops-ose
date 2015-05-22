@@ -13,7 +13,7 @@
 
         <docker.from>fabric8/java</docker.from>
 
-        <docker.image>cmoulliard/${project.artifactId}:${project.version}</docker.image>
+        <docker.image>fabric8/${project.artifactId}:${project.version}</docker.image>
         <docker.autoPull>true</docker.autoPull>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.env.MAIN>io.fabric8.cdelivery.Main</docker.env.MAIN>
