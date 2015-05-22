@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.fabric8.demo</groupId>
@@ -16,9 +17,9 @@
         <docker.image>fabric8/${project.artifactId}:${project.version}</docker.image>
         <docker.autoPull>true</docker.autoPull>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
-        <docker.dockerFileDir>src/main/docker</docker.dockerFileDir>
+        <docker.dockerFileDir>gerrit</docker.dockerFileDir>
         <docker.env.MAIN>io.fabric8.cdelivery.Main</docker.env.MAIN>
-        
+
         <fabric8.generateJson>false</fabric8.generateJson>
     </properties>
 
@@ -33,7 +34,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.jolokia</groupId>
@@ -49,7 +50,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.jolokia</groupId>
@@ -62,9 +63,8 @@
                         <image>
                             <name>${docker.image}</name>
                             <build>
-                                <from>${docker.from}</from>
                                 <assembly>
-                                    <descriptorRef>${docker.assemblyDescriptorRef}</descriptorRef>
+                                    <dockerFileDir>${docker.dockerFileDir}</dockerFileDir>
                                 </assembly>
                             </build>
                         </image>
@@ -101,7 +101,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
         </plugins>
     </build>
 
