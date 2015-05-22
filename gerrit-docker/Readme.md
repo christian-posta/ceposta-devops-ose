@@ -37,24 +37,6 @@ mvn clean install docker:build -Ddocker.host=$DOCKER_HOST
 
 ```
 export DOCKER_REGISTRY=$(osc get -o yaml service docker-registry | grep portalIP | awk '{ print $2 }'):5000
-```
-
-```
-osc project default
-osc login -u admin -p admin https://172.28.128.4:8443
-mvn docker:push -Ddocker.host=$DOCKER_HOST -Ddocker.username=admin -Ddocker.password=admin -Ddocker.registry=$DOCKER_REGISTRY
-```
-
-# Create the application (service, replicationContoller, pod)
-```
-export DOCKER_HOST=tcp://172.28.128.4:2375
-mvn clean install docker:build -Ddocker.host=$DOCKER_HOST
-```
-
-# Push the docker image to the openshift-registry
-
-```
-export DOCKER_REGISTRY=$(osc get -o yaml service docker-registry | grep portalIP | awk '{ print $2 }'):5000
 osc project default
 osc login -u admin -p admin https://172.28.128.4:8443
 mvn docker:push -Ddocker.host=$DOCKER_HOST -Ddocker.username=admin -Ddocker.password=admin -Ddocker.registry=$DOCKER_REGISTRY
