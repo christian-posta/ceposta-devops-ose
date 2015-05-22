@@ -16,6 +16,7 @@
         <docker.image>fabric8/${project.artifactId}:${project.version}</docker.image>
         <docker.autoPull>true</docker.autoPull>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
+        <docker.dockerFileDir>src/main/docker</docker.dockerFileDir>
         <docker.env.MAIN>io.fabric8.cdelivery.Main</docker.env.MAIN>
         
         <fabric8.generateJson>false</fabric8.generateJson>
@@ -65,9 +66,6 @@
                                 <assembly>
                                     <descriptorRef>${docker.assemblyDescriptorRef}</descriptorRef>
                                 </assembly>
-                                <env>
-                                    <MAIN>${docker.env.MAIN}</MAIN>
-                                </env>
                             </build>
                         </image>
                     </images>
