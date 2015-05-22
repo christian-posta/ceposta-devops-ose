@@ -52,7 +52,17 @@ export KUBERNETES_TRUST_CERT="true"
 osc project default
 osc login -u admin -p admin https://172.28.128.4:8443
 mvn clean fabric8:json fabric8:apply
+
+OR 
+
+mvn clean fabric8:json fabric8:apply -Dfabric8.apply.recreate=true
 ```
 
--Dfabric8.apply.recreate=true 
+# Create the docker container
+
+docker run -itdP --name gerrit --env GITLAB_USER=root --env GITLAB_PASSWORD=redhat01 --env GITLAB_PROJ_ROOT=root fabric8/gerrit:1.0
+
+# Bash to the container
+docker execute -it gerrit bash
+ 
 
