@@ -60,7 +60,7 @@ mvn clean fabric8:json fabric8:apply -Dfabric8.apply.recreate=true
 
 # Create the docker container
 
-docker run -itdP --name gerrit --env GITLAB_USER=root --env GITLAB_PASSWORD=redhat01 --env GITLAB_PROJ_ROOT=root fabric8/gerrit:1.0
+docker run -dP --name gerrit -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GITLAB_USER=root -e GITLAB_PASSWORD=redhat01 -e GITLAB_PROJ_ROOT=root -e AUTH_TYPE=OpenID fabric8/gerrit:1.0
 
 # Bash to the container
 docker exec -it gerrit bash

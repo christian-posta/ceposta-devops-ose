@@ -44,5 +44,8 @@ RUN java -jar $GERRIT_WAR reindex -d $GERRIT_ROOT
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
 USER root
+
+ENV AUTH_TYPE DEVELOPMENT_BECOME_ANY_ACCOUNT
+
 EXPOSE 8080 29418
 CMD ["/home/gerrit/conf-and-run-gerrit.sh"]
