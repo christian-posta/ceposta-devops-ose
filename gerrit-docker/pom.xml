@@ -9,7 +9,7 @@
     <version>1.0</version>
 
     <properties>
-        <fabric8.version>2.1.3</fabric8.version>
+        <fabric8.version>2.1.5</fabric8.version>
         <docker.maven.plugin.version>0.11.5-M1</docker.maven.plugin.version>
 
         <docker.from>fabric8/java</docker.from>
