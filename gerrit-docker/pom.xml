@@ -18,20 +18,28 @@
         <docker.autoPull>true</docker.autoPull>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.dockerFileDir>gerrit</docker.dockerFileDir>
-
-        <!--
-        <fabric8.replicationController.name>${project.artifactId}-controller</fabric8.replicationController.name>
-        <fabric8.service.port>80</fabric8.service.port>
+        
+        <!-- General -->
         <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
-
         <fabric8.label.component>gerrit</fabric8.label.component>
         <fabric8.label.provider>fabric8</fabric8.label.provider>
-        <fabric8.extra.json>${basedir}/src/main/fabric8/kubernetes-extra.json</fabric8.extra.json>
-        <fabric8.extra.json>${basedir}/src/main/fabric8/kubernetes-extra.json</fabric8.extra.json>
-        -->
         <!-- to access docker socket lets run in priviledged mode -->
         <fabric8.containerPrivileged>true</fabric8.containerPrivileged>
-        <fabric8.generateJson>false</fabric8.generateJson>
+        <fabric8.generateJson>true</fabric8.generateJson>
+
+        <!--  ReplicationController  -->
+        <fabric8.replicationController.name>${project.artifactId}-controller</fabric8.replicationController.name>
+        
+        <!-- Service -->
+        <fabric8.service.name>${project.artifactId}-service</fabric8.service.name>
+        <!-- HTTP Protocol -->
+        <fabric8.service.port.http>80</fabric8.service.port.http>
+        <fabric8.service.containerPort.http>8080</fabric8.service.containerPort.http>
+<!--        <fabric8.service.protocol.http>http</fabric8.service.protocol.http>-->
+        <!-- SSH Protocol-->
+        <fabric8.service.port.ssh>29418</fabric8.service.port.ssh>
+        <fabric8.service.containerPort.ssh>29418</fabric8.service.containerPort.ssh>
+<!--        <fabric8.service.protocol.ssh>ssh</fabric8.service.protocol.ssh>-->
     </properties>
 
     <dependencyManagement>

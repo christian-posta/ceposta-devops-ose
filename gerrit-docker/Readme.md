@@ -92,8 +92,8 @@ docker exec -it gerrit bash
 # To cleanup the project, reinstall the base app and the openshift registry, run this command within the VM Machine 
 ```
 osc delete rc gerrit-controller
-osc delete se gerrit-service
-osc delete pods -l component=gerrit
+osc delete se gerrit
+osc delete pod -l component=gerrit
 
 We don't have to recreate the registry or router in this case
 
