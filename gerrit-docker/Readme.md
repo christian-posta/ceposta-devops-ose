@@ -47,7 +47,7 @@ mvn docker:push -Ddocker.host=$DOCKER_HOST -Ddocker.username=admin -Ddocker.pass
 ```
 
 # Push the docker image to the official registry
-```
+``
 mvn docker:push -Ddocker.username='cmoulliard' -Ddocker.password='xxxxx' -Ddocker.registry="registry.hub.docker.com'
 ```
 
@@ -67,7 +67,7 @@ OR
 mvn clean fabric8:json fabric8:apply -Dfabric8.apply.recreate=true
 ```
 
-# Genrate the json file and next apply it
+# Generate the json file and next apply it
 
 ```
 mvn clean fabric8:json compile
@@ -113,6 +113,50 @@ Commands to be executed within the VM machine
 
 sudo osadm registry --create --credentials=/var/lib/openshift/openshift.local.config/master/openshift-registry.kubeconfig
 sudo osadm router --create --credentials=/var/lib/openshift/openshift.local.config/master/openshift-router.kubeconfig
-```  
+```
+  
+# Generate SSH keys on MacosX
+  
+https://help.github.com/articles/generating-ssh-keys/#step-2-generate-a-new-ssh-key
+  
+```
+ssh-keygen -t rsa -b 4096 -C "secret@fabric8.io"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/chmoulli/.ssh/id_rsa): /Users/chmoulli/.ssh/secret_fabric8_rsa
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /Users/chmoulli/.ssh/secret_fabric8_rsa.
+Your public key has been saved in /Users/chmoulli/.ssh/secret_fabric8_rsa.pub.
+The key fingerprint is:
+eb:1b:2b:99:8d:9d:32:0b:fc:1f:ae:04:c5:38:a5:3e secret@fabric8.io
+The key's randomart image is:
++--[ RSA 4096]----+
+|      .          |
+|     =           |
+|    + o          |
+|   . o           |
+|    E   S        |
+|   . o   .       |
+|    o .*+.       |
+|     +Bo++       |
+|      +B*.       |
++-----------------+
+```
+
+# Transform in Base64 the keys file (pub, private)
+
+```
+openssl base64 -in ssh-keys/secret_fabric8_rsa -out ssh-keys/secret_fabric8_rsa_base64
+openssl base64 -in ssh-keys/secret_fabric8_rsa.pub -out ssh-keys/secret_fabric8_rsa_pub_base64
+
+```
+
+# generate the json file to add the ssh keys to openshift
+
+```
+./ssh-keys-base64.sh
+```
+
+  
 
 
