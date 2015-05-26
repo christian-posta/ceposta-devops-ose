@@ -84,7 +84,11 @@ docker exec -it gerrit bash
 ```
 osc delete se,rc,dc,bc,oauthclient,pods,route --all
 
+OR
+
 osc delete all --all
+
+OR
 
 osc delete rc gerrit-controller
 osc delete se gerrit-service
@@ -92,6 +96,7 @@ osc delete pods -l component=gerrit
 
 osc process -v DOMAIN='vagrant.local' -f http://central.maven.org/maven2/io/fabric8/apps/base/2.1.1/base-2.1.1-kubernetes.json | osc create -f -
 sudo osadm registry --create --credentials=/var/lib/openshift/openshift.local.config/master/openshift-registry.kubeconfig
+sudo osadm router --create --credentials=/var/lib/openshift/openshift.local.config/master/openshift-router.kubeconfig
 ```  
 
 
