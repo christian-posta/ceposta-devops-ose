@@ -92,16 +92,25 @@ docker exec -it gerrit bash
 # To cleanup the project, reinstall the base app and the openshift registry, run this command within the VM Machine 
 ```
 osc delete rc gerrit-controller
-osc delete se gerrit
+osc delete se gerrit-service
+osc delete route gerrit-service-route
 osc delete pod -l component=gerrit
+
+Check if we still have gerrit stuffs
+
+osc get all | grep gerrit
 
 We don't have to recreate the registry or router in this case
 
 OR
 
 osc delete all --all
+osc delete oauthclients fabric8
 
 osc process -v DOMAIN='vagrant.local' -f http://central.maven.org/maven2/io/fabric8/apps/base/2.1.1/base-2.1.1-kubernetes.json | osc create -f -
+
+Commands to be executed within the VM machine
+
 sudo osadm registry --create --credentials=/var/lib/openshift/openshift.local.config/master/openshift-registry.kubeconfig
 sudo osadm router --create --credentials=/var/lib/openshift/openshift.local.config/master/openshift-router.kubeconfig
 ```  
