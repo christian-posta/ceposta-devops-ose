@@ -31,6 +31,10 @@ TODO - Explain how to build the image, deploy it and install the kube applicatio
 ```
 export DOCKER_HOST=tcp://172.28.128.4:2375
 mvn clean install docker:build -Ddocker.host=$DOCKER_HOST
+
+OR for external build with the docker io registry
+
+mvn clean install docker:build
 ```
 
 # Push the docker image to the openshift-registry
@@ -40,6 +44,11 @@ export DOCKER_REGISTRY=$(osc get -o yaml service docker-registry | grep portalIP
 osc project default
 osc login -u admin -p admin https://172.28.128.4:8443
 mvn docker:push -Ddocker.host=$DOCKER_HOST -Ddocker.username=admin -Ddocker.password=admin -Ddocker.registry=$DOCKER_REGISTRY
+```
+
+# Push the docker image to the official registry
+```
+mvn docker:push -Ddocker.username='cmoulliard' -Ddocker.password='xxxxx' -Ddocker.registry="registry.hub.docker.com'
 ```
 
 # Create the application (service, replicationContoller, pod)
@@ -58,7 +67,7 @@ OR
 mvn clean fabric8:json fabric8:apply -Dfabric8.apply.recreate=true
 ```
 
-# Generate the json file and next apply it
+# Genrate the json file and next apply it
 
 ```
 mvn clean fabric8:json compile
