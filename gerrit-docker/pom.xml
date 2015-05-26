@@ -9,18 +9,32 @@
     <version>1.0</version>
 
     <properties>
-        <fabric8.version>2.2-SNAPSHOT</fabric8.version>
+        <fabric8.version>2.1.4</fabric8.version>
         <docker.maven.plugin.version>0.11.5-M1</docker.maven.plugin.version>
 
         <docker.from>fabric8/java</docker.from>
 
         <docker.image>fabric8/${project.artifactId}:${project.version}</docker.image>
-        <docker.autoPull>true</docker.autoPull>
+        <docker.autoPull>false</docker.autoPull>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.dockerFileDir>gerrit</docker.dockerFileDir>
-        <docker.env.MAIN>io.fabric8.cdelivery.Main</docker.env.MAIN>
 
-        <fabric8.generateJson>false</fabric8.generateJson>
+        <fabric8.extra.json>${basedir}/src/main/fabric8/kubernetes-extra.json</fabric8.extra.json>
+        <fabric8.generateJson>true</fabric8.generateJson>
+        
+        <fabric8.replicationController.name>${project.artifactId}-controller</fabric8.replicationController.name>
+<!--        <fabric8.service.port>80</fabric8.service.port>
+        <fabric8.service.name>${project.artifactId}</fabric8.service.name>
+        <fabric8.service.containerPort>8080</fabric8.service.containerPort>-->
+        <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
+
+        <fabric8.label.component>jenkins</fabric8.label.component>
+        <fabric8.label.provider>fabric8</fabric8.label.provider>
+
+        <!-- to access docker socket lets run in priviledged mode -->
+        <fabric8.containerPrivileged>true</fabric8.containerPrivileged>
+
+
     </properties>
 
     <dependencyManagement>

@@ -1,0 +1,48 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1beta3",
+  "kind": "Template",
+  "metadata" : {
+    "annotations" : { },
+    "labels" : { },
+    "name" : "gerrit"
+  },
+  "items": [
+    {
+      "kind": "Service",
+      "apiVersion": "v1beta3",
+      "metadata": {
+        "name": "gerrit-service"
+      },
+      "spec": {
+        "ports": [
+          {
+            "port": 80,
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "name": "gerrit"
+        }
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1beta3",
+      "metadata": {
+        "name": "gerrit-daemon-service"
+      },
+      "spec": {
+        "ports": [
+          {
+            "port": 29418,
+            "targetPort": 29418
+          }
+        ],
+        "selector": {
+          "name": "gerrit"
+        }
+      }
+    }
+  ]
+}
