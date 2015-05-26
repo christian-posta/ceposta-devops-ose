@@ -65,11 +65,19 @@ mvn clean fabric8:json compile
 mvn fabric8:apply -Dfabric8.apply.recreate=true
 ```
 
-# Create the docker container
-
+# Create thedocker container
+``` 
 docker run -dP --name gerrit -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GITLAB_USER=root -e GITLAB_PASSWORD=redhat01 -e GITLAB_PROJ_ROOT=root -e AUTH_TYPE=OpenID fabric8/gerrit:1.0
-
+```
 # Bash to the container
+```
 docker exec -it gerrit bash
- 
+```
+# To cleanup the project, reinstall the base app and the openshift registry, run this command within the VM Machine 
+```
+osc delete se,rc,dc,bc,oauthclient,pods,route --all
+osc process -v DOMAIN='vagrant.local' -f http://central.maven.org/maven2/io/fabric8/apps/base/2.1.1/base-2.1.1-kubernetes.json | osc create -f -
+sudo osadm registry --create --credentials=/var/lib/openshift/openshift.local.config/master/openshift-registry.kubeconfig
+```  
+
 
