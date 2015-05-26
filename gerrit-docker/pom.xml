@@ -19,22 +19,19 @@
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.dockerFileDir>gerrit</docker.dockerFileDir>
 
-        <fabric8.extra.json>${basedir}/src/main/fabric8/kubernetes-extra.json</fabric8.extra.json>
-        <fabric8.generateJson>true</fabric8.generateJson>
-        
+        <!--
         <fabric8.replicationController.name>${project.artifactId}-controller</fabric8.replicationController.name>
-<!--        <fabric8.service.port>80</fabric8.service.port>
-        <fabric8.service.name>${project.artifactId}</fabric8.service.name>
-        <fabric8.service.containerPort>8080</fabric8.service.containerPort>-->
+        <fabric8.service.port>80</fabric8.service.port>
         <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
 
         <fabric8.label.component>gerrit</fabric8.label.component>
         <fabric8.label.provider>fabric8</fabric8.label.provider>
-
+        <fabric8.extra.json>${basedir}/src/main/fabric8/kubernetes-extra.json</fabric8.extra.json>
+        <fabric8.extra.json>${basedir}/src/main/fabric8/kubernetes-extra.json</fabric8.extra.json>
+        -->
         <!-- to access docker socket lets run in priviledged mode -->
         <fabric8.containerPrivileged>true</fabric8.containerPrivileged>
-
-
+        <fabric8.generateJson>false</fabric8.generateJson>
     </properties>
 
     <dependencyManagement>
@@ -55,6 +52,7 @@
             <artifactId>docker-maven-plugin</artifactId>
             <version>${docker.maven.plugin.version}</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -114,6 +112,13 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>kubernetes-assertions</artifactId>
+                        <version>${fabric8.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
         </plugins>
