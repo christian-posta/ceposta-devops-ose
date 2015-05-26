@@ -15,7 +15,7 @@
         <docker.from>fabric8/java</docker.from>
 
         <docker.image>fabric8/${project.artifactId}:${project.version}</docker.image>
-        <docker.autoPull>false</docker.autoPull>
+        <docker.autoPull>true</docker.autoPull>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.dockerFileDir>gerrit</docker.dockerFileDir>
 
