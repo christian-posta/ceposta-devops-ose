@@ -15,7 +15,7 @@ public class GerritModelProcessor {
                 .endMetadata()
                 .withNewSpec()
                   .addNewPort()
-/*                    .withProtocol("HTTP")*/
+                    .withProtocol("TCP")
                     .withPort(80)
                       .withNewTargetPort(8080)
                     .endPort()
@@ -32,7 +32,7 @@ public class GerritModelProcessor {
                 .endMetadata()
                 .withNewSpec()
                   .addNewPort()
-/*                    .withProtocol("SSH")*/
+                    .withProtocol("TCP")
                     .withPort(29418)
                       .withNewTargetPort(29418)
                     .endPort()
