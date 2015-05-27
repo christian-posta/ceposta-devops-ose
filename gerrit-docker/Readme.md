@@ -154,6 +154,14 @@ openssl base64 -in ssh-keys/secret_fabric8_rsa.pub -out ssh-keys/secret_fabric8_
 ./ssh-keys-base64.sh
 ```
 
+# Temp - Delete gogs
+
+osc delete rc gogs-controller
+osc delete se gogs
+osc delete route gogs-route
+osc delete pod -l component=gogs
+
+osc get all | grep gogs
   
 
 
