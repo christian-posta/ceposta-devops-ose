@@ -45,11 +45,6 @@ ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
 USER root
 
-# Add ssh key imported by Kubernetes to access gogs
-RUN echo "Host Gogs" >> /etc/ssh/ssh_config
-RUN echo "Hostname gogs.vagrant.local" >> /etc/ssh/ssh_config
-RUN echo "IdentityFile /etc/secret-volume/id-rsa" >> /etc/ssh/ssh_config
-
 ENV AUTH_TYPE DEVELOPMENT_BECOME_ANY_ACCOUNT
 
 EXPOSE 8080 29418
