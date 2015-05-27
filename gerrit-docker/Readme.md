@@ -60,11 +60,8 @@ export KUBERNETES_DOMAIN=vagrant.local
 export KUBERNETES_TRUST_CERT="true"
 osc project default
 osc login -u admin -p admin https://172.28.128.4:8443
-mvn clean fabric8:json fabric8:apply
-
-OR 
-
-mvn clean fabric8:json fabric8:apply -Dfabric8.apply.recreate=true
+mvn clean fabric8:json compile
+mvn fabric8:apply -Dfabric8.apply.recreate=true
 ```
 
 # Generate the json file and next apply it
