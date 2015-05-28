@@ -37,7 +37,8 @@ ADD http://ci.gerritforge.com/view/Plugins-stable-2.9/job/Plugin_delete-project_
 RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
 USER gerrit
-CMD ["/usr/bin/ls","/home/gerrit"]
+# CMD ["/usr/bin/ls","/home/gerrit"]
+WORKDIR $GERRIT_HOME
 RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_ROOT
 RUN java -jar $GERRIT_WAR reindex -d $GERRIT_ROOT
 
@@ -45,7 +46,7 @@ ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
 ENV AUTH_TYPE DEVELOPMENT_BECOME_ANY_ACCOUNT
 
-USER root
+# USER root
 
 EXPOSE 8080 29418
 CMD ["/home/gerrit/conf-and-run-gerrit.sh"]
