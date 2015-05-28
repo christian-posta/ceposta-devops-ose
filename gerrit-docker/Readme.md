@@ -89,8 +89,10 @@ docker exec -it gerrit bash
 # To cleanup the project, reinstall the base app and the openshift registry, run this command within the VM Machine 
 ```
 osc delete rc gerrit-controller
-osc delete se gerrit-service
-osc delete route gerrit-service-route
+osc delete se gerrit-http-service
+osc delete se gerrit-ssh-service
+osc delete route gerrit-http-service-route
+osc delete route gerrit-ssh-service-route
 osc delete pod -l component=gerrit
 
 Check if we still have gerrit stuffs
@@ -162,6 +164,11 @@ osc delete route gogs-route
 osc delete pod -l component=gogs
 
 osc get all | grep gogs
+
+# Test to mount volume with docker directly
+
+docker run -v /home/gerrit/data:/home/gerrit/gerrit/data -v /home/gerrit/etc:/home/gerrit/gerrit/etc -v /home/gerrit/db:/home/gerrit/gerrit/db --name my-gerrit -d cmoulliard/gerrit:1.0
+
   
 
 
