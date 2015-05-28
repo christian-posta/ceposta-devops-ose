@@ -17,8 +17,8 @@ RUN \
   DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-7-jre-headless
   
 # Install gosu - Version 1.4
-ADD https://github.com/tianon/gosu/releases/download/1.4/gosu-amd64 /usr/local/bin/gosu
-RUN chmod +x /usr/local/bin/gosu
+# ADD https://github.com/tianon/gosu/releases/download/1.4/gosu-amd64 /usr/local/bin/gosu
+# RUN chmod +x /usr/local/bin/gosu
 
 # Add user gerrit & group like also gerrit to sudo to allow the gerrit user to issue a sudo cmd
 RUN groupadd -r $GERRIT_USER && useradd -r -g $GERRIT_USER $GERRIT_USER && adduser gerrit sudo
