@@ -19,3 +19,11 @@ sed -i  's/__AUTH_TYPE__/'${AUTH_TYPE}'/g' /home/gerrit/gerrit/etc/gerrit.config
 
 # Start gerrit
 $GERRIT_HOME/gerrit/bin/gerrit.sh start
+if [ $? -eq 0 ]
+then
+    echo "gerrit $GERRIT_VERSION is started successfully with auth.type=$AUTH_TYPE, please login to check."
+	echo ""
+	tail -f $GERRIT_HOME/gerrit/logs/httpd_log
+else
+    cat $GERRIT_HOME/gerrit/logs/error_log
+fi
