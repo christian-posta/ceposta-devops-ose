@@ -47,9 +47,16 @@ mvn docker:push -Ddocker.host=$DOCKER_HOST -Ddocker.username=admin -Ddocker.pass
 ```
 
 # Push the docker image to the official registry
-``
+```
 mvn docker:push -Ddocker.username='cmoulliard' -Ddocker.password='xxxxx' -Ddocker.registry="registry.hub.docker.com'
 ```
+
+# Build and push the docker image to the official registry
+```
+mvn clean docker:build docker:push -Ddocker.username='cmoulliard' -Ddocker.password='B1kers99!' -Ddocker.registry="registry.hub.docker.com"
+```
+
+
 
 # Create the application (service, replicationContoller, pod)
 
@@ -78,9 +85,9 @@ osc create -f target/classes/kubernetes.json
 mvn fabric8:create-routes
 ```
 
-# Create thedocker container
+# Create a docker gerrit container
 ``` 
-docker run -dP --name gerrit -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GITLAB_USER=root -e GITLAB_PASSWORD=redhat01 -e GITLAB_PROJ_ROOT=root -e AUTH_TYPE=OpenID fabric8/gerrit:1.0
+docker run -dP -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GITLAB_USER=root -e GITLAB_PASSWORD=redhat01 -e GITLAB_PROJ_ROOT=root -e AUTH_TYPE=OpenID -v /home/gerrit/db:/home/gerrit/gerrit/db --name my-gerrit cmoulliard/gerrit:1.0
 ```
 # Bash to the container
 ```

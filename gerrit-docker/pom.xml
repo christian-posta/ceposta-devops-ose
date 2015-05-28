@@ -46,8 +46,8 @@
         <fabric8.volume.ssh-key.mountPath>/etc/secret-volume</fabric8.volume.ssh-key.mountPath>
         <fabric8.volume.ssh-key.readOnly>true</fabric8.volume.ssh-key.readOnly>
 
-        <fabric8.volume.gerrit-workspace.hostPath>/home/gerrit</fabric8.volume.gerrit-workspace.hostPath>
-        <fabric8.volume.gerrit-workspace.mountPath>/home/gerrit/gerrit</fabric8.volume.gerrit-workspace.mountPath>
+        <fabric8.volume.gerrit-workspace.hostPath>/home/gerrit/gerrit/db</fabric8.volume.gerrit-workspace.hostPath>
+        <fabric8.volume.gerrit-workspace.mountPath>/home/gerrit/gerrit/db</fabric8.volume.gerrit-workspace.mountPath>
     </properties>
 
     <dependencyManagement>

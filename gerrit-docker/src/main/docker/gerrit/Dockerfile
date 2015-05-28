@@ -15,17 +15,17 @@ RUN \
   DEBIAN_FRONTEND=noninteractive apt-get install -y sudo vim-tiny git && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y supervisor && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-7-jre-headless
+  
+# Install gosu - Version 1.4
+ADD https://github.com/tianon/gosu/releases/download/1.4/gosu-amd64 /usr/local/bin/gosu
+RUN chmod +x /usr/local/bin/gosu
 
-RUN useradd -m $GERRIT_USER
-RUN mkdir -p $GERRIT_HOME
-RUN chown ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
-
-RUN mkdir -p /var/log/supervisor
-
-ADD http://gerrit-releases.storage.googleapis.com/gerrit-${GERRIT_VERSION}.war $GERRIT_WAR
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Add user gerrit & group like also gerrit to sudo to allow the gerrit user to issue a sudo cmd
+RUN groupadd -r $GERRIT_USER && useradd -r -g $GERRIT_USER $GERRIT_USER && adduser gerrit sudo
 
 RUN mkdir -p ${GERRIT_HOME}/gerrit/plugins
+
+ADD http://gerrit-releases.storage.googleapis.com/gerrit-${GERRIT_VERSION}.war $GERRIT_WAR
 
 ADD replication.config $GERRIT_HOME/gerrit/etc/replication.config
 ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
@@ -43,9 +43,9 @@ RUN java -jar $GERRIT_WAR reindex -d $GERRIT_ROOT
 
 ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
-USER root
-
 ENV AUTH_TYPE DEVELOPMENT_BECOME_ANY_ACCOUNT
+
+USER ROOT
 
 EXPOSE 8080 29418
 CMD ["/home/gerrit/conf-and-run-gerrit.sh"]
