@@ -27,7 +27,7 @@ RUN mkdir -p ${GERRIT_HOME}/gerrit/plugins
 
 ADD http://gerrit-releases.storage.googleapis.com/gerrit-${GERRIT_VERSION}.war $GERRIT_WAR
 
-ADD replication.config $GERRIT_HOME/gerrit/etc/replication.config
+ADD replication.config $GERRIT_ROOT/etc/replication.config
 ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
 RUN chmod +x $GERRIT_HOME/conf-and-run-gerrit.sh
 
@@ -42,7 +42,7 @@ WORKDIR $GERRIT_HOME
 RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_ROOT
 RUN java -jar $GERRIT_WAR reindex -d $GERRIT_ROOT
 
-ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
+ADD gerrit.config $GERRIT_ROOT/etc/gerrit.config
 
 ENV AUTH_TYPE DEVELOPMENT_BECOME_ANY_ACCOUNT
 
