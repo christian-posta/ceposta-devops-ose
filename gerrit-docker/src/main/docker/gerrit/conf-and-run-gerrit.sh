@@ -15,7 +15,7 @@ sed -i  's/__AUTH_TYPE__/'${AUTH_TYPE}'/g' /home/gerrit/gerrit/etc/gerrit.config
 # RUN echo "IdentityFile /etc/secret-volume/id-rsa" >> /etc/ssh/ssh_config
 
 # Change permissions 
-sudo chown -R gerrit $GERRIT_HOME/gerrit
+chown -R gerrit $GERRIT_HOME/gerrit
 # exec gosu gerrit "/bin/bash -c '/home/gerrit/gerrit/bin/gerrit.sh' start"
 
 # Start gerrit

@@ -45,7 +45,7 @@ ADD gerrit.config $GERRIT_HOME/gerrit/etc/gerrit.config
 
 ENV AUTH_TYPE DEVELOPMENT_BECOME_ANY_ACCOUNT
 
-USER ROOT
+USER root
 
 EXPOSE 8080 29418
 CMD ["/home/gerrit/conf-and-run-gerrit.sh"]
