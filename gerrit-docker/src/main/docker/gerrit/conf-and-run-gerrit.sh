@@ -2,7 +2,7 @@
 
 set -e
 
-cp -R ${GERRIT_TMP_DIR}/site ${GERRIT_SITE}
+cp -R ${GERRIT_TMP_DIR}/site ${GERRIT_HOME}
 cp ${GERRIT_TMP_DIR}/${GERRIT_WAR} ${GERRIT_HOME}/${GERRIT_WAR}
 
 # Configure Git Replication
