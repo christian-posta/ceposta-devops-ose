@@ -31,7 +31,6 @@ ADD http://gerrit-releases.storage.googleapis.com/gerrit-${GERRIT_VERSION}.war $
 # Download gerrit plugin
 ADD http://ci.gerritforge.com/view/Plugins-stable-2.9/job/Plugin_delete-project_stable-2.9/lastSuccessfulBuild/artifact/target/delete-project-2.9.jar ${GERRIT_HOME}/gerrit/plugins/delete-project.jar
 
-ADD replication.config $GERRIT_ROOT/etc/replication.config
 ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
 RUN chmod +x $GERRIT_HOME/conf-and-run-gerrit.sh
 
@@ -43,6 +42,7 @@ RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_R
 RUN java -jar $GERRIT_WAR reindex -d $GERRIT_ROOT
 
 ADD gerrit.config $GERRIT_ROOT/etc/gerrit.config
+ADD replication.config $GERRIT_ROOT/etc/replication.config
 
 ENV AUTH_TYPE DEVELOPMENT_BECOME_ANY_ACCOUNT
 
