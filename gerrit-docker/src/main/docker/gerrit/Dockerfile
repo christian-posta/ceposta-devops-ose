@@ -21,23 +21,23 @@ ADD https://github.com/tianon/gosu/releases/download/1.4/gosu-amd64 /usr/local/b
 RUN chmod +x /usr/local/bin/gosu
 
 # Add user gerrit & group like also gerrit to sudo to allow the gerrit user to issue a sudo cmd
-RUN groupadd -r $GERRIT_USER && useradd -r -g $GERRIT_USER $GERRIT_USER && adduser gerrit sudo
+RUN groupadd -r $GERRIT_USER && useradd -r -u 1000 -g $GERRIT_USER $GERRIT_USER && adduser gerrit sudo
 
 RUN mkdir -p ${GERRIT_HOME}/gerrit/plugins
 
+# Download Gerrit
 ADD http://gerrit-releases.storage.googleapis.com/gerrit-${GERRIT_VERSION}.war $GERRIT_WAR
+
+# Download gerrit plugin
+ADD http://ci.gerritforge.com/view/Plugins-stable-2.9/job/Plugin_delete-project_stable-2.9/lastSuccessfulBuild/artifact/target/delete-project-2.9.jar ${GERRIT_HOME}/gerrit/plugins/delete-project.jar
 
 ADD replication.config $GERRIT_ROOT/etc/replication.config
 ADD conf-and-run-gerrit.sh $GERRIT_HOME/conf-and-run-gerrit.sh
 RUN chmod +x $GERRIT_HOME/conf-and-run-gerrit.sh
 
-# Download gerrit plugin
-ADD http://ci.gerritforge.com/view/Plugins-stable-2.9/job/Plugin_delete-project_stable-2.9/lastSuccessfulBuild/artifact/target/delete-project-2.9.jar ${GERRIT_HOME}/gerrit/plugins/delete-project.jar
-
 RUN chown -R ${GERRIT_USER}:${GERRIT_USER} $GERRIT_HOME
 
 USER gerrit
-# CMD ["/usr/bin/ls","/home/gerrit"]
 WORKDIR $GERRIT_HOME
 RUN java -jar $GERRIT_WAR init --install-plugin=replication --batch -d $GERRIT_ROOT
 RUN java -jar $GERRIT_WAR reindex -d $GERRIT_ROOT
@@ -45,8 +45,6 @@ RUN java -jar $GERRIT_WAR reindex -d $GERRIT_ROOT
 ADD gerrit.config $GERRIT_ROOT/etc/gerrit.config
 
 ENV AUTH_TYPE DEVELOPMENT_BECOME_ANY_ACCOUNT
-
-# USER root
 
 EXPOSE 8080 29418
 CMD ["/home/gerrit/conf-and-run-gerrit.sh"]
