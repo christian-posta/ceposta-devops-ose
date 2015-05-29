@@ -11,10 +11,10 @@ demo purposes. Gerrit uses SSO by default. To see the security options, [see the
 replaced when linking the docker containers and starting up. If you choose to run outside of docker, you'll need
 to replace the properties yourself:
 
-    __GITLAB_USER__ the user account on gitlab that will host the replicated repositories
-    __GITLAB_PASSWORD__ the password for the account
-    __GITLAB_IP__ the location of the gitlab servier (IP or dns if dns is resolvable)
-    __GITLAB_PROJ_ROOT__ the root location of where the projects will be stored on gitlab (usually the username)
+    __GIT_SERVER_USER__ the user account on git sever (gitlab, gogs, ...) that will host the replicated repositories
+    __GIT_SERVER_PASSWORD__ the password for the account
+    __GIT_SERVER_IP__ the location of the git servier (IP or dns if dns is resolvable)
+    __GIT_SERVER_PROJ_ROOT__ the root location of where the projects will be stored on the git server (usually the username)
     
     
 Keep in mind these are all scripted out of the box to look at environment variables. Also, by default for the demo,
@@ -87,7 +87,7 @@ mvn fabric8:create-routes
 
 # Create a docker gerrit container
 ``` 
-docker run -dP -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GITLAB_USER=root -e GITLAB_PASSWORD=redhat01 -e GITLAB_PROJ_ROOT=root -e AUTH_TYPE=OpenID -v /home/gerrit/db:/home/gerrit/gerrit/db --name my-gerrit cmoulliard/gerrit:1.0
+docker run -dP -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE=OpenID -v /home/gerrit/db:/home/gerrit/gerrit/db --name my-gerrit cmoulliard/gerrit:1.0
 ```
 # Bash to the container
 ```
