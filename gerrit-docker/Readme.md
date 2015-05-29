@@ -162,41 +162,61 @@ openssl base64 -in ssh-keys/secret_fabric8_rsa.pub -out ssh-keys/secret_fabric8_
 ```
 
 # Temp - Delete gogs
-
+```
 osc delete rc gogs-controller
 osc delete se gogs
 osc delete route gogs-route
 osc delete pod -l component=gogs
 
 osc get all | grep gogs
-
+```
 # Test to mount volume with docker directly
 
 On the host machine, issue this command
-
+```
 sudo chcon -Rt svirt_sandbox_file_t /home/gerrit/site
+```
 
+```
 docker run -v /home/gerrit/data:/home/gerrit/gerrit/data -v /home/gerrit/etc:/home/gerrit/gerrit/etc -v /home/gerrit/db:/home/gerrit/gerrit/db --name my-gerrit -d cmoulliard/gerrit:1.0
 docker run -dP -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_IP='gogs-http-service.default.local' -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE='DEVELOPMENT_BECOME_ANY_ACCOUNT' -v /home/gerrit/site:/home/gerrit/site --name my-gerrit cmoulliard/gerrit:1.0
+```
 
 Remark : there is still an issue as when we recreate a new container, a new DB is recerated. We should perhaps change the script to control if the site folder
 /directory already exist 
 
+# To debug image when you develop it
+```
+docker run -it -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_IP='gogs-http-service.default.local' -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE='DEVELOPMENT_BECOME_ANY_ACCOUNT' --name my-gerrit cmoulliard/gerrit:1.0 bash
+```
 # To clean images
-   
+```
 docker rmi -f $(docker images --no-trunc=true --filter dangling=true --quiet)
-
+```
 # Kill all running containers
+```
 docker kill $(docker ps -q)
-
+```
 # Delete all stopped containers (including data-only containers)
+```
 docker rm $(docker ps -a -q)
+```
 
 # Delete all ‘untagged/dangling’ (<none>) images
+```
 docker rmi $(docker images -q -f dangling=true)
+```
 
 # Delete ALL images
+```
 docker rmi $(docker images -q)
-   
+```
 
+# Check how we could pass ssh keys 
+```   
+Add ssh key imported by Kubernetes to access gogs
+RUN echo "Host Gogs" >> /etc/ssh/ssh_config
+RUN echo "Hostname gogs-http-service.default.local" >> /etc/ssh/ssh_config
+RUN echo "IdentityFile /etc/secret-volume/id-rsa" >> /etc/ssh/ssh_config   
+```
 
