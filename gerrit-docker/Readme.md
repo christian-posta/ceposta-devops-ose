@@ -56,8 +56,6 @@ mvn docker:push -Ddocker.username='cmoulliard' -Ddocker.password='xxxxx' -Ddocke
 mvn clean docker:build docker:push -Ddocker.username='cmoulliard' -Ddocker.password='B1kers99!' -Ddocker.registry="registry.hub.docker.com"
 ```
 
-
-
 # Create the application (service, replicationContoller, pod)
 
 ```
@@ -174,7 +172,15 @@ osc get all | grep gogs
 
 # Test to mount volume with docker directly
 
+On the host machine, issue this command
+
+sudo chcon -Rt svirt_sandbox_file_t /home/gerrit/site
+
 docker run -v /home/gerrit/data:/home/gerrit/gerrit/data -v /home/gerrit/etc:/home/gerrit/gerrit/etc -v /home/gerrit/db:/home/gerrit/gerrit/db --name my-gerrit -d cmoulliard/gerrit:1.0
+docker run -dP -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_IP='gogs-http-service.default.local' -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE='DEVELOPMENT_BECOME_ANY_ACCOUNT' -v /home/gerrit/site:/home/gerrit/site --name my-gerrit cmoulliard/gerrit:1.0
+
+Remark : there is still an issue as when we recreate a new container, a new DB is recerated. We should perhaps change the script to control if the site folder
+/directory already exist 
 
 # To clean images
    
