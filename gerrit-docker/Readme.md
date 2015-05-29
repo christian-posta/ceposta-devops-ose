@@ -176,6 +176,21 @@ osc get all | grep gogs
 
 docker run -v /home/gerrit/data:/home/gerrit/gerrit/data -v /home/gerrit/etc:/home/gerrit/gerrit/etc -v /home/gerrit/db:/home/gerrit/gerrit/db --name my-gerrit -d cmoulliard/gerrit:1.0
 
-  
+# To clean images
+   
+docker rmi -f $(docker images --no-trunc=true --filter dangling=true --quiet)
+
+# Kill all running containers
+docker kill $(docker ps -q)
+
+# Delete all stopped containers (including data-only containers)
+docker rm $(docker ps -a -q)
+
+# Delete all ‘untagged/dangling’ (<none>) images
+docker rmi $(docker images -q -f dangling=true)
+
+# Delete ALL images
+docker rmi $(docker images -q)
+   
 
 
