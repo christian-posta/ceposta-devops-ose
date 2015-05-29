@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Configure Git Replication
 sed -i  's/__GITLAB_IP__/'${GITLAB_PORT_80_TCP_ADDR}'/g' /home/gerrit/gerrit/etc/replication.config
 sed -i  's/__GITLAB_USER__/'${GITLAB_USER}'/g' /home/gerrit/gerrit/etc/replication.config
