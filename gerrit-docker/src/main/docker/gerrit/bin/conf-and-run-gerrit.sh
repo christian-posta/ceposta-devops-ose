@@ -21,6 +21,7 @@ if [ ! -d "$GERRIT_HOME/site" ]; then
   
   # Configure Git Replication
   sed -i  's/__GIT_SERVER_IP__/'${GIT_SERVER_IP}'/g' ${GERRIT_HOME}/site/etc/replication.config
+  sed -i  's/__GIT_SERVER_PORT__/'${GIT_SERVER_PORT}'/g' ${GERRIT_HOME}/site/etc/replication.config
   sed -i  's/__GIT_SERVER_USER__/'${GIT_SERVER_USER}'/g' ${GERRIT_HOME}/site/etc/replication.config
   sed -i  's/__GIT_SERVER_PASSWORD__/'${GIT_SERVER_PASSWORD}'/g' ${GERRIT_HOME}/site/etc/replication.config
   sed -i  's/__GIT_SERVER_PROJ_ROOT__/'${GIT_SERVER_PROJ_ROOT}'/g' ${GERRIT_HOME}/site/etc/replication.config

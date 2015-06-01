@@ -159,6 +159,23 @@ osc delete pod -l component=gogs
 
 osc get all | grep gogs
 ```
+
+# Build and deploy gogs kube app on Openshift
+
+```
+cd /Users/chmoulli/Fuse/projects/fabric8/quickstarts-forked/apps/gogs
+export KUBERNETES_NAMESPACE=default
+export KUBERNETES_MASTER=https://172.28.128.4:8443
+export KUBERNETES_DOMAIN=vagrant.local
+export KUBERNETES_TRUST_CERT="true"
+osc project default
+osc login -u admin -p admin https://172.28.128.4:8443
+mvn clean fabric8:json compile
+
+mvn fabric8:apply 
+
+```
+
 # Test to mount volume with docker directly
 
 On the host machine, issue this command
@@ -167,7 +184,7 @@ sudo chcon -Rt svirt_sandbox_file_t /home/gerrit-site
 ```
 
 ```
-docker run -dP -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_IP='gogs-http-service.default.local' -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE='DEVELOPMENT_BECOME_ANY_ACCOUNT' -v /home/gerrit/site:/home/gerrit/site --name my-gerrit cmoulliard/gerrit:1.0
+docker run -dP -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_IP='gogs-http-service.default.local' -e GIT_SERVER_PORT='80' -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE='DEVELOPMENT_BECOME_ANY_ACCOUNT' -v /home/gerrit/site:/home/gerrit/site --name my-gerrit cmoulliard/gerrit:1.0
 ```
 
 Remark : there is still an issue as when we recreate a new container, a new DB is recerated. We should perhaps change the script to control if the site folder
