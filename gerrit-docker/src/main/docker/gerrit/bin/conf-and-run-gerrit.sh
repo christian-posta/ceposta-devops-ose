@@ -6,11 +6,11 @@ set -e
 if [ ! -d "$GERRIT_HOME/site" ]; then
 
   mkdir -p site/plugins
-  
+
   echo ">> Site doesn't exist. We will start gerrit to generate it"
   java -jar ${GERRIT_HOME}/$GERRIT_WAR init --install-plugin=replication --batch -d ${GERRIT_HOME}/site
   java -jar ${GERRIT_HOME}/$GERRIT_WAR reindex -d ${GERRIT_HOME}/site
-  
+
   # Download Gerrit plugin
   echo ">> Download gerrit plugins - delete project <<"
   curl -sSL http://ci.gerritforge.com/view/Plugins-stable-2.10/job/Plugin_delete-project_stable-2.10/lastSuccessfulBuild/artifact/target/delete-project-2.10.jar -o ${GERRIT_HOME}/site/plugins/delete-project.jar
@@ -18,7 +18,7 @@ if [ ! -d "$GERRIT_HOME/site" ]; then
   # Copy our config files
   cp bin/gerrit.config ${GERRIT_HOME}/site/etc/gerrit.config
   cp bin/replication.config ${GERRIT_HOME}/site/etc/replication.config
-  
+
   # Configure Git Replication
   sed -i  's/__GIT_SERVER_IP__/'${GIT_SERVER_IP}'/g' ${GERRIT_HOME}/site/etc/replication.config
   sed -i  's/__GIT_SERVER_PORT__/'${GIT_SERVER_PORT}'/g' ${GERRIT_HOME}/site/etc/replication.config
