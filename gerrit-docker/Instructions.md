@@ -72,10 +72,17 @@ osc create -f target/classes/kubernetes.json
 mvn fabric8:create-routes
 ```
 
-# Create a docker gerrit container
+# Create a docker gerrit container using cmoulliard/gerrit
 ``` 
 docker run -dP -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE=OpenID -v /home/gerrit/db:/home/gerrit/gerrit/db --name my-gerrit cmoulliard/gerrit:1.0
 ```
+
+# Create the official fabric8/gerrit container
+
+```
+docker run -dP -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_IP='gogs-http-service.default.local' -e GIT_SERVER_PORT=80 -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE='DEVELOPMENT_BECOME_ANY_ACCOUNT' -v /home/gerrit-site:/home/gerrit/site --name gerrit-server fabric/gerrit
+```
+
 # Bash to the container
 ```
 docker exec -it gerrit bash
@@ -101,6 +108,13 @@ osc delete all --all
 osc delete oauthclients fabric8
 
 osc process -v DOMAIN='vagrant.local' -f http://central.maven.org/maven2/io/fabric8/apps/base/2.1.1/base-2.1.1-kubernetes.json | osc create -f -
+osc process -v DOMAIN='vagrant.local' -f http://central.maven.org/maven2/io/fabric8/apps/gerrit/2.1.1/base-2.1.1-kubernetes.json | osc create -f -
+osc process -v DOMAIN='vagrant.local' -f http://central.maven.org/maven2/io/fabric8/apps/gogs/2.1.1/gogs-2.1.1-kubernetes.json | osc create -f -
+osc process -v DOMAIN='vagrant.local' -f http://central.maven.org/maven2/io/fabric8/apps/jenkins/2.1.1/jenkins-2.1.1-kubernetes.json | osc create -f -
+osc process -v DOMAIN='vagrant.local' -f http://central.maven.org/maven2/io/fabric8/apps/nexus/2.1.1/nexus-2.1.1-kubernetes.json | osc create -f -
+
+
+osc create -f target/classes/kubernetes.json
 
 Commands to be executed within the VM machine
 
