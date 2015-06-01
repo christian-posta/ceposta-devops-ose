@@ -192,7 +192,7 @@ Remark : there is still an issue as when we recreate a new container, a new DB i
 
 # To debug image when you develop it
 ```
-docker run -it -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_IP='gogs-http-service.default.local' -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE='DEVELOPMENT_BECOME_ANY_ACCOUNT' --name my-gerrit cmoulliard/gerrit:1.0 bash
+docker run -it -p 0.0.0.0:8080:8080 -p 127.0.0.1:29418:29418 -e GIT_SERVER_IP='gogs-http-service.default.local' -e GIT_SERVER_PORT='80' -e GIT_SERVER_USER=root -e GIT_SERVER_PASSWORD=redhat01 -e GIT_SERVER_PROJ_ROOT=root -e AUTH_TYPE='DEVELOPMENT_BECOME_ANY_ACCOUNT' --name my-gerrit cmoulliard/gerrit:1.0 bash
 ```
 # To clean images
 ```
